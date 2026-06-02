@@ -1,12 +1,17 @@
 [
   {
     "type": "dir-section-header",
-    "name": "start",
-    "label": "Getting Started"
+    "name": "beginner",
+    "label": "基础篇"
   },
   {
     "type": "dir-section-header",
-    "name": "use-mdx",
-    "label": "Markdown & MDX"
+    "name": "intermediate",
+    "label": "进阶篇"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "advanced",
+    "label": "高级篇"
   }
 ]

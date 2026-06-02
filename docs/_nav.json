@@ -1,16 +1,21 @@
 [
   {
-    "text": "Guide",
-    "link": "/guide/start/introduction",
+    "text": "教程",
+    "link": "/guide/quick-start",
     "activeMatch": "/guide/"
   },
   {
-    "text": "API",
-    "link": "/api/",
-    "activeMatch": "/api/"
+    "text": "命令参考",
+    "link": "/commands/",
+    "activeMatch": "/commands/"
   },
   {
-    "text": "Document",
-    "link": "https://rspress.rs/"
+    "text": "技巧",
+    "link": "/tips/",
+    "activeMatch": "/tips/"
+  },
+  {
+    "text": "Claude Code 文档",
+    "link": "https://docs.anthropic.com/en/docs/claude-code"
   }
 ]
