@@ -377,3 +377,404 @@ claude mcp add spring-boot -- npx -y @anthropic-ai/spring-boot-mcp-server
 :::warning
 Claude Code 的训练数据可能不包含最新的 Spring Boot 版本变更。如果你使用 Spring Boot 3.2+，建议安装 MCP 服务器或 [Context7](/guide/advanced/context7) 注入最新文档。
 :::
+
+## 常见场景
+
+### Spring Boot REST API 全栈生成
+
+```
+> 基于现有的 User 实体类，生成完整的 REST API：
+> 1. UserDTO（请求和响应分开：CreateUserRequest, UpdateUserRequest, UserResponse）
+> 2. MapStruct 转换器 UserMapper
+> 3. UserRepository（继承 JpaRepository）
+> 4. UserService（CRUD + 分页 + 按用户名搜索）
+> 5. UserController（RESTful 路由 + 参数校验）
+> 6. 全局异常处理器
+> 7. 对应的单元测试和集成测试
+>
+> 参考项目中 Order 模块的代码风格
+```
+
+### 数据库迁移脚本
+
+```
+> 创建 Flyway 迁移脚本，添加 product 表：
+> - id: BIGSERIAL 主键
+> - name: VARCHAR(100) 非空
+> - price: DECIMAL(10,2) 非空
+> - stock: INTEGER 默认 0
+> - category_id: BIGINT 外键关联 category 表
+> - created_at, updated_at: TIMESTAMP
+> 添加索引：category_id 和 name
+```
+
+### DTO 与 Entity 转换
+
+```
+> 创建 OrderMapper（MapStruct），实现：
+> - Order → OrderResponse 转换
+> - CreateOrderRequest → Order 转换
+> - List<Order> → List<OrderResponse> 批量转换
+> - 嵌套对象：OrderItem → OrderItemResponse
+> 使用 @Mapper(componentModel = "spring")
+```
+
+### 统一响应格式
+
+```
+> 创建统一 API 响应包装：
+> 1. ApiResponse<T> 泛型类：code, message, data, timestamp
+> 2. PageResponse<T> 分页响应：content, totalElements, totalPages, currentPage
+> 3. 创建 ApiResponseHelper 工具类：
+>    - success(T data) → ApiResponse
+>    - success(Page<T>) → PageResponse
+>    - error(ErrorCode) → ApiResponse
+>    - error(int code, String message) → ApiResponse
+```
+
+### 异常处理体系
+
+```
+> 创建统一异常处理体系：
+> 1. ErrorCode 枚举：定义业务错误码（USER_NOT_FOUND, ORDER_ALREADY_PAID 等）
+> 2. BusinessException 继承 RuntimeException，包含 ErrorCode
+> 3. GlobalExceptionHandler 使用 @RestControllerAdvice：
+>    - BusinessException → 对应错误码和消息
+>    - MethodArgumentNotValidException → 400 + 字段错误列表
+>    - AccessDeniedException → 403
+>    - Exception → 500 + 通用错误消息
+> 4. ErrorResponse DTO：code, message, errors, timestamp
+```
+
+### 安全配置
+
+```
+> 配置 Spring Security：
+> 1. SecurityConfig 类，使用 @Configuration
+> 2. 配置 JWT 认证过滤器
+> 3. 放行公开接口：/api/auth/login, /api/auth/register, /actuator/health
+> 4. 其他接口需要认证
+> 5. 配置 CORS 允许前端域名
+> 6. 配置密码编码器 BCryptPasswordEncoder
+```
+
+:::danger
+生成安全相关代码后务必审查。Claude Code 生成的安全配置可能需要根据你的具体需求调整——特别是 CORS 策略、JWT 密钥管理和权限规则。不要直接将生成的安全配置用于生产环境。
+:::
+
+### MyBatis / MyBatis-Plus 场景
+
+如果你的项目使用 MyBatis 而非 JPA：
+
+```
+> 使用 MyBatis-Plus 实现用户模块：
+> 1. UserMapper 继承 BaseMapper<User>
+> 2. UserServiceImpl 实现 IService<User>
+> 3. 自定义查询使用 @Select 注解或 XML Mapper
+> 4. 分页使用 MybatisPlusInterceptor + PaginationInnerInterceptor
+```
+
+:::info
+在 CLAUDE.md 中明确指定 ORM 框架（JPA / MyBatis / MyBatis-Plus），这会显著影响 Claude Code 生成的代码风格。
+:::
+
+## 代码审查与重构
+
+### 代码审查
+
+Claude Code 可以作为代码审查助手：
+
+```
+> 审查 src/main/java/com/example/app/service/PaymentService.java：
+> 1. 检查线程安全问题
+> 2. 检查异常处理是否完善
+> 3. 检查是否有资源泄漏（数据库连接、流等）
+> 4. 检查事务边界是否正确
+> 5. 检查是否有 N+1 查询问题
+```
+
+```
+> 扫描整个 service/ 包，找出：
+> - 缺少 @Transactional 的方法
+> - 硬编码的魔法值
+> - 过长的方法（超过 50 行）
+> - 不一致的异常处理方式
+```
+
+### 重构策略
+
+```
+> 重构 src/main/java/com/example/app/service/OrderService.java：
+> 1. 提取订单状态机逻辑到 OrderStateMachine 类
+> 2. 将金额计算逻辑抽取到 PricingStrategy 接口
+> 3. 使用策略模式替代 if-else 的支付方式选择
+> 4. 保持所有现有测试通过
+```
+
+:::tip
+重构时，让 Claude Code 先运行现有测试确认基线，重构后再运行确认没有回归。使用 `/plan` 命令让 Claude Code 先规划重构步骤，确认后再执行。
+:::
+
+### 遗留代码现代化
+
+```
+> 分析 src/main/java/com/example/app/legacy/ 目录：
+> 1. 找出使用的过时 API（如 javax.* → jakarta.*）
+> 2. 识别可以使用 Java 21 新特性的代码（record, sealed class, pattern matching）
+> 3. 标记可以使用 Stream API 替代 for 循环的地方
+> 4. 列出 Lombok 可以消除的样板代码
+> 生成重构计划，按风险从低到高排序
+```
+
+### 性能优化
+
+```
+> 分析 ProductService 的性能问题：
+> 1. 找出 N+1 查询（检查 @OneToMany, @ManyToOne 的 fetch 类型）
+> 2. 检查是否有不必要的数据库调用可以批量处理
+> 3. 分析是否需要添加缓存（@Cacheable）
+> 4. 检查分页查询是否使用了正确的索引
+> 给出优化建议和具体代码改动
+```
+
+## 自动化与 CI/CD
+
+### Hooks 集成
+
+使用 [Hooks](/guide/advanced/hooks) 在 Claude Code 操作前后自动执行 Java 项目任务：
+
+````json title=".claude/settings.json"
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.java$'; then mvn spotless:apply -q 2>/dev/null || true; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
+````
+
+这个 Hook 在 Claude Code 修改 `.java` 文件后自动运行 Spotless 格式化。
+
+:::details 更多 Java Hooks 示例
+
+````json title=".claude/settings.json"
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.java$'; then mvn checkstyle:check -q 2>/dev/null; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mvn test -pl $(git diff --name-only HEAD | grep -oP 'src/main/java/\\K[^/]+' | head -1) -q 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}
+````
+
+- `PostToolUse` Hook：修改 Java 文件后运行 Checkstyle 检查
+- `Stop` Hook：Claude Code 完成任务后运行相关模块的测试
+
+::
+
+### 集成到 CI/CD
+
+在 CI 流水线中使用 Claude Code 进行代码审查：
+
+````yaml title=".github/workflows/ai-review.yml"
+name: AI Code Review
+on:
+  pull_request:
+    paths:
+      - '**/*.java'
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          review_path: src/main/java
+          prompt: |
+            审查这个 PR 中的 Java 代码变更：
+            1. 检查是否遵循项目的分层架构（Controller → Service → Repository）
+            2. 检查异常处理是否完善
+            3. 检查是否有潜在的 N+1 查询
+            4. 检查测试覆盖是否充分
+            5. 检查是否有安全隐患（SQL 注入、硬编码密钥等）
+````
+
+### 自定义 Skills
+
+为 Java 项目创建专用 Skill，标准化常见操作：
+
+````markdown title=".claude/skills/create-api-endpoint/SKILL.md"
+# 创建 API 端点
+
+根据需求创建完整的 Spring Boot REST API 端点。
+
+## 步骤
+
+1. 在 model/ 包下创建 Entity 类（使用 JPA 注解）
+2. 在 dto/ 包下创建请求和响应 DTO
+3. 创建 MapStruct Mapper 接口
+4. 在 repository/ 包下创建 Repository 接口
+5. 在 service/ 包下创建 Service 类（包含业务逻辑）
+6. 在 controller/ 包下创建 Controller（使用 @RestController）
+7. 在 src/test/java/ 对应包下创建单元测试
+8. 运行测试确认通过
+
+## 约定
+
+- 遵循项目现有的代码风格
+- 使用 Lombok 减少样板代码
+- 所有 Controller 方法需要参数校验
+- Service 层需要处理业务异常
+````
+
+使用时只需：
+
+```
+> /create-api-endpoint
+> 创建商品管理 API，包含 CRUD、分页查询和按分类筛选
+```
+
+## 注意事项
+
+### Java 版本兼容性
+
+Claude Code 的训练数据可能偏向 Java 8/11 的写法。如果你使用 Java 17+ 或 21，在 CLAUDE.md 中明确标注：
+
+````markdown title="CLAUDE.md（片段）"
+## Java 版本
+
+本项目使用 Java 21，请使用以下现代特性：
+- 使用 record 定义 DTO（替代 Lombok @Data）
+- 使用 sealed class 定义状态机
+- 使用 pattern matching（switch with ->）
+- 使用 Text Blocks（"""）编写 SQL
+- 不要使用已废弃的 SecurityManager
+````
+
+:::warning
+如果你不指定 Java 版本，Claude 可能生成 Java 8 风格的代码（如使用 `new ArrayList<>()` 而不是 `List.of()`），或者使用已废弃的 `javax.*` 包而非 `jakarta.*`。
+:::
+
+### 常见陷阱
+
+| 陷阱 | 说明 | 解决方案 |
+|------|------|----------|
+| javax vs jakarta | Spring Boot 3.x 使用 `jakarta.*` 命名空间 | 在 CLAUDE.md 中注明 Spring Boot 版本 |
+| Lombok 注解处理器 | IDE 可能提示找不到 Lombok 生成的方法 | 确保 pom.xml 中配置了 annotation processor |
+| @Transactional 传播 | 嵌套事务行为可能不符合预期 | 让 Claude 明确指定 propagation 属性 |
+| 测试上下文加载 | 集成测试启动慢 | 使用 `@SpringBootTest(properties = "...")` 减少不必要的自动配置 |
+| MapStruct 版本 | 不同版本的 MapStruct API 有差异 | 在 CLAUDE.md 中注明使用的 MapStruct 版本 |
+
+### 效率提示
+
+```
+# 使用 /compact 压缩上下文
+> /compact 保留 Spring Boot 和 Maven 相关的上下文
+
+# 使用 /clear 重新开始
+> 当切换到不相关的功能模块时，用 /clear 清除上下文避免干扰
+
+# 使用 Context7 获取最新文档
+> 查询 Spring Data JPA 3.2 的 findBy 方法命名规范
+```
+
+## 提示词模板库
+
+以下是 Java 开发常用场景的提示词模板，可直接复制使用：
+
+:::details REST API 开发
+
+```
+> 基于 [Entity 名称] 创建完整的 REST API 模块：
+> - Entity: [字段列表]
+> - 包含 CRUD + 分页查询 + 按 [字段] 搜索
+> - 使用 DTO 隔离（CreateRequest, UpdateRequest, Response）
+> - MapStruct 转换
+> - 统一异常处理
+> - 单元测试 + 集成测试
+> 参考项目中 [现有模块] 的代码风格
+```
+
+::
+
+:::details 数据库迁移
+
+```
+> 创建 Flyway 迁移脚本：
+> - 表名: [名称]
+> - 字段: [字段定义]
+> - 索引: [索引定义]
+> - 外键: [外键关系]
+> 命名规范: V{下一个版本号}__{描述}.sql
+```
+
+::
+
+:::details 安全配置
+
+```
+> 配置 Spring Security + JWT 认证：
+> - JwtAuthenticationFilter 继承 OncePerRequestFilter
+> - JwtTokenProvider 负责 token 生成和验证
+> - SecurityConfig 配置路由权限
+> - 放行: /api/auth/**, /actuator/health
+> - 保护: /api/** 其他所有接口
+> - 配置 CORS 允许 [前端域名]
+```
+
+::
+
+:::details 缓存配置
+
+```
+> 为 [Service 名称] 添加 Redis 缓存：
+> - 使用 Spring Cache + Redis
+> - @Cacheable 缓存查询结果
+> - @CachePut 更新缓存
+> - @CacheEvict 删除缓存
+> - 配置缓存过期时间
+> - 添加缓存命中率日志
+```
+
+::
+
+:::details 消息队列集成
+
+```
+> 集成 RabbitMQ/Kafka：
+> - 创建消息生产者 [ProducerName]
+> - 创建消息消费者 [ConsumerName]
+> - 配置死信队列处理失败消息
+> - 消息序列化使用 JSON
+> - 添加消费失败重试机制（3次重试，指数退避）
+```
+
+::
