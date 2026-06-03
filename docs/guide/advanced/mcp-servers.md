@@ -117,6 +117,10 @@ await server.connect(transport);
 - 敏感信息（如 API Token）应通过环境变量传入，不要硬编码
 - 建议只启用需要的 MCP 服务器，过多会降低响应速度
 
+:::info
+管理多个 MCP 服务器配置比较繁琐？[CC-Switch](/guide/advanced/cc-switch) 提供了可视化的 MCP 管理界面，支持跨应用双向同步。
+:::
+
 ## 下一步
 
 - [自定义技能](/guide/advanced/custom-skills) — 创建自定义的 Skills 和 Agents

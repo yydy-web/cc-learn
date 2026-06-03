@@ -39,6 +39,10 @@ export ANTHROPIC_API_KEY=your-api-key
 将环境变量添加到 `~/.bashrc` 或 `~/.zshrc` 中，避免每次启动都要设置。
 :::
 
+:::tip
+如果你需要在多个 API Provider 之间切换（如 Anthropic API、AWS Bedrock 等），可以使用 [CC-Switch](/guide/advanced/cc-switch) 一键切换，无需手动修改配置文件。
+:::
+
 ### 方式二：Claude Pro/Max 订阅
 
 如果你有 Claude Pro 或 Max 订阅，可以直接登录使用，无需 API Key：

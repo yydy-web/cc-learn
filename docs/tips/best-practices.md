@@ -69,6 +69,14 @@ description: Claude Code 日常使用中的高效技巧和常见模式
 4. **监控 /cost**：定期检查 token 用量
 5. **日常用 Sonnet**：复杂问题才切 Opus
 
+### Provider 管理
+
+使用 [CC-Switch](/guide/advanced/cc-switch) 管理多个 API Provider，快速在不同服务间切换：
+
+- 一键切换 Provider，无需手动编辑配置文件
+- 支持 AWS Bedrock、NVIDIA NIM 等 50+ 预设
+- 用量追踪帮助你监控花费
+
 ## 团队协作
 
 ### 共享 CLAUDE.md

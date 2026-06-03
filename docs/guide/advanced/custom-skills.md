@@ -106,6 +106,10 @@ description: 按照团队规范审查代码改动
 3. **提供示例**：给出输入输出的例子
 4. **保持更新**：随着项目演进更新 Skill 内容
 
+:::info
+想发现更多社区 Skills？[CC-Switch](/guide/advanced/cc-switch) 内置 Skills 市场，可以浏览和一键安装来自 GitHub 的社区技能。
+:::
+
 ## 使用 Skill
 
 在对话中通过斜杠命令调用：
