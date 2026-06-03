@@ -215,6 +215,15 @@ Superpowers 会按照 4 阶段系统性排查：
 3. 形成假设并验证
 4. 修复并添加防护测试
 
+## 与 Gstack 的对比
+
+Superpowers 和 [Gstack](/guide/advanced/gstack) 都是 Claude Code 的 Skill 插件，可以互补使用：
+
+- **Superpowers** 聚焦**结构化方法论**——TDD、头脑风暴、计划驱动开发
+- **Gstack** 聚焦**工程团队模拟**——QA、安全审计、浏览器测试、发布流程
+
+推荐的组合方式：用 Superpowers 做前期设计和 TDD 实现，用 Gstack 的 `/review`、`/qa`、`/cso` 做后期保障。
+
 ## 与 CC-Switch 配合使用
 
 Superpowers 和 [CC-Switch](/guide/advanced/cc-switch) 是互补的工具：

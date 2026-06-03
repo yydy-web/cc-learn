@@ -71,6 +71,26 @@ description: Claude Code 日常使用中的高效技巧和常见模式
 
 这会触发完整的七步流程：头脑风暴 → 设计 → 计划 → TDD → 审查 → 完成。适合复杂功能开发。
 
+### 虚拟工程团队模式（Gstack）
+
+安装 [Gstack](/guide/advanced/gstack) 后，你可以用 Slash 命令调用不同工程角色：
+
+```
+> /office-hours
+> 我想做一个实时协作编辑器
+
+> /plan-eng-review
+> 帮我审查架构方案
+
+> /review
+> 审查当前分支的代码改动
+
+> /qa https://staging.example.com
+> 在浏览器中测试这个页面
+```
+
+Gstack 覆盖从产品思考到发布监控的全流程，适合需要完整工程保障的项目。
+
 ## 省钱技巧
 
 1. **及时 /compact**：每 10-15 轮对话压缩一次

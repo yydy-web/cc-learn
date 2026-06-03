@@ -25,7 +25,7 @@ features:
     icon: 🔧
     link: /guide/intermediate/codebase-navigation
   - title: 高级篇
-    details: 探索 Hooks、MCP 服务器、自定义技能、CC-Switch 配置管理、Superpowers 工作流和多智能体协作
+    details: 探索 Hooks、MCP 服务器、自定义技能、CC-Switch 配置管理、Superpowers 和 Gstack 工作流
     icon: ⚡
     link: /guide/advanced/hooks
   - title: 命令参考
