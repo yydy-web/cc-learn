@@ -529,3 +529,18 @@ npx skills add https://github.com/antfu/skills --skill vue-router-best-practices
 :::warning
 安装过多 Skills 可能增加 Claude Code 的上下文负担。建议根据实际需求选择 2-4 个最相关的 Skill，而不是全部安装。
 :::
+
+## 常见陷阱
+
+| 陷阱 | 说明 | 解决方案 |
+|------|------|----------|
+| reactive 解构丢失响应性 | `const { name } = reactive({name: ''})` 解构后 name 不再响应 | 使用 `toRefs()` 解构，或直接用 `ref` |
+| v-for 使用 index 作为 key | 列表重排时导致渲染异常 | 使用唯一标识（如 id）作为 key |
+| Options API vs Composition API 混用 | Claude 可能在同一项目中混用两种风格 | 在 CLAUDE.md 中明确指定使用 Composition API |
+| watch 依赖遗漏 | watch 未正确声明依赖导致不触发 | 使用 watchEffect 自动收集依赖，或检查 watch 的第一个参数 |
+| 组件 props 命名风格 | Vue 模板中使用 camelCase 可能不生效 | Props 定义用 camelCase，模板中用 kebab-case |
+| CSS scoped 泄漏 | 深度选择器写法不一致 | Vue 3.3+ 使用 `:deep(.class)` 语法 |
+| SSR 中的响应式陷阱 | 在 setup 顶层调用 useRoute 等导致 SSR 共享状态 | 在函数或 composable 内部调用 |
+| defineProps 未使用泛型 | 使用运行时声明导致 TypeScript 推断不完整 | 优先使用 `defineProps<{...}>()` 泛型形式 |
+| 忘记清理副作用 | 定时器、事件监听器在组件卸载后未清理 | 在 onUnmounted 中清理，或使用 VueUse 的自动清理函数 |
+| Pinia store 在模块顶层调用 | SSR 场景下导致跨请求状态污染 | 在函数内部调用 `useXxxStore()` |
