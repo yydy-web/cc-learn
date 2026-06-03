@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@11.5.0",
+  "license": "MIT",
   "scripts": {
     "build": "rspress build",
     "dev": "rspress dev",
