@@ -193,6 +193,16 @@ Ralph 特别适合"离开电脑，回来时功能已经开发完毕"的场景。
 3. Gstack: /review Staff Engineer 级审查 + /cso 安全审计
 ```
 
+### 实时文档注入（Context7）
+
+安装 [Context7](/guide/advanced/context7) 后，Claude Code 会自动查询最新的库文档：
+
+```bash
+npx ctx7 setup --claude
+```
+
+之后 Claude Code 在使用库/框架时会自动获取最新文档，避免 API 幻觉和过时代码。特别适合使用快速迭代的库（如 Next.js、React Router）。
+
 ## 省钱技巧
 
 1. **及时 /compact**：每 10-15 轮对话压缩一次
