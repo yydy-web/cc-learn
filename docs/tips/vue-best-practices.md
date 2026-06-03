@@ -177,4 +177,96 @@ describe('UserCard', () => {
 :::tip
 MSW 比手动 mock axios 更好：它在网络层拦截请求，不侵入业务代码，测试更接近真实行为。在 CLAUDE.md 中约定使用 MSW，Claude Code 会自动生成对应的 handler。
 :::
+
+## 常见场景
+
+### 页面全栈生成（Nuxt 3）
+
+```
+> 基于现有的数据库表结构，生成 Nuxt 3 的用户管理页面：
+> 1. pages/users/index.vue — 用户列表（useAsyncData 获取初始数据）
+> 2. pages/users/[id].vue — 用户详情
+> 3. pages/users/new.vue — 创建用户表单
+> 4. components/users/UserTable.vue — 可排序、可筛选的表格
+> 5. components/users/UserForm.vue — 表单组件（VeeValidate + Zod）
+> 6. server/api/users.ts — 服务端 API 路由（Nitro）
+>
+> 使用 Element Plus / Naive UI 组件库
+> 参考项目中 pages/products/ 的代码风格
+```
+
+:::tip
+如果使用纯 Vite SPA 项目（非 Nuxt），页面路由使用 Vue Router，API 层使用 axios 或 useFetch（VueUse），组件参考 Vite 项目的目录结构。
+:::
+
+### 表单处理
+
+```
+> 创建用户注册表单：
+> - 使用 VeeValidate + Zod 校验
+> - 字段：用户名、邮箱、密码、确认密码、手机号
+> - 实时校验：密码强度指示器，邮箱格式提示
+> - 密码确认字段自动与密码字段交叉校验
+> - 提交时显示加载状态，禁用按钮防止重复提交
+> - 错误信息显示在对应字段下方
+> - 提交成功后显示 ElMessage / NMessage 提示并跳转到登录页
+```
+
+### 状态管理（Pinia）
+
+```
+> 使用 Pinia（Setup Store 模式）创建应用全局状态：
+> 1. useAuthStore：登录状态、用户信息、token 管理
+> 2. useThemeStore：深色/浅色模式切换，持久化到 localStorage
+> 3. useUiStore：侧边栏展开/折叠、全局 Loading、通知队列
+> 每个 Store 使用 TypeScript 严格类型
+> 支持 HMR 和 devtools
+```
+
+:::info
+**Setup Store vs Options Store：** 优先使用 Setup Store 模式（函数式写法），它更灵活，支持 VueUse 等组合式函数，且与 Composition API 风格一致。Options Store（类似 Vuex 的对象写法）适合简单场景。
+:::
+
+### API 集成
+
+```
+> 配置 axios 实例和 API 层：
+> 1. 创建 axios 实例，配置 baseURL、超时、请求/响应拦截器
+> 2. 请求拦截器：自动附加 Authorization header
+> 3. 响应拦截器：统一处理 401 跳转登录、403 提示无权限、500 显示错误页
+> 4. 封装 useApi() 组合式函数，返回 { data, error, loading, execute }
+> 5. 统一错误处理和消息提示
+```
+
+### VueUse 组合式函数集成
+
+```
+> 在项目中集成 VueUse：
+> 1. 安装 @vueuse/core
+> 2. 封装常用组合式函数：
+>    - useStorage 替代手动操作 localStorage
+>    - useDark + useToggle 管理深色模式
+>    - useEventListener 替代手动 addEventListener/removeEventListener
+>    - useDebounceFn 处理搜索防抖
+>    - useIntersectionObserver 实现图片懒加载
+> 3. 统一在 composables/ 目录下按功能分组
+```
+
+:::tip
+VueUse 提供了 200+ 个组合式函数，覆盖浏览器 API、状态、传感器、动画、网络等场景。在开发前先检查 VueUse 是否已有现成方案，避免重复造轮子。详见下方 [推荐 Vue Skills > VueUse Functions](#推荐-vue-skills)。
+:::
+
+### 组件库集成（Element Plus / Naive UI）
+
+```
+> 安装并配置 Element Plus：
+> 1. 按需导入（unplugin-vue-components + unplugin-auto-import）
+> 2. 配置主题色（CSS 变量覆盖）
+> 3. 安装常用组件：ElTable, ElForm, ElInput, ElButton, ElDialog, ElSelect, ElMessage
+> 4. 创建一个示例页面展示所有组件的用法
+```
+
+:::info
+在 CLAUDE.md 中明确指定 UI 组件库（Element Plus、Naive UI、Ant Design Vue、Vuetify 等），这会显著影响 Claude Code 生成的组件代码和样式写法。
+:::
 ````
