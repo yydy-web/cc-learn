@@ -55,3 +55,126 @@ Vue 3 的 Composition API 和 `<script setup>` 语法简洁且类型友好，Cla
 > - 统一错误响应类型 ApiError
 > - 封装 loading、error、data 响应式状态
 ````
+
+## 测试最佳实践
+
+### TDD 工作流
+
+Claude Code 完美支持 Vue 的 TDD 工作流。以下是一个典型的对话：
+
+```
+> 用 TDD 方式实现搜索框组件：
+> 1. 先写 SearchBox 的组件测试，覆盖以下场景：
+>    - 渲染输入框和搜索按钮
+>    - 输入文字后显示清除按钮
+>    - 点击搜索按钮触发 emit('search') 事件
+>    - 按 Enter 键触发搜索
+>    - 输入为空时搜索按钮禁用
+> 2. 运行测试确认失败
+> 3. 写最小实现让测试通过
+> 4. 重构优化
+```
+
+### 组件测试生成
+
+让 Claude Code 为现有组件生成测试：
+
+```
+> 为 src/components/UserCard.vue 编写组件测试：
+> - 使用 Vitest + @vue/test-utils
+> - 测试渲染用户名称和邮箱
+> - 测试点击编辑按钮触发 emit
+> - 测试无头像时显示默认占位图
+> - 使用 mount 和 shallowMount
+```
+
+Claude Code 会生成类似如下的测试：
+
+```ts title="UserCard.spec.ts"
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
+import UserCard from './UserCard.vue';
+
+const mockUser = {
+  id: '1',
+  name: '张三',
+  email: 'zhangsan@example.com',
+  avatar: 'https://example.com/avatar.jpg',
+};
+
+describe('UserCard', () => {
+  it('渲染用户名称和邮箱', () => {
+    const wrapper = mount(UserCard, {
+      props: { user: mockUser },
+    });
+    expect(wrapper.text()).toContain('张三');
+    expect(wrapper.text()).toContain('zhangsan@example.com');
+  });
+
+  it('点击编辑按钮触发 edit 事件', async () => {
+    const wrapper = mount(UserCard, {
+      props: { user: mockUser },
+    });
+    await wrapper.find('button[aria-label="编辑"]').trigger('click');
+    expect(wrapper.emitted('edit')).toHaveLength(1);
+    expect(wrapper.emitted('edit')![0]).toEqual([mockUser]);
+  });
+
+  it('无头像时显示默认占位图', () => {
+    const userWithoutAvatar = { ...mockUser, avatar: null };
+    const wrapper = mount(UserCard, {
+      props: { user: userWithoutAvatar },
+    });
+    const img = wrapper.find('img');
+    expect(img.attributes('src')).toContain('default-avatar');
+  });
+});
+```
+
+### E2E 测试生成
+
+```
+> 为登录流程编写 Playwright E2E 测试：
+> - 访问 /login 页面
+> - 填写邮箱和密码
+> - 点击登录按钮
+> - 验证跳转到 /dashboard
+> - 验证页面显示用户名
+> - 测试错误密码显示错误提示
+> - 测试表单验证（空邮箱、无效邮箱格式）
+```
+
+### 测试策略建议
+
+| 测试类型 | 工具 | 覆盖内容 | 运行时机 |
+|----------|------|----------|----------|
+| 单元测试 | Vitest | 工具函数、纯逻辑 Composable | 每次提交 |
+| 组件测试 | Vitest + @vue/test-utils | 组件渲染、交互、emit、插槽 | 每次提交 |
+| E2E 测试 | Playwright | 完整用户流程、页面导航 | PR 合并前 |
+| 视觉回归 | Chromatic / Percy | UI 截图对比 | PR 合并前 |
+
+:::info
+**测试文件命名约定：**
+- 组件测试：`ComponentName.spec.ts`（与组件同目录）
+- E2E 测试：`feature-name.spec.ts`（放在 `tests/e2e/` 目录）
+- Composable 测试：`useComposableName.spec.ts`（与 composable 同目录）
+- 工具函数测试：`functionName.test.ts`
+
+在 CLAUDE.md 中约定命名规则，Claude Code 会自动遵循。
+:::
+
+### Mock 策略
+
+```
+> 配置 MSW（Mock Service Worker）用于 Vue 项目测试：
+> - 创建 src/mocks/handlers.ts，定义 API Mock
+> - 创建 src/mocks/server.ts（Node 环境，测试用）
+> - 创建 src/mocks/browser.ts（浏览器环境，开发用）
+> - Mock /api/users 接口：GET 返回用户列表，POST 创建用户
+> - 在 Vitest setup 文件中启动 MSW server
+```
+
+:::tip
+MSW 比手动 mock axios 更好：它在网络层拦截请求，不侵入业务代码，测试更接近真实行为。在 CLAUDE.md 中约定使用 MSW，Claude Code 会自动生成对应的 handler。
+:::
+````
