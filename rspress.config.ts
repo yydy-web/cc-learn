@@ -1,5 +1,6 @@
 import * as path from 'node:path';
 import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
@@ -10,6 +11,7 @@ export default defineConfig({
     light: '/cc-learn-light-logo.png',
     dark: '/cc-learn-dark-logo.png',
   },
+  plugins: [pluginLlms()],
   themeConfig: {
     socialLinks: [
       {
@@ -18,5 +20,8 @@ export default defineConfig({
         content: 'https://github.com/anthropics/claude-code',
       },
     ],
+    llmsUI: {
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    },
   },
 });
