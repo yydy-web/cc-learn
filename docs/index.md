@@ -13,7 +13,7 @@ hero:
       text: GitHub
       link: https://github.com/anthropics/claude-code
   image:
-    src: /rspress-icon.png
+    src: /cc-learn-icon.png
     alt: Claude Code
 features:
   - title: 基础篇
