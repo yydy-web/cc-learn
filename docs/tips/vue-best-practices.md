@@ -270,3 +270,69 @@ VueUse 提供了 200+ 个组合式函数，覆盖浏览器 API、状态、传感
 在 CLAUDE.md 中明确指定 UI 组件库（Element Plus、Naive UI、Ant Design Vue、Vuetify 等），这会显著影响 Claude Code 生成的组件代码和样式写法。
 :::
 ````
+
+## 代码审查与重构
+
+### 代码审查
+
+```
+> 审查 src/features/dashboard/components/ChartPanel.vue：
+> 1. 检查是否有不必要的响应式开销（ref vs shallowRef）
+> 2. 检查 watch/onUnmounted 的清理函数是否正确（定时器、事件监听）
+> 3. 检查是否有内存泄漏（未取消的订阅、定时器）
+> 4. 检查是否正确使用 computed 而非在模板中做复杂计算
+> 5. 检查 v-for 是否使用唯一 key（非 index）
+> 6. 检查是否误用 reactive 导致解构丢失响应性
+```
+
+```
+> 扫描整个 src/components/ 目录，找出：
+> - 使用 v-for 时缺少 key 或使用 index 作为 key
+> - 过大的组件（超过 200 行）应该拆分
+> - 缺少 TypeScript 类型定义的 Props（defineProps 未使用泛型）
+> - 可以提取为 Composable 的重复逻辑
+> - 误用 ref 包裹不需要响应式的值（应使用 shallowRef）
+> - 模板中直接操作 DOM（应使用 ref 引用）
+```
+
+### 组件拆分与重构
+
+```
+> 重构 src/features/order/OrderPage.vue（目前 500 行）：
+> 1. 提取订单列表为 OrderTable 组件
+> 2. 提取筛选器为 OrderFilter 组件
+> 3. 提取订单详情弹窗为 OrderDetailDialog 组件
+> 4. 将数据获取逻辑提取到 useOrders() Composable
+> 5. 将表单逻辑提取到 useOrderForm() Composable
+> 6. 保持所有现有功能和样式不变
+```
+
+:::tip
+重构 Vue 组件时，让 Claude Code 先运行现有测试确认基线，重构后再运行确认没有回归。对于没有测试的组件，先补测试再重构。
+:::
+
+### 性能优化
+
+```
+> 优化 src/features/product/ProductList.vue 的性能：
+> 1. 分析是否有不必要的响应式开销
+> 2. 对不需要深层响应的数据使用 shallowRef
+> 3. 对计算密集的派生数据使用 computed
+> 4. 使用 v-once 渲染静态内容
+> 5. 使用 v-memo 优化大列表的条件渲染
+> 6. 图片使用 loading="lazy" 或 VueUse 的 useIntersectionObserver
+> 7. 大列表使用虚拟滚动（@tanstack/vue-virtual 或 VueUse 的 useVirtualList）
+> 给出优化前后的对比说明
+```
+
+### TypeScript 类型安全
+
+```
+> 审查 src/ 目录的 TypeScript 类型安全：
+> 1. 找出所有的 any 类型，建议替换为具体类型
+> 2. 检查 defineProps 是否都使用泛型形式（而非运行时声明）
+> 3. 检查 defineEmits 是否都有类型声明
+> 4. 检查 API 响应是否有完整的类型定义
+> 5. 找出可以使用泛型提高复用性的地方
+> 6. 检查 Pinia store 的 state 和 getters 是否都有类型标注
+```
