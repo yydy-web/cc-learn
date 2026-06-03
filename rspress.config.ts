@@ -1,6 +1,7 @@
 import * as path from 'node:path';
 import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
+import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
@@ -11,7 +12,12 @@ export default defineConfig({
     light: '/cc-learn-light-logo.png',
     dark: '/cc-learn-dark-logo.png',
   },
-  plugins: [pluginLlms()],
+  plugins: [
+    pluginLlms(),
+    pluginSitemap({
+      siteUrl: 'https://cc-learn.pages.dev',
+    }),
+  ],
   themeConfig: {
     socialLinks: [
       {
