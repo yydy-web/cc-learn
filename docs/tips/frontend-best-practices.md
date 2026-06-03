@@ -808,24 +808,142 @@ npx skills add https://github.com/nextlevelbuilder/ui-ux-pro-max-skill --skill u
 
 ### UnJS
 
-[unjs](https://www.skills.sh/hairyf/skills/unjs) 提供 UnJS 生态系统的知识和使用模式，帮助 Claude Code 使用 H3、Nitro 等工具构建全栈 JavaScript 应用。
+[unjs](https://www.skills.sh/hairyf/skills/unjs) 提供 UnJS（Unified JavaScript）生态系统的完整知识，涵盖 60+ 个高质量、单一用途的 JavaScript 库和工具。这些库设计为可独立使用，也可协同工作，适用于任何 JavaScript 运行环境。
 
 ```bash
 npx skills add https://github.com/hairyf/skills --skill unjs
 ```
 
-**覆盖范围：**
+#### HTTP & 服务端
 
-| 类别 | 包 | 说明 |
-|------|-----|------|
-| HTTP & 服务端 | H3 | 轻量级 HTTP 框架，高性能且可移植 |
-| HTTP & 服务端 | Nitro | 通用 Web 服务器框架，可在任何环境运行 |
-| HTTP & 服务端 | Listhen | 优雅的 HTTP 监听器 |
-| 工具库 | unstorage | 通用键值存储接口 |
-| 工具库 | unenv | 通用 Node.js 环境兼容层 |
+| 包 | 说明 |
+|-----|------|
+| **H3** | 轻量级 HTTP 框架，高性能且可移植 |
+| **Nitro** | 通用 Web 服务器框架，可在任何环境运行（Node.js、Deno、Bun、Workers） |
+| **Listhen** | 优雅的 HTTP 监听器，适用于 Node.js 和边缘环境 |
+
+#### HTTP 客户端 & WebSocket
+
+| 包 | 说明 |
+|-----|------|
+| **Ofetch** | 更好的 fetch API，适用于 Node.js、浏览器和 Workers |
+| **Httpxy** | 全功能 HTTP 和 WebSocket 代理 |
+| **Crossws** | 跨平台 WebSocket 服务器（Node.js、Deno、Bun、Cloudflare Workers） |
+| **Cookie-es** | ESM cookie 序列化和反序列化 |
+| **Node-fetch-native** | node-fetch 的优化重分发版本 |
+
+#### 路由 & 请求处理
+
+| 包 | 说明 |
+|-----|------|
+| **Radix3** | 基于 Radix Tree 的轻量快速路由器 |
+| **Hookable** | 可等待的 Hooks 系统，用于插件和扩展 |
+| **Unctx** | 在原生 JavaScript 中使用组合式模式（composables） |
+
+#### 工具库
+
+| 包 | 说明 |
+|-----|------|
+| **Defu** | 递归默认属性合并 |
+| **Destr** | 快速安全的 JSON.parse 替代方案 |
+| **Ohash** | 基于 murmurhash3 的快速哈希 |
+| **Pathe** | 跨平台路径工具，替代 Node.js path |
+| **UFO** | URL 解析、格式化和操作工具 |
+| **Scule** | 字符串大小写转换（camelCase、kebab-case 等） |
+| **Perfect-debounce** | 支持 Promise 和 async 函数的防抖 |
+| **Get-port-please** | 获取可用端口 |
+
+#### 存储 & 数据
+
+| 包 | 说明 |
+|-----|------|
+| **Unstorage** | 异步键值存储 API，支持多种驱动（文件系统、Redis、localStorage 等） |
+| **Db0** | 轻量级 SQL 连接器 |
+| **Mongoz** | 零配置 MongoDB 服务器 |
+
+#### 环境 & 运行时
+
+| 包 | 说明 |
+|-----|------|
+| **Unenv** | 将 JavaScript 代码转换为运行时无关 |
+| **Std-env** | 标准环境变量工具 |
+
+#### 配置管理
+
+| 包 | 说明 |
+|-----|------|
+| **C12** | 智能配置加载器 |
+| **Confbox** | 紧凑的 YAML、TOML、JSONC、JSON5 解析器 |
+| **Rc9** | 简化的配置读写 |
+
+#### 构建工具
+
+| 包 | 说明 |
+|-----|------|
+| **Unbuild** | 统一 JavaScript 构建系统 |
+| **Mkdist** | 从源码生成分发文件 |
+| **Unplugin** | 统一插件系统，支持 Vite、Rollup、webpack、esbuild |
+| **Webpackbar** | webpack 3/4/5 进度条和性能分析器 |
+| **Nanotar** | 适用于任何 JS 运行时的轻量 Tar 工具 |
+
+#### 模块系统 & 代码生成
+
+| 包 | 说明 |
+|-----|------|
+| **Jiti** | 运行时 TypeScript 和 ESM 支持 |
+| **Mlly** | ECMAScript 模块工具 |
+| **Unimport** | 模块自动导入 API |
+| **Magicast** | 编程方式修改 JS/TS 源码 |
+| **Magic-regexp** | 编译时移除的类型安全可读正则表达式 |
+| **Knitwork-X** | 安全 JavaScript 代码生成工具 |
+
+#### 类型系统 & 日志
+
+| 包 | 说明 |
+|-----|------|
+| **Untyped** | 从配置对象生成类型和 Markdown |
+| **Consola** | 优雅的控制台包装器，支持多种报告器 |
+
+#### CLI & 脚手架
+
+| 包 | 说明 |
+|-----|------|
+| **Citty** | 优雅的 CLI 构建器，类型安全命令 |
+| **Giget** | 下载模板和 Git 仓库 |
+| **Nypm** | 统一 Node.js 包管理器 |
+| **Pkg-types** | package.json 和 tsconfig.json 的工具和类型定义 |
+
+#### 图片处理
+
+| 包 | 说明 |
+|-----|------|
+| **IPX** | 基于 Sharp/libvips 的高性能图片代理 |
+| **Image-meta** | 纯 JavaScript 检测图片类型和尺寸 |
+| **Fontaine** | 基于字体度量的自动字体回退 |
+
+#### 文档 & Markdown
+
+| 包 | 说明 |
+|-----|------|
+| **Automd** | 自动化 Markdown 维护 |
+| **Changelogen** | 使用 Conventional Commits 生成变更日志 |
+| **Mdbox** | 简单 Markdown 工具 |
+| **Undocs** | 最小化文档主题和 CLI |
+
+#### Web API & 加密
+
+| 包 | 说明 |
+|-----|------|
+| **Unhead** | 通用文档 head 标签管理器 |
+| **Uncrypto** | 通用加密 API（Node.js、浏览器、Edge） |
+| **Ungh** | GitHub API 无限制访问 |
+| **Unpdf** | PDF 工具（Node.js、浏览器、Workers） |
+| **Unwasm** | WebAssembly 工具 |
+| **Uqr** | 通用 QR 码生成（ANSI、Unicode、SVG） |
+| **Untun** | 通过 Cloudflare Quick Tunnels 暴露本地 HTTP 服务 |
 
 :::info
-如果你的前端项目使用 Nuxt 3 或 Nitro 作为全栈框架，安装此 Skill 可以让 Claude Code 更准确地生成服务端代码——它了解 H3 路由、Nitro 配置和 UnJS 工具链的最新 API。
+UnJS 的包大多被 Nuxt 3 和 Nitro 内部使用。即使你的项目不是 Nuxt，这些独立包也可以在任何 JavaScript 项目中使用——例如 `ofetch` 替代 `axios`，`c12` 加载配置文件，`consola` 替代 `console.log`。
 :::
 
 ### Skills 组合建议
