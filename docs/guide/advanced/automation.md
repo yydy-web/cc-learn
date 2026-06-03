@@ -101,6 +101,17 @@ claude --print "你的任务描述"
 - 限制自动化任务的权限范围
 - 对于敏感操作，保留人工审核环节
 
+## 自主循环开发
+
+对于需要多轮迭代的大型功能，可以使用 [Ralph](/guide/advanced/ralph) 让 Claude Code 自主循环执行：
+
+```bash
+# 使用 Claude Code 自主循环执行 PRD 中的所有用户故事
+./scripts/ralph/ralph.sh --tool claude
+```
+
+Ralph 会反复启动新的 Claude Code 实例，逐个实现 PRD 中的用户故事，直到全部完成。适合需要长时间自主运行的开发场景。
+
 ## 下一步
 
 - [命令参考](/commands/) — 查看所有可用的 Claude Code 命令
