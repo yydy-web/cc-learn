@@ -1041,10 +1041,12 @@ npx skills add https://github.com/shadcn-ui/ui --skill shadcn
 
 | 场景 | 推荐 Skills |
 |------|-------------|
+| React 项目性能优化 | react-best-practices + composition-patterns |
+| React + shadcn/ui 全栈开发 | react-best-practices + shadcn + composition-patterns |
 | 从零设计高品质 UI | frontend-design + ui-ux-pro-max |
-| 审查现有页面质量 | web-design-guidelines |
+| 审查现有页面质量 | web-design-guidelines + react-best-practices |
 | Nuxt 3 / Nitro 全栈开发 | unjs + frontend-design |
-| 全面的前端开发体验 | frontend-design + web-design-guidelines + ui-ux-pro-max |
+| 全面的前端开发体验 | frontend-design + web-design-guidelines + ui-ux-pro-max + react-best-practices |
 
 :::warning
 安装过多 Skills 可能增加 Claude Code 的上下文负担。建议根据实际需求选择 2-3 个最相关的 Skill，而不是全部安装。
