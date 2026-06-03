@@ -1,38 +1,33 @@
+# 完善最佳实践：四阶段工作流 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** 将最佳实践页面中的工具介绍重新组织为四阶段工作流（Gstack 治理 → OpenSpec 规格 → Superpowers 纪律 → Ralph 自动化），并添加组合使用指南。
+
+**Architecture:** 重写 `docs/tips/best-practices.md` 中的"工作流模式"部分，将分散的工具介绍整合为一个连贯的四阶段流水线，每个阶段明确职责和推荐工具，最后添加组合使用场景。
+
+**Tech Stack:** Rspress v2, Markdown/MDX
+
 ---
-title: 最佳实践
-description: Claude Code 日常使用中的高效技巧和常见模式
+
+## File Structure
+
+| 操作 | 文件 | 职责 |
+|------|------|------|
+| 修改 | `docs/tips/best-practices.md` | 重写"工作流模式"部分为四阶段流水线 |
+
 ---
 
-# 最佳实践
+### Task 1: 重写工作流模式为四阶段流水线
 
-## 对话技巧
+**Files:**
+- Modify: `docs/tips/best-practices.md:36-153`
 
-### 1. 提供具体上下文
+- [ ] **Step 1: 替换"工作流模式"部分**
 
-```
-❌ "帮我修个 bug"
-✅ "用户登录后 token 没有保存到 localStorage，检查 src/auth/login.ts 的登录逻辑"
-```
+将现有的 `## 工作流模式` 到 `## 省钱技巧` 之间的全部内容替换为：
 
-### 2. 指定范围
-
-```
-❌ "优化这个项目"
-✅ "优化 src/api/users.ts 中的数据库查询，目前列表接口没有分页"
-```
-
-### 3. 分步完成
-
-```
-> 第一步：分析 src/database/ 的表结构
-> 第二步：添加索引优化查询
-> 第三步：运行测试确认没有回归
-```
-
-### 4. 利用 CLAUDE.md
-
-在 `CLAUDE.md` 中记录项目约定，这样每次对话都不用重复说明。
-
+```markdown
 ## 工作流模式
 
 ### 基础模式
@@ -192,53 +187,27 @@ Ralph 特别适合"离开电脑，回来时功能已经开发完毕"的场景。
 2. Code Review Graph: Blast-Radius 影响分析
 3. Gstack: /review Staff Engineer 级审查 + /cso 安全审计
 ```
-
-## 省钱技巧
-
-1. **及时 /compact**：每 10-15 轮对话压缩一次
-2. **精确指定文件**：不要让 Claude 读整个项目
-3. **用 /clear 重启**：切换任务时清空上下文
-4. **监控 /cost**：定期检查 token 用量
-5. **日常用 Sonnet**：复杂问题才切 Opus
-
-### Provider 管理
-
-使用 [CC-Switch](/guide/advanced/cc-switch) 管理多个 API Provider，快速在不同服务间切换：
-
-- 一键切换 Provider，无需手动编辑配置文件
-- 支持 AWS Bedrock、NVIDIA NIM 等 50+ 预设
-- 用量追踪帮助你监控花费
-
-## 团队协作
-
-### 共享 CLAUDE.md
-
-把 `CLAUDE.md` 提交到 Git，让整个团队共享项目约定。
-
-### 共享 Skills
-
-把 `.agents/skills/` 提交到 Git，让团队复用工作流。
-
-### Code Review
-
-```
-> 帮我审查 main..feature 分支的改动，重点关注安全性和性能
 ```
 
-## 常见问题
+- [ ] **Step 2: Commit**
 
-### Claude Code 似乎"忘记"了之前的内容
+```bash
+git add docs/tips/best-practices.md
+git commit -m "docs: reorganize best practices into four-stage workflow pipeline"
+```
 
-对话太长了，执行 `/compact` 或 `/clear` 后重新开始。
+---
 
-### Claude Code 的修改不符合预期
+### Task 2: 构建验证
 
-- 检查 `CLAUDE.md` 中是否有明确的约定
-- 用 `/plan` 模式先确认方案再执行
-- 对于关键修改，要求 Claude 先解释再动手
+**Files:**
+- None (verification only)
 
-### 响应速度变慢
+- [ ] **Step 1: 运行生产构建**
 
-- 对话上下文可能过大，执行 `/compact`
-- 检查是否加载了过多的 MCP 服务器
-- 考虑切换到更快的模型（如 Haiku）
+Run: `npm run build`
+Expected: 所有页面构建成功，无报错。`doc_build/tips/best-practices.html` 应包含新的四阶段工作流。
+
+- [ ] **Step 2: 检查生成的页面**
+
+确认 `doc_build/tips/best-practices.html` 正确生成。
