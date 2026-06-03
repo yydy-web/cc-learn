@@ -43,7 +43,7 @@ my-react-app/
 
 :::tip
 在 CLAUDE.md 中说明目录约定（如 `features/` 按业务划分，`components/` 存放通用组件），Claude Code 会自动遵循这个结构生成新文件。
-::::
+:::
 
 ### Next.js App Router 项目结构
 
@@ -74,7 +74,7 @@ my-next-app/
 
 :::tip
 Next.js App Router 使用文件系统路由，`page.tsx`、`layout.tsx`、`loading.tsx` 等文件名有特殊含义。在 CLAUDE.md 中注明你的路由约定，避免 Claude 生成错误的文件结构。
-::::
+:::
 
 ### Vue 3 + Vite 项目结构
 
@@ -105,7 +105,7 @@ my-vue-app/
 
 :::tip
 Vue 项目的 `composables/` 目录对应 React 的 `hooks/`，`views/` 对应页面级组件。在 CLAUDE.md 中说明使用 Composition API（`<script setup>`）还是 Options API，避免 Claude 生成风格不一致的代码。
-::::
+:::
 
 ## 配置 CLAUDE.md
 
@@ -159,7 +159,7 @@ pnpm type-check       # TypeScript 类型检查（tsc --noEmit）
 
 :::warning
 不同前端项目的技术栈差异很大。上面的模板基于 React + Vite + Tailwind CSS，如果你使用 Vue + Pinia、Next.js + CSS Modules 或其他组合，需要相应调整 CLAUDE.md 内容。
-::::
+:::
 
 ## 提示词策略
 
@@ -192,7 +192,7 @@ pnpm type-check       # TypeScript 类型检查（tsc --noEmit）
 
 :::tip
 渐进式生成的好处：每一步都可以在浏览器中预览效果，及时发现 UI 问题。特别是样式和布局，逐步调整比一次性生成更容易控制质量。
-::::
+:::
 
 ### 引用现有组件风格
 
@@ -345,7 +345,7 @@ describe('UserCard', () => {
 - 工具函数测试：`functionName.test.ts`
 
 在 CLAUDE.md 中约定命名规则，Claude Code 会自动遵循。
-::::
+:::
 
 ### Mock 策略
 
@@ -360,7 +360,7 @@ describe('UserCard', () => {
 
 :::tip
 MSW 比手动 mock fetch/axios 更好：它在网络层拦截请求，不侵入业务代码，测试更接近真实行为。在 CLAUDE.md 中约定使用 MSW，Claude Code 会自动生成对应的 handler。
-::::
+:::
 
 ## 构建工具集成
 
@@ -406,7 +406,7 @@ Claude Code 可以直接读取和修改 `vite.config.ts`。常用操作：
 > - 开启 CSS 代码分割
 > - 压缩配置：terser，移除 console.log
 ````
-::::
+:::
 
 ### Next.js 项目
 
@@ -420,7 +420,7 @@ Claude Code 可以直接读取和修改 `vite.config.ts`。常用操作：
 
 :::info
 Next.js App Router 和 Pages Router 的配置方式差异较大。在 CLAUDE.md 中明确标注使用的 Router 类型，避免 Claude 生成错误的路由结构或 API 路由写法。
-::::
+:::
 
 ### 使用 Context7 获取最新文档
 
@@ -439,4 +439,405 @@ claude mcp add context7 -- npx -y @upstash/context7-mcp@latest
 
 :::warning
 前端框架迭代速度极快——React 19、Next.js 15、Tailwind v4、Vite 6 等大版本在 2024-2025 年密集发布。Claude Code 的训练数据可能不包含最新 API 变更。建议安装 Context7 MCP 服务器，确保生成的代码使用最新语法。
-::::
+:::
+
+## 常见场景
+
+### 页面全栈生成（Next.js App Router）
+
+```
+> 基于现有的数据库表结构，生成 Next.js App Router 的用户管理页面：
+> 1. /app/users/page.tsx — 用户列表（Server Component，fetch 初始数据）
+> 2. /app/users/[id]/page.tsx — 用户详情
+> 3. /app/users/new/page.tsx — 创建用户表单
+> 4. /app/users/_components/UserTable.tsx — 可排序、可筛选的表格（Client Component）
+> 5. /app/users/_components/UserForm.tsx — 表单组件（React Hook Form + Zod）
+> 6. /lib/api/users.ts — 服务端 API 客户端
+>
+> 使用 shadcn/ui 的 Table, Form, Input, Button 组件
+> 参考项目中 /app/products/ 的代码风格
+```
+
+### 表单处理
+
+```
+> 创建用户注册表单：
+> - 使用 React Hook Form + Zod 校验
+> - 字段：用户名、邮箱、密码、确认密码、手机号
+> - 实时校验：密码强度指示器，邮箱格式提示
+> - 密码确认字段自动与密码字段交叉校验
+> - 提交时显示加载状态，禁用按钮防止重复提交
+> - 错误信息显示在对应字段下方
+> - 提交成功后显示 Toast 提示并跳转到登录页
+```
+
+### 状态管理
+
+```
+> 使用 Zustand 创建应用全局状态：
+> 1. authStore：登录状态、用户信息、token 管理
+> 2. themeStore：深色/浅色模式切换，持久化到 localStorage
+> 3. uiStore：侧边栏展开/折叠、全局 Loading、通知队列
+> 每个 Store 使用 TypeScript 严格类型
+> 支持 devtools 和 immer 中间件
+```
+
+### API 集成
+
+```
+> 配置 axios 实例和 React Query：
+> 1. 创建 axios 实例，配置 baseURL、超时、请求/响应拦截器
+> 2. 请求拦截器：自动附加 Authorization header
+> 3. 响应拦截器：统一处理 401 跳转登录、403 提示无权限、500 显示错误页
+> 4. 配置 QueryClient：staleTime 5 分钟，retry 1 次
+> 5. 封装 useApi() Hook 统一错误处理
+```
+
+### 组件库集成（shadcn/ui）
+
+```
+> 安装并配置 shadcn/ui：
+> 1. 初始化 shadcn/ui（npx shadcn-ui@latest init）
+> 2. 安装以下组件：Button, Input, Card, Dialog, Table, Form, Select, Toast
+> 3. 配置主题色（primary, secondary, accent 等 CSS 变量）
+> 4. 创建一个示例页面展示所有组件的用法
+```
+
+:::info
+在 CLAUDE.md 中明确指定 UI 组件库（shadcn/ui、Ant Design、MUI、Element Plus 等），这会显著影响 Claude Code 生成的组件代码和样式写法。
+:::
+
+### 响应式布局
+
+```
+> 创建 Dashboard 布局组件：
+> - 顶部导航栏：Logo、搜索框、用户头像下拉菜单
+> - 左侧边栏：可折叠菜单，支持多级嵌套
+> - 主内容区域：自适应宽度
+> - 移动端：侧边栏变为抽屉式弹出
+> - 使用 Tailwind CSS 响应式断点
+> - 侧边栏展开/折叠状态持久化到 localStorage
+```
+
+### 动画与交互
+
+```
+> 使用 Framer Motion 为列表页面添加动画：
+> - 列表项进入时：从下方淡入 + 滑入（stagger 100ms）
+> - 列表项删除时：向右滑出 + 淡出
+> - 卡片 hover 时：轻微上浮 + 阴影加深
+> - 页面切换时：淡入淡出过渡
+> - 加载更多时：底部 Skeleton 渐入
+```
+
+## 代码审查与重构
+
+### 代码审查
+
+```
+> 审查 src/features/dashboard/components/ChartPanel.tsx：
+> 1. 检查是否有不必要的 re-render（缺少 memo、依赖数组问题）
+> 2. 检查 useEffect 的清理函数是否正确
+> 3. 检查是否有内存泄漏（未取消的订阅、定时器）
+> 4. 检查事件处理函数是否正确使用 useCallback
+> 5. 检查是否有 XSS 风险（dangerouslySetInnerHTML）
+```
+
+```
+> 扫描整个 src/components/ 目录，找出：
+> - 缺少 key 或使用 index 作为 key 的列表渲染
+> - 过大的组件（超过 200 行）应该拆分
+> - 缺少 TypeScript 类型定义的 Props
+> - 可以提取为自定义 Hook 的重复逻辑
+> - 未使用的 state 和 props
+```
+
+### 组件拆分与重构
+
+```
+> 重构 src/features/order/OrderPage.tsx（目前 500 行）：
+> 1. 提取订单列表为 OrderTable 组件
+> 2. 提取筛选器为 OrderFilter 组件
+> 3. 提取订单详情弹窗为 OrderDetailDialog 组件
+> 4. 将数据获取逻辑提取到 useOrders() 自定义 Hook
+> 5. 将表单逻辑提取到 useOrderForm() 自定义 Hook
+> 6. 保持所有现有功能和样式不变
+```
+
+:::tip
+重构前端组件时，让 Claude Code 先运行现有测试确认基线，重构后再运行确认没有回归。对于没有测试的组件，先补测试再重构。
+:::
+
+### 性能优化
+
+```
+> 优化 src/features/product/ProductList.tsx 的性能：
+> 1. 分析是否有不必要的 re-render（使用 React DevTools Profiler 的建议）
+> 2. 对列表项使用 React.memo
+> 3. 对事件处理函数使用 useCallback
+> 4. 对计算密集的派生数据使用 useMemo
+> 5. 图片使用 Next.js Image 组件或 lazy loading
+> 6. 大列表考虑使用虚拟滚动（@tanstack/react-virtual）
+> 给出优化前后的对比说明
+```
+
+### TypeScript 类型安全
+
+```
+> 审查 src/ 目录的 TypeScript 类型安全：
+> 1. 找出所有的 any 类型，建议替换为具体类型
+> 2. 检查 API 响应是否有完整的类型定义
+> 3. 检查组件 Props 是否都有 interface 定义
+> 4. 找出可以使用泛型提高复用性的地方
+> 5. 检查是否有类型断言（as）可以避免的地方
+```
+
+## 自动化与 CI/CD
+
+### Hooks 集成
+
+使用 [Hooks](/guide/advanced/hooks) 在 Claude Code 操作前后自动执行前端项目任务：
+
+````json title=".claude/settings.json"
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -qE '\\.(tsx?|css)$'; then npx prettier --write $CLAUDE_FILE_PATHS 2>/dev/null || true; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
+````
+
+这个 Hook 在 Claude Code 修改 `.tsx`、`.ts` 或 `.css` 文件后自动运行 Prettier 格式化。
+
+:::details 更多前端 Hooks 示例
+
+````json title=".claude/settings.json"
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -qE '\\.tsx?$'; then npx eslint --fix $CLAUDE_FILE_PATHS 2>/dev/null || true; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx tsc --noEmit 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}
+````
+
+- `PostToolUse` Hook：修改 TypeScript 文件后运行 ESLint 自动修复
+- `Stop` Hook：Claude Code 完成任务后运行 TypeScript 类型检查
+
+:::
+
+### 集成到 CI/CD
+
+在 CI 流水线中使用 Claude Code 进行代码审查：
+
+````yaml title=".github/workflows/ai-review.yml"
+name: AI Code Review
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - '*.tsx'
+      - '*.ts'
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          review_path: src/
+          prompt: |
+            审查这个 PR 中的前端代码变更：
+            1. 检查组件是否遵循项目的目录结构约定
+            2. 检查 TypeScript 类型是否完整（无 any）
+            3. 检查是否有不必要的 re-render
+            4. 检查是否有 XSS 风险
+            5. 检查测试覆盖是否充分
+            6. 检查无障碍（a11y）问题
+````
+
+### 自定义 Skills
+
+为前端项目创建专用 Skill，标准化常见操作：
+
+````markdown title=".claude/skills/create-page/SKILL.md"
+# 创建页面
+
+根据需求创建完整的前端页面，包含路由、组件、API 对接和测试。
+
+## 步骤
+
+1. 创建页面路由和布局组件
+2. 创建页面的主要 UI 组件
+3. 添加 TypeScript 类型定义
+4. 接入 API 数据层（React Query）
+5. 添加表单处理（如需要，使用 React Hook Form + Zod）
+6. 添加加载状态、错误状态和空状态
+7. 编写组件测试
+8. 运行测试和类型检查确认通过
+
+## 约定
+
+- 使用项目的组件库（shadcn/ui / Ant Design / MUI）
+- 遵循现有的目录结构和命名规范
+- 所有交互元素需要无障碍标签（aria-label）
+- 使用 Tailwind CSS 编写样式
+````
+
+使用时只需：
+
+```
+> /create-page
+> 创建商品管理页面，包含列表、搜索、创建表单和详情弹窗
+```
+
+## 注意事项
+
+### 框架版本兼容性
+
+Claude Code 可能使用你项目中未使用或已过时的 API。在 CLAUDE.md 中明确标注框架版本：
+
+````markdown title="CLAUDE.md（片段）"
+## 框架版本
+
+本项目使用以下版本，请使用对应的 API：
+- React 19：使用 useActionState、useOptimistic，不用已废弃的 forwardRef
+- Next.js 15：App Router，不用 Pages Router（getServerSideProps 等）
+- Tailwind CSS 4：使用 @theme 指令，不用旧版 tailwind.config.ts
+````
+
+:::warning
+如果你不指定框架版本，Claude 可能生成过时的代码——如 React 17 的 class 组件、Next.js 的 Pages Router、或已废弃的 API。这对前端项目尤其常见，因为框架迭代快。
+:::
+
+### 常见陷阱
+
+| 陷阱 | 说明 | 解决方案 |
+|------|------|----------|
+| forwardRef 已废弃 | React 19 中 ref 直接作为 prop 传递 | 在 CLAUDE.md 中注明 React 版本 |
+| Pages Router vs App Router | Next.js 两种路由模式代码差异大 | 明确指定使用 App Router |
+| CSS 方案不一致 | Claude 可能混用 Tailwind 和 CSS Modules | 在 CLAUDE.md 中指定 CSS 方案 |
+| key prop 缺失 | 列表渲染缺少唯一 key | 让 Claude 检查所有 .map() 调用 |
+| 服务端/客户端组件混淆 | Next.js App Router 需要区分 'use client' | 在 CLAUDE.md 中说明规则 |
+
+### 效率提示
+
+```
+# 使用 /compact 压缩上下文
+> /compact 保留 React 和 TypeScript 相关的上下文
+
+# 使用 /clear 重新开始
+> 当切换到不相关的功能模块时，用 /clear 清除上下文避免干扰
+
+# 使用 Context7 获取最新文档
+> 查询 Next.js 15 的 Server Actions 用法
+
+# 使用 CodeGraph 分析代码关系
+> 分析 src/components/ 中组件的依赖关系图
+```
+
+## 提示词模板库
+
+以下是前端开发常用场景的提示词模板，可直接复制使用：
+
+:::details React 组件开发
+
+```
+> 创建 [ComponentName] 组件：
+> - Props: [字段列表和类型]
+> - 使用 [shadcn/ui / Ant Design / MUI] 组件库
+> - 支持 [功能描述]
+> - 加载状态使用 Skeleton
+> - 空状态显示友好提示
+> - 错误状态显示重试按钮
+> - 无障碍：所有交互元素有 aria-label
+> 参考项目中 [现有组件] 的代码风格
+```
+
+:::
+
+:::details 自定义 Hook
+
+```
+> 创建 use[HookName] 自定义 Hook：
+> - 参数：[参数列表和类型]
+> - 返回值：[返回值类型]
+> - 功能：[具体功能描述]
+> - 包含 loading 和 error 状态
+> - 支持取消/清理（useEffect cleanup）
+> - 编写完整的单元测试
+```
+
+:::
+
+:::details API 集成
+
+```
+> 使用 React Query 创建 [资源] 的 API 层：
+> - use[Resources]()：列表查询，支持分页、搜索、排序
+> - use[Resource](id)：详情查询，缓存 [N] 分钟
+> - useCreate[Resource]()：创建后自动失效列表缓存
+> - useUpdate[Resource]()：乐观更新
+> - useDelete[Resource]()：删除后自动刷新
+> - 统一错误处理和 Toast 提示
+```
+
+:::
+
+:::details 表单页面
+
+```
+> 创建 [表单名称] 表单页面：
+> - 使用 React Hook Form + Zod 校验
+> - 字段：[字段列表]
+> - 实时校验 + 提交校验
+> - 提交时显示加载状态，防止重复提交
+> - 错误信息显示在字段下方
+> - 提交成功后 [跳转/关闭弹窗/刷新列表]
+> - 响应式布局：桌面端两列，移动端单列
+```
+
+:::
+
+:::details 页面布局
+
+```
+> 创建 [页面名称] 的完整布局：
+> - 顶部：面包屑导航 + 页面标题 + 操作按钮
+> - 左侧：筛选面板（可折叠）
+> - 主区域：数据表格 + 分页
+> - 右侧/弹窗：详情面板
+> - 移动端：筛选变为抽屉式弹出
+> - 使用 Tailwind CSS 响应式设计
+```
+
+:::
