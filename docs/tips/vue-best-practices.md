@@ -544,3 +544,82 @@ npx skills add https://github.com/antfu/skills --skill vue-router-best-practices
 | defineProps 未使用泛型 | 使用运行时声明导致 TypeScript 推断不完整 | 优先使用 `defineProps<{...}>()` 泛型形式 |
 | 忘记清理副作用 | 定时器、事件监听器在组件卸载后未清理 | 在 onUnmounted 中清理，或使用 VueUse 的自动清理函数 |
 | Pinia store 在模块顶层调用 | SSR 场景下导致跨请求状态污染 | 在函数内部调用 `useXxxStore()` |
+
+## 提示词模板库
+
+以下是 Vue 开发常用场景的提示词模板，可直接复制使用：
+
+:::details Vue 组件开发
+
+```
+> 创建 [ComponentName] 组件：
+> - 使用 `<script setup lang="ts">`
+> - Props: [字段列表和类型]（使用 defineProps 泛型）
+> - Emits: [事件列表]
+> - 使用 [Element Plus / Naive UI / Ant Design Vue] 组件库
+> - 支持 [功能描述]
+> - 加载状态使用 Skeleton
+> - 空状态显示友好提示
+> - 错误状态显示重试按钮
+> - 无障碍：所有交互元素有 aria-label
+> 参考项目中 [现有组件] 的代码风格
+```
+
+:::
+
+:::details 组合式函数（Composable）
+
+```
+> 创建 use[Name] 组合式函数：
+> - 参数：[参数列表和类型]
+> - 返回值：[返回值类型]
+> - 功能：[具体功能描述]
+> - 包含 loading 和 error 状态（Ref<boolean>、Ref<string | null>）
+> - 支持取消/清理（onUnmounted / effectScope）
+> - 编写完整的单元测试（Vitest）
+```
+
+:::
+
+:::details API 集成
+
+```
+> 使用组合式函数创建 [资源] 的 API 层：
+> - use[Resources]()：列表查询，支持分页、搜索、排序，返回 { data, loading, error, execute }
+> - use[Resource](id)：详情查询
+> - useCreate[Resource]()：创建后手动刷新列表
+> - useUpdate[Resource]()：乐观更新
+> - useDelete[Resource]()：删除后手动刷新
+> - 统一错误处理和消息提示
+```
+
+:::
+
+:::details 表单页面
+
+```
+> 创建 [表单名称] 表单页面：
+> - 使用 VeeValidate + Zod 校验
+> - 字段：[字段列表]
+> - 实时校验 + 提交校验
+> - 提交时显示加载状态，防止重复提交
+> - 错误信息显示在字段下方
+> - 提交成功后 [跳转/关闭弹窗/刷新列表]
+> - 响应式布局：桌面端两列，移动端单列
+```
+
+:::
+
+:::details 页面布局
+
+```
+> 创建 [页面名称] 的完整布局：
+> - 顶部：面包屑导航 + 页面标题 + 操作按钮
+> - 左侧：筛选面板（可折叠）
+> - 主区域：数据表格 + 分页
+> - 右侧/弹窗：详情面板
+> - 移动端：筛选变为抽屉式弹出
+> - 使用 Tailwind CSS / UnoCSS 响应式设计
+```
+
+:::
