@@ -280,6 +280,10 @@ codegraph uninstall
 npm uninstall -g @colbymchenry/codegraph
 ```
 
+## 相关工具
+
+[Code Review Graph](/guide/advanced/code-review-graph) 是另一个基于 tree-sitter 的代码图谱工具，侧重代码审查和 Blast-Radius 分析。两者可以互补：CodeGraph 适合日常代码探索，CRG 适合代码审查和架构分析。
+
 ## 相关资源
 
 - [CodeGraph GitHub](https://github.com/colbymchenry/codegraph) — 项目仓库（38k+ Stars）

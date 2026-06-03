@@ -140,6 +140,18 @@ cd your-project && codegraph init -i
 
 之后 Claude Code 会自动使用 CodeGraph 理解代码——工具调用减少 71%，Token 消耗降低 57%。特别适合大型代码库。
 
+### 代码审查图谱（Code Review Graph）
+
+安装 [Code Review Graph](/guide/advanced/code-review-graph) 后，Claude Code 的代码审查会自动使用 Blast-Radius 分析：
+
+```bash
+pip install code-review-graph
+code-review-graph install
+code-review-graph build
+```
+
+CRG 提供 30 个 MCP 工具，覆盖代码审查、影响分析、架构理解和 Wiki 生成。Token 节省高达 38x-528x。
+
 ## 省钱技巧
 
 1. **及时 /compact**：每 10-15 轮对话压缩一次
