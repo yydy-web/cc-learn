@@ -1,4 +1,4 @@
-# Rspress website
+# CC Learn
 
 ## Setup
 
