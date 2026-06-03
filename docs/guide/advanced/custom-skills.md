@@ -110,6 +110,10 @@ description: 按照团队规范审查代码改动
 想发现更多社区 Skills？[CC-Switch](/guide/advanced/cc-switch) 内置 Skills 市场，可以浏览和一键安装来自 GitHub 的社区技能。
 :::
 
+:::info
+想要一套完整的结构化开发工作流？[Superpowers](/guide/advanced/superpowers) 插件为 Claude Code 提供了从头脑风暴到代码审查的 14 个专业 Skills。
+:::
+
 ## 使用 Skill
 
 在对话中通过斜杠命令调用：

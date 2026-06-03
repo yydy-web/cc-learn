@@ -61,6 +61,16 @@ description: Claude Code 日常使用中的高效技巧和常见模式
 > 3. 识别潜在的技术债务
 ```
 
+### 结构化开发模式（Superpowers）
+
+安装 [Superpowers](/guide/advanced/superpowers) 插件后，Claude Code 会自动按照结构化工作流执行：
+
+```
+> 使用 Superpowers 工作流，给用户系统添加 OAuth 登录
+```
+
+这会触发完整的七步流程：头脑风暴 → 设计 → 计划 → TDD → 审查 → 完成。适合复杂功能开发。
+
 ## 省钱技巧
 
 1. **及时 /compact**：每 10-15 轮对话压缩一次

@@ -119,6 +119,8 @@ cc-switch mcp sync
 - 支持通过符号链接或复制方式安装
 - 跨项目共享 Skills
 
+例如，你可以通过 CC-Switch 一键安装 [Superpowers](/guide/advanced/superpowers) 的全部 14 个 Skills——包括头脑风暴、TDD、代码审查等专业开发工作流。
+
 ### Prompt 管理
 
 集中管理各工具的系统 Prompt：
@@ -202,12 +204,13 @@ CC-Switch 通过管理以下配置文件来控制 Claude Code 的行为：
 3. CC-Switch 自动更新各工具的 settings.json
 ```
 
-### 场景三：安装社区 Skill
+### 场景三：安装 Superpowers Skills
 
 ```
-1. 在 Skills 市场中浏览
-2. 点击安装到项目
-3. 在 Claude Code 中通过斜杠命令调用
+1. 在 Skills 市场中搜索 "superpowers"
+2. 选择需要的 Skills（如 TDD、头脑风暴）
+3. 点击安装到 Claude Code
+4. 在 Claude Code 中通过斜杠命令调用
 ```
 
 ## 相关资源
