@@ -91,6 +91,23 @@ description: Claude Code 日常使用中的高效技巧和常见模式
 
 Gstack 覆盖从产品思考到发布监控的全流程，适合需要完整工程保障的项目。
 
+### 规格驱动开发模式（OpenSpec）
+
+安装 [OpenSpec](/guide/advanced/openspec) 后，用规格文档引导 AI 编码：
+
+```
+> /opsx:propose add-user-profile
+先定义需求规格，再写代码
+
+> /opsx:apply
+按照任务清单逐步实现
+
+> /opsx:archive
+归档变更，更新活文档
+```
+
+规格驱动开发适合需求复杂、需要文档化的功能——所有规格都提交到 Git，成为团队共享的持久化上下文。
+
 ## 省钱技巧
 
 1. **及时 /compact**：每 10-15 轮对话压缩一次
