@@ -334,6 +334,10 @@ jobs:
 
 ### 自定义 Skills
 
+:::tip
+创建自定义 Skills 的基础知识请参考[自定义技能](/skills/custom-skills)。以下是一个前端专用 Skill 的示例。
+:::
+
 为前端项目创建专用 Skill，标准化常见操作：
 
 ````markdown title=".claude/skills/create-page/SKILL.md"
@@ -368,6 +372,10 @@ jobs:
 ```
 
 ## 推荐 Skills
+
+:::tip
+更多 Skills 发现渠道（skills.sh、CC-Switch、ctx7 CLI）请参考[技能市场](/skills/skills-marketplace)。全部 Skills 内容请访问[技能系统](/skills/)。
+:::
 
 除了自建 Skills，社区也提供了许多高质量的前端 Skills。通过 `skills.sh` 可以一键安装和管理：
 

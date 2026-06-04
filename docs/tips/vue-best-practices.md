@@ -339,6 +339,10 @@ VueUse 提供了 200+ 个组合式函数，覆盖浏览器 API、状态、传感
 
 ## 推荐 Vue Skills
 
+:::tip
+更多 Skills 资源请访问[技能系统](/skills/)。Vue Skills 可通过[技能市场](/skills/skills-marketplace)一键安装。
+:::
+
 ### Vue Best Practices
 
 [vue-best-practices](https://github.com/antfu/skills/tree/main/skills/vue-best-practices) 来自 vuejs-ai，是一套完整的 Vue 开发工作流指南，涵盖架构确认、组件设计、响应式系统、性能优化和自检清单。推荐在所有 Vue 项目中使用。

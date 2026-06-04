@@ -629,6 +629,10 @@ jobs:
 
 ### 自定义 Skills
 
+:::tip
+创建自定义 Skills 的基础知识请参考[自定义技能](/skills/custom-skills)。
+:::
+
 为 Java 项目创建专用 Skill，标准化常见操作：
 
 ````markdown title=".claude/skills/create-api-endpoint/SKILL.md"
