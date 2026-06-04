@@ -1,0 +1,12 @@
+[
+  { "type": "dir-section-header", "name": "index", "label": "技能概述" },
+  "custom-skills",
+  "skills-marketplace",
+  { "type": "dir-section-header", "name": "superpowers", "label": "开发工作流" },
+  "superpowers",
+  "gstack",
+  "ralph",
+  "openspec",
+  { "type": "dir-section-header", "name": "context7", "label": "文档与上下文" },
+  "context7"
+]
