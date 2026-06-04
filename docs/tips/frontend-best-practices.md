@@ -282,6 +282,49 @@ cp -R rules/typescript ~/.claude/rules/ecc/
 ECC 的 `typescript-reviewer` 会自动检查常见的前端陷阱（如缺少 key、any 类型滥用、useEffect 依赖数组问题、dangerouslySetInnerHTML XSS 风险）。配合 `frontend-patterns` Skill 使用效果最佳。
 :::
 
+### Superpowers：结构化前端开发
+
+[Superpowers](/guide/advanced/superpowers) 为前端开发提供严格的 TDD 纪律和计划驱动的开发流程。对 React/Vue 组件开发尤其有价值——它确保每个组件从测试开始构建。
+
+#### 前端 TDD 工作流
+
+Superpowers 的 TDD Skill 会强制执行 RED-GREEN-REFACTOR 循环。对前端项目，这意味着：
+
+```
+1. 🔴 RED    — 先写组件测试（Vitest + React Testing Library），运行确认失败
+2. 🟢 GREEN  — 写最小实现让测试通过
+3. 🔵 REFACTOR — 重构优化，保持测试通过
+```
+
+#### 使用示例
+
+```
+> 使用 Superpowers 工作流，实现用户设置页面：
+> 1. 头脑风暴确认需求（哪些设置项？表单布局？实时保存还是手动保存？）
+> 2. 创建 Git Worktree 隔离开发
+> 3. 编写计划：拆分为类型定义 → 静态 UI → 表单逻辑 → API 对接 → 测试
+> 4. TDD 驱动：每个组件先写测试再实现
+> 5. 代码审查：检查 re-render、类型安全、无障碍
+```
+
+```
+> /superpowers:brainstorming
+> 设计一个数据看板页面，需要支持自定义拖拽布局、实时数据刷新、图表联动
+```
+
+```
+> /superpowers:systematic-debugging
+> 页面在 Safari 上样式错乱，Chrome 正常，帮我排查
+```
+
+:::warning
+Superpowers 严格执行"先测试后代码"规则。如果代码在测试之前写好，会被要求删除重来。这对习惯了"先写 UI 后补测试"的前端开发者可能需要适应。
+:::
+
+:::tip
+Superpowers 的头脑风暴阶段对前端开发特别有价值——它会帮你理清 UI/UX 需求中的歧义。比如"用户设置页面"是否需要实时预览、是否支持深色模式切换、表单验证规则是什么。这些前期决策直接影响组件设计和状态管理方案。
+:::
+
 ## 常见场景
 
 ### 页面全栈生成、表单处理、状态管理、API 集成、组件库集成
