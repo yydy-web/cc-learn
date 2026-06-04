@@ -244,6 +244,88 @@ Serena 在四阶段工作流中的价值：
 Serena 特别适合重构密集型任务——重命名跨文件的符号、移动函数到新模块、安全删除废弃代码。这些操作用文本搜索容易出错，Serena 通过 LSP 保证原子化和精确性。
 :::
 
+### 开发效率增强（ECC）
+
+[ECC](/tips/ecc)（Enhanced Claude Code）是一个生产级的 Claude Code 增强系统，通过 Plugin 方式一键安装：
+
+```bash
+# 在 Claude Code 中执行
+/plugin marketplace add https://github.com/affaan-m/ECC
+/plugin install ecc@ecc
+```
+
+ECC 在四阶段工作流中的价值：
+
+- **Gstack 阶段**：`planner` agent 辅助功能规划，`architect` agent 提供架构建议
+- **OpenSpec 阶段**：`deep-research` skill 提供技术调研，`docs-lookup` agent 查询 API 文档
+- **Superpowers 阶段**：`tdd-workflow` skill 驱动测试先行，`code-reviewer` agent 自动审查
+- **Ralph 阶段**：`autonomous-loops` skill 支持自主循环执行，`loop-operator` agent 管理循环状态
+
+ECC 还内置了 [AgentShield](https://github.com/affaan-m/ECC#security) 安全扫描，覆盖密钥泄露、权限审计、Hook 注入等 5 大安全类别。
+
+:::tip
+ECC 是"全家桶"方案——249 个 Skill 覆盖 12+ 语言生态。如果只需要特定能力（如安全扫描），可用 `npx ecc consult "security reviews"` 按需安装。详见 [ECC 完整文档](/tips/ecc)。
+:::
+
+### 业务场景实战
+
+以下场景展示了如何将四阶段工具链与 ECC、Context7、Serena 组合，解决真实的业务开发需求。
+
+#### 业务场景一：新 SaaS 功能开发
+
+从需求到上线的完整闭环：
+
+```
+1. Gstack: /office-hours 探索多租户需求 → /plan-eng-review 审查架构方案
+2. ECC: /ecc:plan 创建详细实现蓝图 → deep-research 调研技术方案
+3. OpenSpec: /opsx:propose 生成结构化规格文档
+4. Superpowers + ECC: tdd-workflow 驱动测试先行 → code-reviewer 自动审查
+5. Context7: 自动获取 Next.js / Supabase 最新 API 文档
+6. ECC: security-review 进行安全审查 → /ship 发布
+```
+
+#### 业务场景二：遗留系统安全加固
+
+对已有项目进行安全审计和加固：
+
+```
+1. ECC AgentShield: npx ecc-agentshield scan --opus --stream 深度安全扫描
+2. Serena: find_referencing_symbols 追踪敏感数据流向
+3. ECC: security-reviewer agent 逐模块审查安全问题
+4. Code Review Graph: Blast-RADIUS 影响分析
+5. Superpowers: TDD 驱动安全修复 → 回归测试
+6. ECC: security-review skill 最终审查
+```
+
+#### 业务场景三：跨语言微服务重构
+
+同时涉及 Go、TypeScript、Python 的微服务项目：
+
+```
+1. ECC: /multi-plan 分解跨服务任务 → /multi-backend 和 /multi-frontend 分别编排
+2. Serena: get_symbols_overview 快速理解各服务代码结构
+3. ECC: 自动加载对应语言的 Rules（go-reviewer + typescript-reviewer + python-reviewer）
+4. OpenSpec: /opsx:propose 为每个服务创建独立重构规格
+5. Ralph: 将规格转为 PRD → 自主循环执行各服务重构
+6. ECC: database-reviewer 审查数据库迁移 → e2e-testing 验证跨服务集成
+```
+
+#### 业务场景四：AI 产品快速迭代
+
+需要快速实验和迭代的 AI 产品开发：
+
+```
+1. ECC: /ecc:plan 规划 MVP 功能 → mle-workflow skill 设计 ML 流水线
+2. Superpowers: 头脑风暴 → TDD 快速实现
+3. ECC: pytorch-patterns skill 规范模型代码 → mle-reviewer agent 审查生产就绪度
+4. Ralph: 自主循环实现剩余用户故事
+5. ECC: e2e-testing skill 编写端到端测试 → security-scan 上线前安全检查
+```
+
+:::info
+以上业务场景均可根据项目实际情况灵活组合。核心原则：**治理先行（Gstack/OpenSpec）→ 纪律执行（Superpowers/ECC TDD）→ 安全审查（ECC AgentShield）→ 自动化交付（Ralph/ECC 自主循环）**。
+:::
+
 ## 省钱技巧
 
 1. **及时 /compact**：每 10-15 轮对话压缩一次
