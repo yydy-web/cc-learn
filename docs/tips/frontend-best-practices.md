@@ -325,6 +325,52 @@ Superpowers 严格执行"先测试后代码"规则。如果代码在测试之前
 Superpowers 的头脑风暴阶段对前端开发特别有价值——它会帮你理清 UI/UX 需求中的歧义。比如"用户设置页面"是否需要实时预览、是否支持深色模式切换、表单验证规则是什么。这些前期决策直接影响组件设计和状态管理方案。
 :::
 
+### Gstack：前端项目的工程团队
+
+[Gstack](/guide/advanced/gstack) 将 Claude Code 变成虚拟工程团队。对前端项目，Gstack 最大的亮点是**内置浏览器**——基于 Playwright 的 Chromium 可以像真人一样操作前端应用，自动发现交互 Bug。
+
+#### 前端项目常用命令
+
+| 命令 | 角色 | 前端场景 |
+|------|------|---------|
+| `/plan-design-review` | 高级设计师 | 审查 UI 设计质量，检测 AI 风格设计 |
+| `/plan-eng-review` | 工程经理 | 审查前端架构方案（状态管理、路由、组件设计） |
+| `/review` | Staff Engineer | 审查前端代码变更，聚焦生产 Bug |
+| `/qa` | QA Lead | 在真实浏览器中测试前端应用，自动发现 Bug |
+| `/cso` | 安全负责人 | OWASP Top 10 安全审计，检查 XSS、CSRF |
+| `/ship` | 发布工程师 | 运行测试，审计覆盖率，推送并创建 PR |
+| `/benchmark` | 性能工程师 | 测量页面加载时间、Core Web Vitals、资源大小 |
+
+#### 使用示例
+
+```
+> /plan-design-review
+> 审查用户管理页面的 UI 设计质量
+```
+
+```
+> /qa https://localhost:5173
+> 在真实浏览器中测试前端应用，自动发现交互 Bug
+```
+
+```
+> /review
+> 在 feature/user-settings 分支上审查前端代码变更
+```
+
+```
+> /benchmark
+> 测量首页的 Core Web Vitals 和加载性能
+```
+
+:::info
+Gstack 的 `/qa` 使用内置的 Playwright 浏览器，会自动遍历页面、填写表单、点击按钮，像真实用户一样操作前端应用。它能发现 Claude Code 仅通过代码审查无法发现的交互 Bug——比如按钮点击无响应、表单提交后状态未更新、移动端布局错乱等。
+:::
+
+:::tip
+Gstack 的 `/benchmark` 命令可以测量 LCP（Largest Contentful Paint）、FID（First Input Delay）、CLS（Cumulative Layout Shift）等 Core Web Vitals 指标，帮你定位前端性能瓶颈。
+:::
+
 ## 常见场景
 
 ### 页面全栈生成、表单处理、状态管理、API 集成、组件库集成
