@@ -453,6 +453,49 @@ cp -R rules/common ~/.claude/rules/ecc/
 ECC 的 `java-reviewer` 会自动检查常见的 Java 陷阱（如 javax vs jakarta、@Transactional 传播级别、Lombok 注解处理器配置）。配合 `springboot-patterns` Skill 使用效果最佳。
 :::
 
+### Superpowers：结构化 Java 开发
+
+[Superpowers](/guide/advanced/superpowers) 为 Java 开发提供严格的 TDD 纪律和计划驱动的开发流程。对 Spring Boot 项目尤其有价值——它确保每一层（Controller、Service、Repository）都有测试覆盖。
+
+#### Java TDD 工作流
+
+Superpowers 的 TDD Skill 会强制执行 RED-GREEN-REFACTOR 循环。对 Java 项目，这意味着：
+
+```
+1. 🔴 RED    — 先写 JUnit 5 测试，运行 mvn test 确认失败
+2. 🟢 GREEN  — 写最小实现让测试通过
+3. 🔵 REFACTOR — 重构优化，运行 mvn test 确认无回归
+```
+
+#### 使用示例
+
+```
+> 使用 Superpowers 工作流，实现用户注册功能：
+> 1. 头脑风暴确认需求（邮箱验证？手机验证？密码强度规则？）
+> 2. 创建 Git Worktree 隔离开发
+> 3. 编写计划：拆分为 Entity → DTO → Repository → Service → Controller → 测试
+> 4. TDD 驱动：每个组件先写测试再实现
+> 5. 代码审查：检查异常处理、事务边界、安全性
+```
+
+```
+> /superpowers:brainstorming
+> 设计一个订单状态机，支持待支付、已支付、发货中、已完成、已取消状态转换
+```
+
+```
+> /superpowers:systematic-debugging
+> 集成测试在 CI 上间歇性失败，本地无法复现，帮我排查
+```
+
+:::warning
+Superpowers 严格执行"先测试后代码"规则。如果代码在测试之前写好，会被要求删除重来。这对习惯了"先写实现后补测试"的 Java 开发者可能需要适应。
+:::
+
+:::tip
+Superpowers 的头脑风暴阶段会帮你理清需求中的歧义——比如"用户注册"是否需要邮箱验证、密码策略是什么。在 Java 项目中，这些前期决策直接影响 Entity 设计和数据库 Schema，值得花时间在头脑风暴阶段想清楚。
+:::
+
 ## 常见场景
 
 ### Spring Boot REST API 全栈生成
