@@ -23,7 +23,7 @@ export default defineConfig({
       {
         icon: 'github',
         mode: 'link',
-        content: 'https://github.com/anthropics/claude-code',
+        content: 'https://github.com/Muromi-Rikka/cc-learn',
       },
     ],
     llmsUI: {
