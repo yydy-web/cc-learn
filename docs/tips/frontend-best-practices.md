@@ -801,9 +801,85 @@ Vue 专属的常见陷阱（Options API vs Composition API 混用、reactive 解
 > 查询 Next.js 15 的 Server Actions 用法
 
 # 使用 CodeGraph 分析代码关系
-> 分析 src/components/ 中组件的依赖关系图
+> codegraph_explore 这个项目的认证流程是什么？
+
+# 使用 Serena 精确重构
+> 把 UserProfile 组件重命名为 AccountProfile，包括所有 import
 ```
+
+:::tip
+在大型前端项目中，CodeGraph 可以显著减少 Claude Code 的 Token 消耗——一次 `codegraph_explore` 调用替代多次 `Grep` + `Read`，Token 节省可达 57%。详见 [CodeGraph 代码智能](/guide/advanced/codegraph)。
+:::
 
 ## 提示词模板库
 
 React 组件开发、自定义 Hook、API 集成、表单页面、页面布局等场景的提示词模板，请参考 [React 开发最佳实践 > 提示词模板库](/tips/react-best-practices#提示词模板库)。
+
+以下是工具链相关的前端提示词模板：
+
+:::details ECC 组件审查
+
+```
+> 使用 ECC 的 typescript-reviewer 审查 [ComponentName].tsx：
+> 1. 检查 TypeScript 类型安全（是否有 any、类型断言过多）
+> 2. 检查是否有不必要的 re-render（缺少 memo、依赖数组问题）
+> 3. 检查 useEffect 的清理函数是否正确
+> 4. 检查是否有 XSS 风险（dangerouslySetInnerHTML）
+> 5. 检查无障碍问题（缺少 aria-label、键盘导航）
+```
+
+:::
+
+:::details CodeGraph 组件影响分析
+
+```
+> 我要修改 [HookName] Hook 的返回值类型：
+> 1. 用 codegraph_impact 分析影响范围
+> 2. 列出所有使用该 Hook 的页面和组件
+> 3. 列出所有受影响的测试
+> 4. 给出安全修改的步骤建议
+```
+
+:::
+
+:::details Serena 精确重构
+
+```
+> 重构 [FeatureName] 模块：
+> 1. 用 find_referencing_symbols 找出 [OldComponentName] 的所有引用
+> 2. 将 [OldComponentName] 重命名为 [NewComponentName]
+> 3. 将 [HookName] 中的 [extractedLogic] 提取到 [TargetHook]
+> 4. 验证所有测试仍然通过
+```
+
+:::
+
+:::details Superpowers TDD 组件
+
+```
+> /superpowers:test-driven-development
+> 实现 [ComponentName] 组件：
+> 1. 先写组件测试（Vitest + React Testing Library）
+> 2. 运行 pnpm test 确认失败
+> 3. 实现静态 UI（JSX + Tailwind CSS）
+> 4. 添加交互逻辑和状态管理
+> 5. 接入 API 层（React Query）
+> 6. 添加 loading、error、empty 状态
+> 7. 运行 pnpm test 确认全部通过
+```
+
+:::
+
+:::details Gstack 浏览器 QA
+
+```
+> /qa https://localhost:5173
+> 测试 [PageName] 页面：
+> - 表单提交流程是否正常
+> - 响应式布局在移动端是否正确
+> - 错误状态是否有友好提示
+> - 加载状态是否有 Skeleton
+> - 页面导航是否流畅
+```
+
+:::
