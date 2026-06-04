@@ -28,14 +28,14 @@ npx skills add https://github.com/anthropics/skills --skill frontend-design
 
 ### 热门 Skills 速查
 
-| Skill | 来源 | 用途 |
-|-------|------|------|
-| `frontend-design` | Anthropic | 高品质前端界面设计 |
+| Skill                   | 来源        | 用途                    |
+| ----------------------- | ----------- | ----------------------- |
+| `frontend-design`       | Anthropic   | 高品质前端界面设计      |
 | `web-design-guidelines` | Vercel Labs | 100+ 条 Web UI 最佳实践 |
-| `ui-ux-pro-max` | 社区 | 全栈 UI/UX 设计系统 |
-| `react-best-practices` | 社区 | React 开发规范 |
-| `vue-best-practices` | 社区 | Vue 3 开发规范 |
-| `superpowers` | 社区 | 14 个结构化开发 Skills |
+| `ui-ux-pro-max`         | 社区        | 全栈 UI/UX 设计系统     |
+| `react-best-practices`  | 社区        | React 开发规范          |
+| `vue-best-practices`    | 社区        | Vue 3 开发规范          |
+| `superpowers`           | 社区        | 14 个结构化开发 Skills  |
 
 :::info
 完整的前端框架推荐 Skills 列表，请参考[前端开发最佳实践 > 推荐 Skills](/tips/frontend-best-practices#推荐-skills)。
@@ -90,12 +90,12 @@ ctx7 skills generate
 
 ## 安装方式对比
 
-| 方式 | 适用场景 | 特点 |
-|------|----------|------|
-| `npx skills add` | 安装单个 Skill | 简单直接，支持 URL 和 GitHub 引用 |
-| CC-Switch 市场 | 批量管理和跨工具同步 | GUI 界面，一键安装，跨工具同步 |
-| `ctx7` CLI | 搜索和 AI 生成 | 自动推荐，AI 生成 Skill |
-| `git clone` | 完整工具包安装 | 如 Gstack、Ralph 等需要 `setup` 脚本的工具 |
+| 方式             | 适用场景             | 特点                                       |
+| ---------------- | -------------------- | ------------------------------------------ |
+| `npx skills add` | 安装单个 Skill       | 简单直接，支持 URL 和 GitHub 引用          |
+| CC-Switch 市场   | 批量管理和跨工具同步 | GUI 界面，一键安装，跨工具同步             |
+| `ctx7` CLI       | 搜索和 AI 生成       | 自动推荐，AI 生成 Skill                    |
+| `git clone`      | 完整工具包安装       | 如 Gstack、Ralph 等需要 `setup` 脚本的工具 |
 
 ## 下一步
 

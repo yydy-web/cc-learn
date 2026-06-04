@@ -23,27 +23,27 @@ Superpowers 的核心是 7 步开发工作流，每一步对应一个或多个 S
 
 ### 流程类 Skills（严格遵循）
 
-| Skill | 斜杠命令 | 用途 |
-|-------|----------|------|
-| `brainstorming` | `/superpowers:brainstorming` | 编码前的设计探索 |
-| `writing-plans` | `/superpowers:writing-plans` | 详细的任务拆分 |
-| `test-driven-development` | `/superpowers:test-driven-development` | 严格的 TDD 循环 |
-| `systematic-debugging` | `/superpowers:systematic-debugging` | 4 阶段根因分析 |
-| `verification-before-completion` | — | "有证据才能说完成" |
-| `finishing-a-development-branch` | — | 分支收尾流程 |
+| Skill                            | 斜杠命令                               | 用途               |
+| -------------------------------- | -------------------------------------- | ------------------ |
+| `brainstorming`                  | `/superpowers:brainstorming`           | 编码前的设计探索   |
+| `writing-plans`                  | `/superpowers:writing-plans`           | 详细的任务拆分     |
+| `test-driven-development`        | `/superpowers:test-driven-development` | 严格的 TDD 循环    |
+| `systematic-debugging`           | `/superpowers:systematic-debugging`    | 4 阶段根因分析     |
+| `verification-before-completion` | —                                      | "有证据才能说完成" |
+| `finishing-a-development-branch` | —                                      | 分支收尾流程       |
 
 ### 灵活类 Skills（可按需调整）
 
-| Skill | 斜杠命令 | 用途 |
-|-------|----------|------|
-| `executing-plans` | `/superpowers:executing-plans` | 在当前会话中执行计划 |
-| `subagent-driven-development` | `/superpowers:subagent-driven-development` | 子智能体驱动开发 |
-| `dispatching-parallel-agents` | — | 并行任务协调 |
-| `using-git-worktrees` | — | 隔离工作区管理 |
-| `requesting-code-review` | — | 发起代码审查 |
-| `receiving-code-review` | — | 处理审查反馈 |
-| `writing-skills` | — | 基于 TDD 创建新 Skill |
-| `using-superpowers` | — | 引导 Skill，自动加载 |
+| Skill                         | 斜杠命令                                   | 用途                  |
+| ----------------------------- | ------------------------------------------ | --------------------- |
+| `executing-plans`             | `/superpowers:executing-plans`             | 在当前会话中执行计划  |
+| `subagent-driven-development` | `/superpowers:subagent-driven-development` | 子智能体驱动开发      |
+| `dispatching-parallel-agents` | —                                          | 并行任务协调          |
+| `using-git-worktrees`         | —                                          | 隔离工作区管理        |
+| `requesting-code-review`      | —                                          | 发起代码审查          |
+| `receiving-code-review`       | —                                          | 处理审查反馈          |
+| `writing-skills`              | —                                          | 基于 TDD 创建新 Skill |
+| `using-superpowers`           | —                                          | 引导 Skill，自动加载  |
 
 ## 安装
 
@@ -55,11 +55,11 @@ Superpowers 的核心是 7 步开发工作流，每一步对应一个或多个 S
 
 ## 与其他 Skills 的关系
 
-| 对比 | Superpowers | [Gstack](/skills/workflow/gstack) |
-|------|-------------|--------------------------|
-| **定位** | 结构化方法论 | 虚拟工程团队 |
-| **特色** | TDD 强制执行 | 内置浏览器、QA |
-| **推荐组合** | 前期设计 + TDD 实现 | 后期审查 + QA + 发布 |
+| 对比         | Superpowers         | [Gstack](/skills/workflow/gstack) |
+| ------------ | ------------------- | --------------------------------- |
+| **定位**     | 结构化方法论        | 虚拟工程团队                      |
+| **特色**     | TDD 强制执行        | 内置浏览器、QA                    |
+| **推荐组合** | 前期设计 + TDD 实现 | 后期审查 + QA + 发布              |
 
 ## 下一步
 

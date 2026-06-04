@@ -124,6 +124,7 @@ OpenSpec 的规格文档（proposal → specs → design → tasks）提交到 G
 ```
 
 Superpowers 会：
+
 1. **头脑风暴**：在写代码前充分理解需求
 2. **TDD**：每个任务先写测试再实现
 3. **代码审查**：对照规格文档审查实现质量

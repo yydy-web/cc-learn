@@ -20,11 +20,12 @@ CodeGraph 预先解析整个代码库，构建符号和关系的知识图谱。C
 
 :::info
 基准测试结果（7 个开源仓库，4 次运行取中位数）：
+
 - **35% 更低费用**
 - **57% 更少 Token**
 - **46% 更快响应**
 - **71% 更少工具调用**
-:::
+  :::
 
 ## 工作原理
 
@@ -81,6 +82,7 @@ codegraph install
 ```
 
 这会自动：
+
 - 检测已安装的 AI 工具（Claude Code、Cursor、Codex CLI 等）
 - 在 `~/.claude.json` 中添加 MCP 服务器配置
 - 在 `~/.claude/settings.json` 中添加自动授权权限
@@ -131,28 +133,28 @@ CodeGraph 为 Claude Code 提供 10 个 MCP 工具：
 
 ### 核心工具
 
-| 工具 | 用途 | 使用场景 |
-|------|------|----------|
-| `codegraph_explore` | 主力工具——一次调用回答问题 | "这个项目怎么处理用户认证？" |
-| `codegraph_search` | 按名称搜索符号 | "找到 UserService 类" |
-| `codegraph_context` | 构建相关代码上下文 | "修复登录 Bug 需要哪些代码？" |
-| `codegraph_node` | 获取单个符号的详细信息 | "showUser 函数的完整源码" |
+| 工具                | 用途                       | 使用场景                      |
+| ------------------- | -------------------------- | ----------------------------- |
+| `codegraph_explore` | 主力工具——一次调用回答问题 | "这个项目怎么处理用户认证？"  |
+| `codegraph_search`  | 按名称搜索符号             | "找到 UserService 类"         |
+| `codegraph_context` | 构建相关代码上下文         | "修复登录 Bug 需要哪些代码？" |
+| `codegraph_node`    | 获取单个符号的详细信息     | "showUser 函数的完整源码"     |
 
 ### 分析工具
 
-| 工具 | 用途 | 使用场景 |
-|------|------|----------|
-| `codegraph_callers` | 查找谁调用了某个函数 | "哪些地方调用了 deleteUser？" |
-| `codegraph_callees` | 查找某个函数调用了什么 | "login 函数依赖哪些服务？" |
-| `codegraph_impact` | 影响分析——修改会影响哪些代码 | "改了 User 模型会影响什么？" |
-| `codegraph_trace` | 追踪两个符号之间的调用路径 | "从路由到数据库的调用链" |
+| 工具                | 用途                         | 使用场景                      |
+| ------------------- | ---------------------------- | ----------------------------- |
+| `codegraph_callers` | 查找谁调用了某个函数         | "哪些地方调用了 deleteUser？" |
+| `codegraph_callees` | 查找某个函数调用了什么       | "login 函数依赖哪些服务？"    |
+| `codegraph_impact`  | 影响分析——修改会影响哪些代码 | "改了 User 模型会影响什么？"  |
+| `codegraph_trace`   | 追踪两个符号之间的调用路径   | "从路由到数据库的调用链"      |
 
 ### 辅助工具
 
-| 工具 | 用途 | 使用场景 |
-|------|------|----------|
-| `codegraph_files` | 获取已索引的文件结构 | "项目有哪些文件？" |
-| `codegraph_status` | 检查索引健康状态 | "图谱数据是否最新？" |
+| 工具               | 用途                 | 使用场景             |
+| ------------------ | -------------------- | -------------------- |
+| `codegraph_files`  | 获取已索引的文件结构 | "项目有哪些文件？"   |
+| `codegraph_status` | 检查索引健康状态     | "图谱数据是否最新？" |
 
 ## 使用示例
 
@@ -284,36 +286,39 @@ npm uninstall -g @colbymchenry/codegraph
 
 [Code Review Graph](/guide/advanced/code-review-graph)（CRG）是另一个基于 tree-sitter 的本地代码图谱工具。两者都通过 MCP 为 Claude Code 提供代码智能，但设计重点不同：
 
-| 方面 | CodeGraph | Code Review Graph |
-|------|-----------|-------------------|
-| **定位** | 日常代码探索 | 代码审查和架构分析 |
-| **语言** | TypeScript (npm) | Python (pip) |
-| **MCP 工具数** | 10 | 30 |
-| **核心工具** | `codegraph_explore`（一次调用回答问题） | `get_minimal_context`（~100 Token 概览） |
-| **特色能力** | 简洁、快速、零配置 | Blast-Radius、社区检测、执行流、Wiki 生成 |
-| **Token 优化** | 35% 费用降低 | 38x-528x Token 节省 |
-| **语言支持** | 20+ | 30+ |
-| **框架路由** | 14 个框架 | 无 |
-| **社区检测** | 无 | Leiden 算法 |
-| **可视化** | 无 | D3.js 交互式图谱 |
-| **安装方式** | 独立二进制/npm | pip install |
-| **最佳场景** | 日常开发中的快速代码探索 | PR 审查、影响分析、架构文档 |
+| 方面           | CodeGraph                               | Code Review Graph                         |
+| -------------- | --------------------------------------- | ----------------------------------------- |
+| **定位**       | 日常代码探索                            | 代码审查和架构分析                        |
+| **语言**       | TypeScript (npm)                        | Python (pip)                              |
+| **MCP 工具数** | 10                                      | 30                                        |
+| **核心工具**   | `codegraph_explore`（一次调用回答问题） | `get_minimal_context`（~100 Token 概览）  |
+| **特色能力**   | 简洁、快速、零配置                      | Blast-Radius、社区检测、执行流、Wiki 生成 |
+| **Token 优化** | 35% 费用降低                            | 38x-528x Token 节省                       |
+| **语言支持**   | 20+                                     | 30+                                       |
+| **框架路由**   | 14 个框架                               | 无                                        |
+| **社区检测**   | 无                                      | Leiden 算法                               |
+| **可视化**     | 无                                      | D3.js 交互式图谱                          |
+| **安装方式**   | 独立二进制/npm                          | pip install                               |
+| **最佳场景**   | 日常开发中的快速代码探索                | PR 审查、影响分析、架构文档               |
 
 ### 选型建议
 
 **选择 CodeGraph 如果：**
+
 - 你主要需要快速探索代码库结构
 - 你使用 TypeScript/JavaScript 项目（框架路由识别更精准）
 - 你偏好零配置、开箱即用的工具
 - 你需要一个轻量级的 MCP 服务器
 
 **选择 Code Review Graph 如果：**
+
 - 你主要需要代码审查和 PR 审核
 - 你需要 Blast-Radius 影响分析
 - 你想了解代码库的架构模块划分（社区检测）
 - 你需要 Wiki 自动生成和可视化
 
 **两者都用：**
+
 - CodeGraph 用于日常开发中的快速代码探索
 - CRG 用于代码审查、PR 审核和架构分析
 - 两者通过 MCP 并行运行，互不冲突

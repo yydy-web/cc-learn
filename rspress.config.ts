@@ -18,7 +18,6 @@ export default defineConfig({
       siteUrl: 'https://cc-learn.pages.dev',
     }),
   ],
-  llms: true,
   themeConfig: {
     socialLinks: [
       {

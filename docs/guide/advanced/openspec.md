@@ -119,6 +119,7 @@ openspec/changes/add-password-reset/
 ```
 
 Claude Code 会：
+
 1. 读取 `tasks.md` 中的任务清单
 2. 逐个实现每个任务
 3. 完成后自动勾选复选框
@@ -139,6 +140,7 @@ Claude Code 会：
 ```
 
 归档操作会：
+
 1. 将增量规格合并到主规格目录（`openspec/specs/`）
 2. 将变更文件夹移动到带日期的归档目录
 3. 更新规格源，反映系统的新状态
@@ -174,14 +176,14 @@ openspec update
 
 ### 扩展命令
 
-| 命令 | 用途 |
-|------|------|
-| `/opsx:new` | 仅创建变更文件夹，等待下一步 |
-| `/opsx:continue` | 按依赖关系逐个生成制品 |
-| `/opsx:ff` | 快进：一次性生成所有制品 |
-| `/opsx:verify` | 验证实现是否完整、正确、一致 |
-| `/opsx:bulk-archive` | 批量归档多个变更 |
-| `/opsx:onboard` | 交互式教程，走完完整工作流 |
+| 命令                 | 用途                         |
+| -------------------- | ---------------------------- |
+| `/opsx:new`          | 仅创建变更文件夹，等待下一步 |
+| `/opsx:continue`     | 按依赖关系逐个生成制品       |
+| `/opsx:ff`           | 快进：一次性生成所有制品     |
+| `/opsx:verify`       | 验证实现是否完整、正确、一致 |
+| `/opsx:bulk-archive` | 批量归档多个变更             |
+| `/opsx:onboard`      | 交互式教程，走完完整工作流   |
 
 ### 工作流模式
 
@@ -270,14 +272,17 @@ openspec update
 # 提案：添加密码重置功能
 
 ## 意图
+
 用户忘记密码时，可以通过邮箱重置密码。
 
 ## 范围
+
 - 新增密码重置 API 端点
 - 添加邮件发送服务
 - 前端重置密码页面
 
 ## 方法
+
 使用 JWT 令牌实现，令牌有效期 15 分钟。
 ```
 
@@ -287,13 +292,17 @@ openspec update
 # 密码重置规格
 
 ## ADDED
+
 ### 需求 1：请求重置
+
 - GIVEN 用户在登录页面点击"忘记密码"
 - WHEN 输入注册邮箱并提交
 - THEN 系统发送包含重置链接的邮件
 
 ## MODIFIED
+
 ### 需求 2：用户表
+
 - 新增 `reset_token` 字段
 - 新增 `reset_token_expires` 字段
 ```
@@ -304,11 +313,13 @@ openspec update
 # 技术设计
 
 ## 架构决策
+
 - 使用 JWT 而非数据库存储令牌
 - 令牌有效期 15 分钟
 - 每次请求生成新令牌（旧令牌失效）
 
 ## API 设计
+
 POST /api/auth/request-reset
 POST /api/auth/reset-password
 ```
@@ -332,12 +343,12 @@ POST /api/auth/reset-password
 
 [Superpowers](/guide/advanced/superpowers) 和 OpenSpec 解决不同层面的问题：
 
-| 方面 | OpenSpec | Superpowers |
-|------|----------|-------------|
-| **核心理念** | 规格驱动——先定义"做什么" | 方法论驱动——先设计"怎么做" |
-| **制品** | 规格文档（proposal、specs、design、tasks） | 过程 Skills（头脑风暴、TDD、审查） |
-| **持久化** | 规格提交到 Git，成为活文档 | 过程是临时的，完成后不保留 |
-| **适用场景** | 需求复杂、需要文档化 | 开发过程需要纪律 |
+| 方面         | OpenSpec                                   | Superpowers                        |
+| ------------ | ------------------------------------------ | ---------------------------------- |
+| **核心理念** | 规格驱动——先定义"做什么"                   | 方法论驱动——先设计"怎么做"         |
+| **制品**     | 规格文档（proposal、specs、design、tasks） | 过程 Skills（头脑风暴、TDD、审查） |
+| **持久化**   | 规格提交到 Git，成为活文档                 | 过程是临时的，完成后不保留         |
+| **适用场景** | 需求复杂、需要文档化                       | 开发过程需要纪律                   |
 
 :::tip
 两者可以结合使用：OpenSpec 社区提供了 `superpowers-bridge` Schema，将 Superpowers 的头脑风暴、TDD、代码审查等 Skills 桥接到 OpenSpec 的工作流中。

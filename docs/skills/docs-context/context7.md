@@ -45,11 +45,11 @@ npx ctx7 setup --claude
 
 ## 与其他 Skills 渠道的对比
 
-| 渠道 | 特色 | 适用场景 |
-|------|------|----------|
-| [skills.sh](/skills/overview/skills-marketplace) | 公共注册中心 | 发现社区 Skills |
-| [CC-Switch](/skills/overview/skills-marketplace) | GUI + 跨工具同步 | 批量管理 |
-| **ctx7 CLI** | **AI 生成 + 自动推荐** | **智能发现和创建** |
+| 渠道                                             | 特色                   | 适用场景           |
+| ------------------------------------------------ | ---------------------- | ------------------ |
+| [skills.sh](/skills/overview/skills-marketplace) | 公共注册中心           | 发现社区 Skills    |
+| [CC-Switch](/skills/overview/skills-marketplace) | GUI + 跨工具同步       | 批量管理           |
+| **ctx7 CLI**                                     | **AI 生成 + 自动推荐** | **智能发现和创建** |
 
 ## 下一步
 

@@ -1,1 +1,15 @@
-["hooks", "mcp-servers", "cc-switch", "superpowers", "gstack", "openspec", "ralph", "codegraph", "code-review-graph", "context7", "serena", "multi-agent", "automation"]
+[
+  "hooks",
+  "mcp-servers",
+  "cc-switch",
+  "superpowers",
+  "gstack",
+  "openspec",
+  "ralph",
+  "codegraph",
+  "code-review-graph",
+  "context7",
+  "serena",
+  "multi-agent",
+  "automation"
+]

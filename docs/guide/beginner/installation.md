@@ -60,20 +60,17 @@ Claude Code 的配置文件位于 `~/.claude/settings.json`：
 {
   "model": "claude-sonnet-4-20250514",
   "permissions": {
-    "allow": [
-      "Bash(npm run *)",
-      "Bash(git *)"
-    ]
+    "allow": ["Bash(npm run *)", "Bash(git *)"]
   }
 }
 ```
 
 ### 常用配置项
 
-| 配置项 | 说明 | 默认值 |
-|--------|------|--------|
-| `model` | 使用的模型 | `claude-sonnet-4-20250514` |
-| `permissions.allow` | 自动允许的工具列表 | `[]` |
+| 配置项              | 说明               | 默认值                     |
+| ------------------- | ------------------ | -------------------------- |
+| `model`             | 使用的模型         | `claude-sonnet-4-20250514` |
+| `permissions.allow` | 自动允许的工具列表 | `[]`                       |
 
 ## 项目级配置
 
@@ -85,6 +82,7 @@ Claude Code 的配置文件位于 `~/.claude/settings.json`：
 本项目使用 TypeScript + React 构建。
 
 ## 常用命令
+
 - `npm run dev` — 启动开发服务器
 - `npm run build` — 构建生产版本
 - `npm test` — 运行测试

@@ -136,12 +136,12 @@ Superpowers 严格执行"先测试后代码"规则。如果代码在测试之前
 
 开发完成后，提供 4 个选项：
 
-| 选项 | 说明 |
-|------|------|
-| 本地合并 | 直接合并到当前分支 |
-| 创建 PR | 推送并创建 Pull Request |
-| 保留现状 | 保持分支不动 |
-| 丢弃 | 删除分支和工作区 |
+| 选项     | 说明                    |
+| -------- | ----------------------- |
+| 本地合并 | 直接合并到当前分支      |
+| 创建 PR  | 推送并创建 Pull Request |
+| 保留现状 | 保持分支不动            |
+| 丢弃     | 删除分支和工作区        |
 
 ## 核心 Skills 一览
 
@@ -149,27 +149,27 @@ Superpowers 包含 14 个 Skills，分为两类：
 
 ### 流程类 Skills（严格遵循）
 
-| Skill | 用途 |
-|-------|------|
-| `brainstorming` | 编码前的设计探索 |
-| `writing-plans` | 详细的任务拆分 |
-| `test-driven-development` | 严格的 TDD 循环 |
-| `systematic-debugging` | 4 阶段根因分析 |
+| Skill                            | 用途               |
+| -------------------------------- | ------------------ |
+| `brainstorming`                  | 编码前的设计探索   |
+| `writing-plans`                  | 详细的任务拆分     |
+| `test-driven-development`        | 严格的 TDD 循环    |
+| `systematic-debugging`           | 4 阶段根因分析     |
 | `verification-before-completion` | "有证据才能说完成" |
-| `finishing-a-development-branch` | 分支收尾流程 |
+| `finishing-a-development-branch` | 分支收尾流程       |
 
 ### 灵活类 Skills（可按需调整）
 
-| Skill | 用途 |
-|-------|------|
-| `executing-plans` | 在当前会话中执行计划 |
-| `subagent-driven-development` | 子智能体驱动开发 |
-| `dispatching-parallel-agents` | 并行任务协调 |
-| `using-git-worktrees` | 隔离工作区管理 |
-| `requesting-code-review` | 发起代码审查 |
-| `receiving-code-review` | 处理审查反馈 |
-| `writing-skills` | 基于 TDD 创建新 Skill |
-| `using-superpowers` | 引导 Skill，自动加载 |
+| Skill                         | 用途                  |
+| ----------------------------- | --------------------- |
+| `executing-plans`             | 在当前会话中执行计划  |
+| `subagent-driven-development` | 子智能体驱动开发      |
+| `dispatching-parallel-agents` | 并行任务协调          |
+| `using-git-worktrees`         | 隔离工作区管理        |
+| `requesting-code-review`      | 发起代码审查          |
+| `receiving-code-review`       | 处理审查反馈          |
+| `writing-skills`              | 基于 TDD 创建新 Skill |
+| `using-superpowers`           | 引导 Skill，自动加载  |
 
 ## 手动调用 Skills
 
@@ -195,6 +195,7 @@ Superpowers 包含 14 个 Skills，分为两类：
 ```
 
 Claude Code 会自动执行完整流程：
+
 1. 头脑风暴：问你分页参数、排序、总数返回等需求
 2. 设计：提出 cursor-based vs offset-based 方案
 3. 计划：拆分为模型、路由、测试等小任务
@@ -210,6 +211,7 @@ Claude Code 会自动执行完整流程：
 ```
 
 Superpowers 会按照 4 阶段系统性排查：
+
 1. 复现问题
 2. 收集证据（heap snapshot、日志分析）
 3. 形成假设并验证

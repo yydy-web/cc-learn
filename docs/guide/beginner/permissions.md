@@ -31,13 +31,7 @@ Allow? (y/n)
 ```json
 {
   "permissions": {
-    "allow": [
-      "Bash(npm run *)",
-      "Bash(npm test *)",
-      "Bash(git status *)",
-      "Bash(git diff *)",
-      "Bash(git log *)"
-    ]
+    "allow": ["Bash(npm run *)", "Bash(npm test *)", "Bash(git status *)", "Bash(git diff *)", "Bash(git log *)"]
   }
 }
 ```
@@ -53,30 +47,23 @@ Allow? (y/n)
 ```json
 {
   "permissions": {
-    "allow": [
-      "Bash(npm run dev)",
-      "Bash(npm run build)",
-      "Bash(npm test *)"
-    ],
-    "deny": [
-      "Bash(rm -rf *)",
-      "Bash(git push --force *)"
-    ]
+    "allow": ["Bash(npm run dev)", "Bash(npm run build)", "Bash(npm test *)"],
+    "deny": ["Bash(rm -rf *)", "Bash(git push --force *)"]
   }
 }
 ```
 
 ## 权限工具类型
 
-| 工具 | 说明 | 风险等级 |
-|------|------|----------|
-| `Read` | 读取文件 | 低 — 默认允许 |
-| `Glob` | 文件搜索 | 低 — 默认允许 |
-| `Grep` | 内容搜索 | 低 — 默认允许 |
-| `Edit` | 编辑文件 | 中 — 需要确认 |
-| `Write` | 创建/覆盖文件 | 中 — 需要确认 |
-| `Bash` | 执行命令 | 高 — 需要确认 |
-| `WebFetch` | 访问网络 | 中 — 需要确认 |
+| 工具       | 说明          | 风险等级      |
+| ---------- | ------------- | ------------- |
+| `Read`     | 读取文件      | 低 — 默认允许 |
+| `Glob`     | 文件搜索      | 低 — 默认允许 |
+| `Grep`     | 内容搜索      | 低 — 默认允许 |
+| `Edit`     | 编辑文件      | 中 — 需要确认 |
+| `Write`    | 创建/覆盖文件 | 中 — 需要确认 |
+| `Bash`     | 执行命令      | 高 — 需要确认 |
+| `WebFetch` | 访问网络      | 中 — 需要确认 |
 
 ## 安全建议
 

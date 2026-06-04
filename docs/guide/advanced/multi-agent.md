@@ -55,8 +55,8 @@ export const meta = {
 const issues = await agent('审查 src/ 目录下的代码，找出所有问题');
 await pipeline(
   issues,
-  issue => agent(`修复这个问题: ${issue.description}`),
-  fix => agent(`运行测试验证修复: ${fix.file}`)
+  (issue) => agent(`修复这个问题: ${issue.description}`),
+  (fix) => agent(`运行测试验证修复: ${fix.file}`),
 );
 ```
 

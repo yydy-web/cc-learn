@@ -68,6 +68,7 @@ Claude Code 使用 Grep 工具进行内容搜索，支持正则表达式。
 ### 用 LSP 增强理解
 
 Claude Code 内置 LSP 支持，可以：
+
 - 跳转到定义（goToDefinition）
 - 查找所有引用（findReferences）
 - 查看类型信息（hover）

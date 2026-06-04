@@ -42,6 +42,7 @@ Strict mode enabled. `verbatimModuleSyntax: true` — use `import type` for type
 ## Skills
 
 Two agent skills are installed under `.agents/skills/` (from `rstackjs/agent-skills`):
+
 - **rspress-best-practices**: Config, content structure, MDX, theme, and deployment guidance.
 - **rspress-description-generator**: Automated workflow for generating `description` frontmatter.
 

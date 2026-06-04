@@ -22,11 +22,11 @@ CC-Switch 是一个跨平台的 AI 编程助手配置管理工具，让你无需
 
 CC-Switch 提供三个版本，适合不同的使用场景：
 
-| 版本 | 技术栈 | 适用场景 |
-|------|--------|----------|
+| 版本        | 技术栈                 | 适用场景                |
+| ----------- | ---------------------- | ----------------------- |
 | **Desktop** | Tauri 2 (Rust + React) | 日常开发，需要 GUI 界面 |
-| **CLI** | Rust CLI | 终端用户、服务器环境 |
-| **Web** | Web 服务器 | 无头环境、远程管理 |
+| **CLI**     | Rust CLI               | 终端用户、服务器环境    |
+| **Web**     | Web 服务器             | 无头环境、远程管理      |
 
 :::tip
 大多数用户推荐使用 **Desktop 版本**，提供最完整的功能和最直观的操作体验。
@@ -172,11 +172,11 @@ cc-switch env check
 
 CC-Switch 通过管理以下配置文件来控制 Claude Code 的行为：
 
-| 配置文件 | 作用 |
-|----------|------|
-| `~/.claude.json` | Provider、API Key 等全局配置 |
-| `~/.claude/settings.json` | 权限、MCP 服务器等设置 |
-| `~/.claude/CLAUDE.md` | 全局系统 Prompt |
+| 配置文件                  | 作用                         |
+| ------------------------- | ---------------------------- |
+| `~/.claude.json`          | Provider、API Key 等全局配置 |
+| `~/.claude/settings.json` | 权限、MCP 服务器等设置       |
+| `~/.claude/CLAUDE.md`     | 全局系统 Prompt              |
 
 关键特性：
 

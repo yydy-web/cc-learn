@@ -19,9 +19,11 @@ Vue 3 的 Composition API 和 `<script setup>` 语法简洁且类型友好，Cla
 
 ### Vue 特定提示词
 
-````markdown title="常用提示词模板"
+```markdown title="常用提示词模板"
 # 组件生成
+
 > 创建 DataTable 组件，使用 `<script setup lang="ts">`：
+>
 > - 支持列排序、筛选、分页
 > - 支持行选择（checkbox）
 > - TypeScript 泛型：DataTable<T>
@@ -30,7 +32,9 @@ Vue 3 的 Composition API 和 `<script setup>` 语法简洁且类型友好，Cla
 > - emit 定义排序和筛选事件
 
 # 组合式函数（Composable）
+
 > 创建 useDebounce<T> 组合式函数：
+>
 > - 泛型支持任意值类型
 > - 参数：value: Ref<T>, delay: number
 > - 返回防抖后的 Ref<T>
@@ -38,7 +42,9 @@ Vue 3 的 Composition API 和 `<script setup>` 语法简洁且类型友好，Cla
 > - 编写 Vitest 测试覆盖：值变化延迟、effectScope 清理
 
 # 状态管理（Pinia）
+
 > 创建购物车 Pinia store（Setup Store 模式）：
+>
 > - state：items（CartItem[]，含 product、quantity）
 > - getters：totalPrice、totalItems
 > - actions：addItem、removeItem、updateQuantity、clearCart
@@ -47,14 +53,16 @@ Vue 3 的 Composition API 和 `<script setup>` 语法简洁且类型友好，Cla
 > - 支持 HMR
 
 # API 层
+
 > 创建用户 API 服务层：
+>
 > - 使用 useFetch（VueUse）或自定义 useApi 组合式函数
 > - axios 实例配置 baseURL 和拦截器
 > - 包含：getUserList、getUserById、createUser、updateUser、deleteUser
 > - 每个方法包含 TypeScript 类型
 > - 统一错误响应类型 ApiError
 > - 封装 loading、error、data 响应式状态
-````
+```
 
 ## 测试最佳实践
 
@@ -146,15 +154,16 @@ describe('UserCard', () => {
 
 ### 测试策略建议
 
-| 测试类型 | 工具 | 覆盖内容 | 运行时机 |
-|----------|------|----------|----------|
-| 单元测试 | Vitest | 工具函数、纯逻辑 Composable | 每次提交 |
-| 组件测试 | Vitest + @vue/test-utils | 组件渲染、交互、emit、插槽 | 每次提交 |
-| E2E 测试 | Playwright | 完整用户流程、页面导航 | PR 合并前 |
-| 视觉回归 | Chromatic / Percy | UI 截图对比 | PR 合并前 |
+| 测试类型 | 工具                     | 覆盖内容                    | 运行时机  |
+| -------- | ------------------------ | --------------------------- | --------- |
+| 单元测试 | Vitest                   | 工具函数、纯逻辑 Composable | 每次提交  |
+| 组件测试 | Vitest + @vue/test-utils | 组件渲染、交互、emit、插槽  | 每次提交  |
+| E2E 测试 | Playwright               | 完整用户流程、页面导航      | PR 合并前 |
+| 视觉回归 | Chromatic / Percy        | UI 截图对比                 | PR 合并前 |
 
 :::info
 **测试文件命名约定：**
+
 - 组件测试：`ComponentName.spec.ts`（与组件同目录）
 - E2E 测试：`feature-name.spec.ts`（放在 `tests/e2e/` 目录）
 - Composable 测试：`useComposableName.spec.ts`（与 composable 同目录）
@@ -269,6 +278,7 @@ VueUse 提供了 200+ 个组合式函数，覆盖浏览器 API、状态、传感
 :::info
 在 CLAUDE.md 中明确指定 UI 组件库（Element Plus、Naive UI、Ant Design Vue、Vuetify 等），这会显著影响 Claude Code 生成的组件代码和样式写法。
 :::
+
 ````
 
 ## 代码审查与重构
@@ -453,3 +463,4 @@ VueUse 提供了 200+ 个组合式函数，覆盖浏览器 API、状态、传感
 ```
 
 :::
+````

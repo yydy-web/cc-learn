@@ -3,29 +3,25 @@
   "version": "1.0.0",
   "private": true,
   "description": "一份由浅入深的 Claude Code 使用教程文档站",
+  "keywords": [
+    "ai",
+    "claude",
+    "claude-code",
+    "documentation",
+    "rspress",
+    "tutorial"
+  ],
   "homepage": "https://cc-learn.pages.dev",
+  "bugs": {
+    "url": "https://github.com/Muromi-Rikka/cc-learn/issues"
+  },
+  "license": "MIT",
+  "author": "Muromi-Rikka",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Muromi-Rikka/cc-learn.git"
   },
-  "bugs": {
-    "url": "https://github.com/Muromi-Rikka/cc-learn/issues"
-  },
-  "keywords": [
-    "claude-code",
-    "claude",
-    "ai",
-    "tutorial",
-    "documentation",
-    "rspress"
-  ],
-  "author": "Muromi-Rikka",
   "type": "module",
-  "packageManager": "pnpm@11.5.0",
-  "engines": {
-    "node": ">=18"
-  },
-  "license": "MIT",
   "scripts": {
     "build": "rspress build",
     "dev": "rspress dev",
@@ -50,5 +46,9 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "wrangler": "^4.96.0"
-  }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@11.5.0"
 }

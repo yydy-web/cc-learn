@@ -23,15 +23,15 @@ npx skills add https://github.com/vercel-labs/agent-skills --skill vercel-react-
 
 **规则分类（按优先级排序）：**
 
-| 优先级 | 类别 | 说明 |
-|--------|------|------|
-| 🔴 关键 | 消除请求瀑布流 | 串行数据获取 → 并行化，减少页面加载时间 |
-| 🔴 关键 | Bundle 优化 | 避免 barrel imports、按需导入大型库 |
-| 🟠 高 | 服务端性能 | React.cache() 去重、并行获取、序列化最小化 |
-| 🟠 高 | 客户端渲染 | 通过 memoization 和依赖管理减少 re-render |
-| 🟡 中 | 渲染性能 | CSS 策略和 hydration 模式 |
-| 🟡 中 | JS 级优化 | DOM 批处理、缓存、Set/Map O(1) 查找 |
-| 🟢 低 | 高级模式 | 复杂场景的进阶优化技巧 |
+| 优先级  | 类别           | 说明                                       |
+| ------- | -------------- | ------------------------------------------ |
+| 🔴 关键 | 消除请求瀑布流 | 串行数据获取 → 并行化，减少页面加载时间    |
+| 🔴 关键 | Bundle 优化    | 避免 barrel imports、按需导入大型库        |
+| 🟠 高   | 服务端性能     | React.cache() 去重、并行获取、序列化最小化 |
+| 🟠 高   | 客户端渲染     | 通过 memoization 和依赖管理减少 re-render  |
+| 🟡 中   | 渲染性能       | CSS 策略和 hydration 模式                  |
+| 🟡 中   | JS 级优化      | DOM 批处理、缓存、Set/Map O(1) 查找        |
+| 🟢 低   | 高级模式       | 复杂场景的进阶优化技巧                     |
 
 :::tip
 安装后，让 Claude Code "审查这个组件的性能" 或 "检查是否有不必要的 re-render"，它会自动应用这 70 条规则进行检查和优化建议。
@@ -47,16 +47,16 @@ npx skills add https://github.com/vercel-labs/agent-skills --skill vercel-compos
 
 **核心模式：**
 
-| 类别 | 模式 | 说明 |
-|------|------|------|
-| 组件架构 | 避免布尔 Props | 用组合替代 `isLoading`、`isCompact` 等布尔开关 |
-| 组件架构 | 复合组件 | 通过共享 Context 构建灵活的组件族 |
-| 状态管理 | 解耦实现 | Provider 是唯一知道状态管理方式的地方 |
-| 状态管理 | Context 接口 | 定义 state + actions + meta 的泛型接口 |
-| 实现模式 | 显式变体 | 创建独立变体组件替代条件分支 |
-| 实现模式 | children 优先 | 用 children 组合替代 renderX props |
-| React 19 | 移除 forwardRef | ref 直接作为 prop 传递 |
-| React 19 | use() 替代 useContext | 使用新的 `use()` Hook 读取 Context |
+| 类别     | 模式                  | 说明                                           |
+| -------- | --------------------- | ---------------------------------------------- |
+| 组件架构 | 避免布尔 Props        | 用组合替代 `isLoading`、`isCompact` 等布尔开关 |
+| 组件架构 | 复合组件              | 通过共享 Context 构建灵活的组件族              |
+| 状态管理 | 解耦实现              | Provider 是唯一知道状态管理方式的地方          |
+| 状态管理 | Context 接口          | 定义 state + actions + meta 的泛型接口         |
+| 实现模式 | 显式变体              | 创建独立变体组件替代条件分支                   |
+| 实现模式 | children 优先         | 用 children 组合替代 renderX props             |
+| React 19 | 移除 forwardRef       | ref 直接作为 prop 传递                         |
+| React 19 | use() 替代 useContext | 使用新的 `use()` Hook 读取 Context             |
 
 ```markdown title="反面示例 — 布尔 Props 泛滥"
 // ❌ 布尔 Props 导致组件僵化
@@ -64,8 +64,8 @@ npx skills add https://github.com/vercel-labs/agent-skills --skill vercel-compos
 
 // ✅ 组合模式更灵活
 <Button variant="primary" size="sm" className="w-full" disabled>
-  <Spinner data-icon="inline-start" />
-  提交
+<Spinner data-icon="inline-start" />
+提交
 </Button>
 ```
 
@@ -83,14 +83,14 @@ npx skills add https://github.com/shadcn-ui/ui --skill shadcn
 
 **核心能力：**
 
-| 能力 | 说明 |
-|------|------|
-| 组件搜索与安装 | 从多个注册表（@shadcn、@magicui、@tailark）搜索并添加组件 |
-| 文档查询 | `npx shadcn@latest docs <component>` 获取组件文档和示例 URL |
-| 变更预览 | `--dry-run` 和 `--diff` 在安装前预览变更内容 |
-| 上游合并 | 智能合并上游更新，保留本地修改 |
-| 主题预设 | 内置 nova、vega、maia、lyra、mira、luma 等预设主题 |
-| 项目模板 | 支持 Next.js、Vite、Start、React Router、Astro 等脚手架 |
+| 能力           | 说明                                                        |
+| -------------- | ----------------------------------------------------------- |
+| 组件搜索与安装 | 从多个注册表（@shadcn、@magicui、@tailark）搜索并添加组件   |
+| 文档查询       | `npx shadcn@latest docs <component>` 获取组件文档和示例 URL |
+| 变更预览       | `--dry-run` 和 `--diff` 在安装前预览变更内容                |
+| 上游合并       | 智能合并上游更新，保留本地修改                              |
+| 主题预设       | 内置 nova、vega、maia、lyra、mira、luma 等预设主题          |
+| 项目模板       | 支持 Next.js、Vite、Start、React Router、Astro 等脚手架     |
 
 **关键规则：**
 
@@ -106,13 +106,13 @@ npx skills add https://github.com/shadcn-ui/ui --skill shadcn
 
 ## Skills 组合建议
 
-| 场景 | 推荐 Skills |
-|------|-------------|
-| React 项目性能优化 | react-best-practices + composition-patterns |
-| React + shadcn/ui 全栈开发 | react-best-practices + shadcn + composition-patterns |
-| 从零设计高品质 UI | frontend-design + ui-ux-pro-max |
-| 审查现有页面质量 | web-design-guidelines + react-best-practices |
-| 全面的前端开发体验 | frontend-design + web-design-guidelines + ui-ux-pro-max + react-best-practices |
+| 场景                       | 推荐 Skills                                                                    |
+| -------------------------- | ------------------------------------------------------------------------------ |
+| React 项目性能优化         | react-best-practices + composition-patterns                                    |
+| React + shadcn/ui 全栈开发 | react-best-practices + shadcn + composition-patterns                           |
+| 从零设计高品质 UI          | frontend-design + ui-ux-pro-max                                                |
+| 审查现有页面质量           | web-design-guidelines + react-best-practices                                   |
+| 全面的前端开发体验         | frontend-design + web-design-guidelines + ui-ux-pro-max + react-best-practices |
 
 :::warning
 安装过多 Skills 可能增加 Claude Code 的上下文负担。建议根据实际需求选择 2-3 个最相关的 Skill，而不是全部安装。
