@@ -25,9 +25,13 @@ features:
     icon: 🔧
     link: /guide/intermediate/codebase-navigation
   - title: 高级篇
-    details: 探索 Hooks、MCP 服务器、自定义技能、CC-Switch 配置管理、Superpowers、Gstack、OpenSpec、Ralph、CodeGraph、Code Review Graph 和 Context7
+    details: 探索 Hooks、MCP 服务器、多智能体工作流和自动化 CI/CD
     icon: ⚡
     link: /guide/advanced/hooks
+  - title: 技能
+    details: 创建自定义 Skills、浏览技能市场、使用 Superpowers、Gstack 等专业开发工作流
+    icon: 🧩
+    link: /skills/
   - title: 命令参考
     details: 完整的 Claude Code 命令速查手册
     icon: 📖

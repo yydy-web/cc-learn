@@ -10,6 +10,11 @@
     "activeMatch": "/commands/"
   },
   {
+    "text": "技能",
+    "link": "/skills/",
+    "activeMatch": "/skills/"
+  },
+  {
     "text": "技巧",
     "link": "/tips/",
     "activeMatch": "/tips/"
