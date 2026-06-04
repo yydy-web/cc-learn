@@ -676,6 +676,56 @@ tools:
 Serena + CodeGraph 是 Java 大型项目的黄金组合：用 CodeGraph 快速探索代码结构和调用链，用 Serena 进行精确的符号级重构。两者通过 MCP 并行运行，互不冲突。
 :::
 
+### 工具链组合实战
+
+以下是 Java/Spring Boot 项目中常见的工具组合场景：
+
+#### 场景一：新功能开发（完整流程）
+
+```
+1. Superpowers: /superpowers:brainstorming 探索需求（邮箱验证？密码策略？）
+2. Gstack: /plan-eng-review 审查架构方案
+3. CodeGraph: codegraph_explore 理解现有代码结构
+4. Superpowers: TDD 驱动实现 → 每层先写 JUnit 5 测试
+5. ECC: java-reviewer 审查代码 → security-reviewer 安全审查
+6. Gstack: /ship 运行 mvn verify → 推送并创建 PR
+```
+
+#### 场景二：大型重构（语义驱动）
+
+```
+1. CodeGraph: codegraph_impact 分析重构影响范围
+2. Serena: find_referencing_symbols 追踪所有引用
+3. Gstack: /plan-eng-review 审查重构方案
+4. Serena: rename_symbol / move_symbol 精确重构
+5. CodeGraph: codegraph_impact 验证变更完整性
+6. Gstack: /review 审查 → /cso 安全审计
+```
+
+#### 场景三：遗留 Spring Boot 项目接管
+
+```
+1. CodeGraph: codegraph_explore 快速理解项目架构和路由
+2. Serena: get_symbols_overview 梳理核心类的公开 API
+3. Gstack: /office-hours 梳理业务需求
+4. ECC: java-reviewer 识别代码问题 → security-reviewer 安全扫描
+5. Superpowers: TDD 驱动渐进式重构，每步都有测试覆盖
+```
+
+#### 场景四：安全加固
+
+```
+1. ECC AgentShield: npx ecc-agentshield scan --opus --stream 深度安全扫描
+2. CodeGraph: codegraph_trace 追踪敏感数据流向（用户密码、支付信息）
+3. Gstack: /cso OWASP Top 10 + STRIDE 威胁建模
+4. ECC: security-reviewer 逐模块审查
+5. Superpowers: TDD 驱动安全修复 → 回归测试
+```
+
+:::info
+工具组合的核心原则：**CodeGraph / Serena 提供代码智能 → Superpowers / ECC 保证开发纪律 → Gstack 负责审查和发布**。根据项目规模灵活组合，小型功能可以跳过 Gstack 的规划阶段直接 TDD，大型重构则需要完整的 CodeGraph 影响分析 + Gstack 架构审查。
+:::
+
 ## 常见场景
 
 ### Spring Boot REST API 全栈生成
