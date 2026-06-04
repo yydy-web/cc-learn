@@ -2,8 +2,29 @@
   "name": "cc-learn",
   "version": "1.0.0",
   "private": true,
+  "description": "一份由浅入深的 Claude Code 使用教程文档站",
+  "homepage": "https://cc-learn.pages.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Muromi-Rikka/cc-learn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Muromi-Rikka/cc-learn/issues"
+  },
+  "keywords": [
+    "claude-code",
+    "claude",
+    "ai",
+    "tutorial",
+    "documentation",
+    "rspress"
+  ],
+  "author": "Muromi-Rikka",
   "type": "module",
   "packageManager": "pnpm@11.5.0",
+  "engines": {
+    "node": ">=18"
+  },
   "license": "MIT",
   "scripts": {
     "build": "rspress build",
