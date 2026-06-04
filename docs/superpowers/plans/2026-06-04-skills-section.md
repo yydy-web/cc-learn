@@ -524,7 +524,7 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 ## 安装
 
 ```
-> git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/workflow/gstack && cd ~/.claude/skills/workflow/gstack && ./setup
+> git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup
 ```
 
 也可通过 [CC-Switch](/skills/overview/skills-marketplace) 市场发现 Gstack 的独立 Skills。
