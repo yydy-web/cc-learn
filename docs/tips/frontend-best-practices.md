@@ -222,6 +222,66 @@ claude mcp add context7 -- npx -y @upstash/context7-mcp@latest
 这五个工具可以组合使用——ECC 提供流程编排，Superpowers 保证开发纪律，CodeGraph 和 Serena 提供代码智能，Gstack 负责审查和发布（内置浏览器可直接测试前端应用）。详见[最佳实践](/tips/best-practices)中的四阶段工作流。
 :::
 
+### ECC：前端专属增强
+
+[ECC](/tips/ecc)（Enhanced Claude Code）内置了前端语言专属的 Agent 和框架专项 Skill，覆盖 React、Next.js、Vue 等主流前端生态。
+
+#### 前端专属 Agent
+
+| Agent | 用途 | 典型场景 |
+|-------|------|---------|
+| `typescript-reviewer` | TypeScript 代码审查，检查类型安全、any 滥用 | 审查组件和 Hooks |
+| `frontend-patterns` | 前端编码规范和组件设计模式 | 组件拆分和复用 |
+| `security-reviewer` | 安全漏洞审查（XSS、CSRF、敏感数据暴露） | 安全配置审查 |
+| `code-reviewer` | 通用代码质量审查 | PR 审查 |
+
+#### 前端专项 Skill
+
+| Skill | 用途 |
+|-------|------|
+| `frontend-patterns` | 前端项目结构和组件设计规范 |
+| `nextjs-turbopack` | Next.js + Turbopack 开发最佳实践 |
+| `tdd-workflow` | 通用 TDD 工作流，适用于前端组件测试 |
+| `security-review` | 安全审查工作流 |
+| `e2e-testing` | E2E 测试最佳实践（Playwright） |
+
+#### 使用示例
+
+```
+> 使用 ECC 的 typescript-reviewer 审查 UserDashboard.tsx：
+> 检查 TypeScript 类型安全、不必要的 re-render、useEffect 清理
+```
+
+```
+> 使用 frontend-patterns skill 实现用户设置页面：
+> 先写组件测试，再实现组件 → Hook → API 层
+```
+
+```
+> 使用 e2e-testing skill 为登录流程编写 Playwright 测试
+```
+
+#### 安装 ECC（前端项目）
+
+```bash
+# Plugin 安装
+/plugin marketplace add https://github.com/affaan-m/ECC
+/plugin install ecc@ecc
+```
+
+安装后复制前端 Rules：
+
+```bash
+git clone https://github.com/affaan-m/ECC.git && cd ECC
+mkdir -p ~/.claude/rules/ecc
+cp -R rules/common ~/.claude/rules/ecc/
+cp -R rules/typescript ~/.claude/rules/ecc/
+```
+
+:::tip
+ECC 的 `typescript-reviewer` 会自动检查常见的前端陷阱（如缺少 key、any 类型滥用、useEffect 依赖数组问题、dangerouslySetInnerHTML XSS 风险）。配合 `frontend-patterns` Skill 使用效果最佳。
+:::
+
 ## 常见场景
 
 ### 页面全栈生成、表单处理、状态管理、API 集成、组件库集成
