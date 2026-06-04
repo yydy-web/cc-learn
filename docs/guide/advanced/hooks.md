@@ -135,4 +135,4 @@ Hook 脚本可以访问以下环境变量：
 ## 下一步
 
 - [MCP 服务器](/guide/advanced/mcp-servers) — 用 MCP 扩展 Claude Code 的工具能力
-- [自定义技能](/guide/advanced/custom-skills) — 创建自定义的 Skills 和 Agents
+- [自定义技能](/skills/custom-skills) — 创建自定义的 Skills 和 Agents

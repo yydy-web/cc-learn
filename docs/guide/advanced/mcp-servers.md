@@ -170,5 +170,5 @@ await server.connect(transport);
 
 ## 下一步
 
-- [自定义技能](/guide/advanced/custom-skills) — 创建自定义的 Skills 和 Agents
+- [自定义技能](/skills/custom-skills) — 创建自定义的 Skills 和 Agents
 - [多智能体工作流](/guide/advanced/multi-agent) — 编排多个 Agent 协作

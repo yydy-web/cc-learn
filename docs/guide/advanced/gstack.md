@@ -274,6 +274,10 @@ Gstack 和 [Superpowers](/guide/advanced/superpowers) 都是 Claude Code 的 Ski
 - `--keep-state`：保留配置和分析数据
 - `--force`：跳过确认提示
 
+:::tip
+Gstack 的 23+ 个 Skills 按角色分类的概览，请参考 [Gstack 技能生态](/skills/gstack)。更多 Skills 资源请访问[技能系统](/skills/)。
+:::
+
 ## 相关资源
 
 - [Gstack GitHub](https://github.com/garrytan/gstack) — 项目仓库（106k+ Stars）

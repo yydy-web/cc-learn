@@ -223,5 +223,6 @@ CC-Switch 通过管理以下配置文件来控制 Claude Code 的行为：
 ## 下一步
 
 - [MCP 服务器](/guide/advanced/mcp-servers) — 深入了解 MCP 服务器配置
-- [自定义技能](/guide/advanced/custom-skills) — 创建和管理自定义 Skills
+- [自定义技能](/skills/custom-skills) — 创建和管理自定义 Skills
+- [技能市场](/skills/skills-marketplace) — 浏览和安装社区 Skills
 - [自动化与 CI/CD](/guide/advanced/automation) — 将 Claude Code 集成到自动化流程

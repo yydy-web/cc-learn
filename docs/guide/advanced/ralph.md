@@ -261,6 +261,8 @@ Verify in browser using dev-browser skill
 
 [OpenSpec](/guide/advanced/openspec) 聚焦规格文档的创建和管理，Ralph 聚焦规格的自动执行。可以组合：用 OpenSpec 的 `/opsx:propose` 创建需求规格，再用 Ralph 的循环机制自动实现。
 
+更多 Skills 工具的关系对比，请参考[技能系统](/skills/)。
+
 ## 相关资源
 
 - [Ralph GitHub](https://github.com/snarktank/ralph) — 项目仓库（19k+ Stars）
@@ -271,4 +273,5 @@ Verify in browser using dev-browser skill
 
 - [自动化与 CI/CD](/guide/advanced/automation) — 将 Claude Code 集成到自动化流程
 - [Superpowers 插件](/guide/advanced/superpowers) — 互补的结构化开发方法论
-- [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理 API Provider 和 Skills
+- [OpenSpec 规格驱动开发](/guide/advanced/openspec) — 互补的规格驱动方法
+- [自定义技能](/skills/custom-skills) — 创建和管理自定义 Skills

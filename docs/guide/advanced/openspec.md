@@ -357,4 +357,5 @@ POST /api/auth/reset-password
 
 - [Superpowers 插件](/guide/advanced/superpowers) — 互补的结构化开发方法论
 - [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理 API Provider 和 Skills
-- [自定义技能](/guide/advanced/custom-skills) — 创建和管理自定义 Skills
+- [自定义技能](/skills/custom-skills) — 创建和管理自定义 Skills
+- [Ralph 自主循环](/skills/ralph) — 互补的自主实现方案
