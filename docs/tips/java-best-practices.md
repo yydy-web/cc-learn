@@ -1,6 +1,6 @@
 ---
 title: Java 开发最佳实践
-description: 使用 Claude Code 进行 Java 开发的完整指南，涵盖项目配置、提示词策略、测试、构建工具和自动化工作流
+description: 使用 Claude Code 进行 Java 开发的完整指南，涵盖项目配置、提示词策略、测试、构建工具、工具链集成（ECC、GStack、Superpowers、CodeGraph、Serena）和自动化工作流
 ---
 
 # Java 开发最佳实践
