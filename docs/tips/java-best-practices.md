@@ -1130,3 +1130,71 @@ Claude Code 的训练数据可能偏向 Java 8/11 的写法。如果你使用 Ja
 ```
 
 :::
+
+:::details ECC 代码审查
+
+```
+> 使用 ECC 的 java-reviewer 审查 [ServiceName].java：
+> 1. 检查 @Transactional 注解的 propagation 和 rollbackFor 配置
+> 2. 检查异常处理是否吞掉了应该抛出的异常
+> 3. 检查资源泄漏（数据库连接、流、锁）
+> 4. 检查线程安全问题（共享可变状态）
+> 5. 检查是否有硬编码的魔法值
+```
+
+:::
+
+:::details CodeGraph 影响分析
+
+```
+> 我要修改 [EntityName].java 的 [字段名] 字段：
+> 1. 用 codegraph_impact 分析影响范围
+> 2. 列出所有受影响的 Service、Repository、Controller
+> 3. 列出所有受影响的测试
+> 4. 给出安全修改的步骤建议
+```
+
+:::
+
+:::details Serena 精确重构
+
+```
+> 重构 [PackageName] 包：
+> 1. 用 find_referencing_symbols 找出 [OldMethodName] 的所有调用者
+> 2. 将 [OldMethodName] 重命名为 [NewMethodName]
+> 3. 将 [ClassName] 中的 [extractedMethod] 提取到 [TargetClass]
+> 4. 验证所有测试仍然通过
+```
+
+:::
+
+:::details Superpowers TDD 任务
+
+```
+> /superpowers:test-driven-development
+> 实现 [FeatureName] 功能：
+> 1. 先写 [EntityName] 的单元测试
+> 2. 运行 mvn test 确认失败
+> 3. 实现 Entity 和 Repository
+> 4. 写 Service 层测试（Mock Repository）
+> 5. 实现 Service 层
+> 6. 写 Controller 集成测试（@WebMvcTest + MockMvc）
+> 7. 实现 Controller
+> 8. 运行 mvn test 确认全部通过
+```
+
+:::
+
+:::details Gstack 安全审计
+
+```
+> /cso
+> 审查 [ModuleName] 模块的安全性：
+> - SQL 注入风险（检查原生 SQL 查询）
+> - XSS 风险（检查返回给前端的数据）
+> - 认证/授权配置（检查 SecurityConfig）
+> - 敏感数据处理（密码、Token、支付信息）
+> - 依赖安全（检查已知漏洞的依赖版本）
+```
+
+:::
