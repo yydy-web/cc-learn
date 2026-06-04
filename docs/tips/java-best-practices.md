@@ -587,6 +587,95 @@ CodeGraph 支持 Spring 框架路由识别——它能自动解析 `@RestControl
 CodeGraph 的所有处理都在本地完成——源代码不会发送到外部服务。对安全敏感的企业 Java 项目，这是一个重要优势。
 :::
 
+### Serena：Java 符号级重构
+
+[Serena](/guide/advanced/serena) 通过 LSP 为 Java 项目提供 IDE 级的符号操作能力。对 Java 项目而言，Serena 最大的价值在于**精确重构**——重命名跨文件的类和方法、移动符号到新模块、安全删除废弃代码，这些操作通过 LSP 保证原子化和精确性。
+
+#### LSP 后端 vs JetBrains 后端
+
+| 能力 | LSP 后端（免费） | JetBrains 后端（付费） |
+|------|-----------------|----------------------|
+| 符号查找 | ✅ `find_symbol` | ✅ |
+| 符号大纲 | ✅ `get_symbols_overview` | ✅ |
+| 引用查找 | ✅ `find_referencing_symbols` | ✅ |
+| 精确重命名 | ✅ `rename_symbol` | ✅ |
+| 符号体替换 | ✅ `replace_symbol_body` | ✅ |
+| 类型层次 | ❌ | ✅ `type_hierarchy` |
+| 移动符号/文件 | ❌ | ✅ `move_symbol`, `move_file` |
+| 内联重构 | ❌ | ✅ `inline_refactoring` |
+| 安全删除 | ❌ | ✅ `safe_delete` |
+| 交互式调试 | ❌ | ✅ `set_breakpoint`, `evaluate_expression` |
+
+:::info
+如果你使用 IntelliJ IDEA 进行 Java 开发，推荐使用 JetBrains 后端——它能利用 IDEA 的分析引擎，获得类型层次、移动重构和调试能力。
+:::
+
+#### 使用示例
+
+```
+> 把 UserService.authenticate() 重命名为 verifyCredentials()，包括所有 Controller 和测试中的调用
+```
+
+Serena 通过 `rename_symbol` 一次调用完成——LSP 精确找到所有引用，原子化替换。
+
+```
+> 哪些地方调用了 OrderRepository.findByStatus？如果删除这个方法会影响什么？
+```
+
+```
+> 把 PaymentService 中的 calculateTotal 方法提取到 PricingStrategy 类中
+```
+
+JetBrains 后端的 `move_symbol` 会自动处理 import 更新和旧文件清理。
+
+```
+> 查看 OrderService.java 的符号大纲，有哪些公开方法？
+```
+
+#### 安装 Serena
+
+```bash
+# 安装
+uv tool install -p 3.13 serena-agent
+
+# 初始化项目
+serena init
+
+# 注册到 Claude Code
+claude mcp add --scope user serena -- serena
+```
+
+如果你使用 IntelliJ IDEA，可以启用 JetBrains 后端获得更强的重构能力：
+
+```bash
+serena init -b JetBrains
+```
+
+#### Java 推荐配置
+
+```yaml title=".serena/config.yaml"
+backend: lsp  # 或 "JetBrains"（如果使用 IntelliJ IDEA）
+
+tools:
+  find_symbol: true
+  get_symbols_overview: true
+  find_referencing_symbols: true
+  rename_symbol: true
+  replace_symbol_body: true
+  # JetBrains 后端额外可用
+  # move_symbol: true
+  # safe_delete: true
+  # type_hierarchy: true
+  # 禁用基础工具（Claude Code 已提供）
+  read_file: false
+  list_dir: false
+  execute_shell: false
+```
+
+:::tip
+Serena + CodeGraph 是 Java 大型项目的黄金组合：用 CodeGraph 快速探索代码结构和调用链，用 Serena 进行精确的符号级重构。两者通过 MCP 并行运行，互不冲突。
+:::
+
 ## 常见场景
 
 ### Spring Boot REST API 全栈生成
