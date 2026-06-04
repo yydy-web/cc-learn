@@ -496,6 +496,47 @@ Superpowers 严格执行"先测试后代码"规则。如果代码在测试之前
 Superpowers 的头脑风暴阶段会帮你理清需求中的歧义——比如"用户注册"是否需要邮箱验证、密码策略是什么。在 Java 项目中，这些前期决策直接影响 Entity 设计和数据库 Schema，值得花时间在头脑风暴阶段想清楚。
 :::
 
+### Gstack：Java 项目的工程团队
+
+[Gstack](/guide/advanced/gstack) 将 Claude Code 变成虚拟工程团队，为 Java/Spring Boot 项目提供 Staff 级代码审查、QA 测试和安全审计。
+
+#### Java 项目常用命令
+
+| 命令 | 角色 | Java 场景 |
+|------|------|----------|
+| `/plan-eng-review` | 工程经理 | 审查 Spring Boot 架构方案、数据库设计 |
+| `/review` | Staff Engineer | 审查 Java 代码变更，聚焦生产 Bug |
+| `/cso` | 安全负责人 | OWASP Top 10 安全审计，检查 SQL 注入、XSS |
+| `/qa` | QA Lead | 在浏览器中测试 Spring Boot 应用的 API 和 Web 界面 |
+| `/ship` | 发布工程师 | 运行 `mvn test`，审计覆盖率，推送并创建 PR |
+| `/investigate` | 调试专家 | 系统性排查 Java 异常和性能问题 |
+
+#### 使用示例
+
+```
+> /plan-eng-review
+> 审查多租户 SaaS 的架构方案：每个租户独立 Schema 还是共享 Schema + tenant_id？
+```
+
+```
+> /review
+> 在 feature/order-state-machine 分支上审查代码变更
+```
+
+```
+> /cso
+> 审查 Spring Security 配置和 JWT 实现，检查 OWASP Top 10 漏洞
+```
+
+```
+> /ship
+> 运行 mvn verify，确认测试通过后推送到远程并创建 PR
+```
+
+:::info
+Gstack 的 `/review` 会聚焦"能通过 CI 的生产 Bug"——对 Java 项目，它会特别关注空指针异常、资源未关闭、事务边界错误、并发安全等常见问题。配合 `/cso` 安全审查，可以在合并前捕获大部分问题。
+:::
+
 ## 常见场景
 
 ### Spring Boot REST API 全栈生成
