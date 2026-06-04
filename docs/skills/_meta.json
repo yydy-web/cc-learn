@@ -1,5 +1,6 @@
 [
   { "type": "dir-section-header", "name": "overview", "label": "技能概述" },
   { "type": "dir-section-header", "name": "workflow", "label": "开发工作流" },
-  { "type": "dir-section-header", "name": "docs-context", "label": "文档与上下文" }
+  { "type": "dir-section-header", "name": "docs-context", "label": "文档与上下文" },
+  { "type": "dir-section-header", "name": "frontend", "label": "前端框架" }
 ]
