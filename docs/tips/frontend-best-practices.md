@@ -371,6 +371,69 @@ Gstack 的 `/qa` 使用内置的 Playwright 浏览器，会自动遍历页面、
 Gstack 的 `/benchmark` 命令可以测量 LCP（Largest Contentful Paint）、FID（First Input Delay）、CLS（Cumulative Layout Shift）等 Core Web Vitals 指标，帮你定位前端性能瓶颈。
 :::
 
+### CodeGraph：前端代码探索
+
+[CodeGraph](/guide/advanced/codegraph) 为前端项目构建本地代码知识图谱，一次 MCP 调用即可获取完整的组件依赖关系和调用链，避免 Claude Code 反复读取大量 `.tsx` 文件浪费 Token。
+
+#### 前端项目核心能力
+
+| 能力 | 说明 | 前端场景 |
+|------|------|---------|
+| 代码探索 | `codegraph_explore` 一次调用回答问题 | "这个项目怎么处理用户认证？" |
+| 影响分析 | `codegraph_impact` 分析修改影响范围 | "改了 useAuth Hook 会影响哪些页面？" |
+| 调用链追踪 | `codegraph_trace` 追踪完整调用路径 | "从页面到 API 层的数据流" |
+| 调用者查找 | `codegraph_callers` 查找所有调用者 | "哪些组件使用了 UserCard？" |
+| 受影响测试 | `codegraph affected` 找出受影响的测试 | CI 中只运行受影响的测试 |
+
+#### 框架路由识别
+
+CodeGraph 支持 14 个框架的路由识别，对前端项目特别有用：
+
+| 框架 | 路由识别 |
+|------|---------|
+| React Router | 自动识别路由定义和嵌套路由 |
+| Next.js | 识别 App Router / Pages Router 页面 |
+| Vue Router | 识别路由配置和导航守卫 |
+| SvelteKit | 识别文件系统路由 |
+
+#### 使用示例
+
+```
+> 这个前端项目的路由结构是什么？有哪些页面和嵌套路由？
+```
+
+CodeGraph 会通过 `codegraph_explore` 一次调用获取所有路由定义、页面组件和布局组件的完整上下文。
+
+```
+> 如果我修改 src/stores/authStore.ts，会影响哪些页面和组件？
+```
+
+```
+> 追踪从登录页面到 API 层的完整数据流
+```
+
+#### 安装 CodeGraph
+
+```bash
+# npm 安装
+npm i -g @colbymchenry/codegraph
+
+# 配置 AI 工具集成
+codegraph install
+
+# 初始化项目
+cd your-frontend-project
+codegraph init -i
+```
+
+:::tip
+CodeGraph 对前端项目特别有价值——React/Vue 组件的 import 关系复杂，一个组件可能被几十个页面引用。CodeGraph 的 `codegraph_impact` 可以在修改组件前快速了解影响范围，避免改了一个组件导致多个页面出问题。
+:::
+
+:::info
+CodeGraph 的所有处理都在本地完成——源代码不会发送到外部服务。对企业前端项目，这是一个重要优势。
+:::
+
 ## 常见场景
 
 ### 页面全栈生成、表单处理、状态管理、API 集成、组件库集成
