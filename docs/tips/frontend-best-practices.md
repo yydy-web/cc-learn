@@ -1,6 +1,6 @@
 ---
 title: 前端开发最佳实践
-description: 使用 Claude Code 进行前端开发的完整指南，涵盖提示词策略、测试、组件开发和自动化工作流
+description: 使用 Claude Code 进行前端开发的完整指南，涵盖提示词策略、测试、组件开发、工具链集成（ECC、GStack、Superpowers、CodeGraph、Serena）和自动化工作流
 ---
 
 # 前端开发最佳实践
