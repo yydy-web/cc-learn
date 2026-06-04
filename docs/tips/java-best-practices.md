@@ -378,6 +378,22 @@ claude mcp add spring-boot -- npx -y @anthropic-ai/spring-boot-mcp-server
 Claude Code 的训练数据可能不包含最新的 Spring Boot 版本变更。如果你使用 Spring Boot 3.2+，建议安装 MCP 服务器或 [Context7](/guide/advanced/context7) 注入最新文档。
 :::
 
+## 工具链集成
+
+除了上述构建工具外，Claude Code 生态还提供了多个辅助工具，可以在 Java 开发的不同阶段发挥作用。以下介绍五个核心工具在 Java/Spring Boot 项目中的集成方式和典型用法。
+
+| 工具 | 定位 | Java 核心价值 | 安装依赖 |
+|------|------|--------------|---------|
+| [ECC](/tips/ecc) | 全能增强系统 | Java 专属 Agent 和 Spring Boot Skills | Node.js |
+| [Gstack](/guide/advanced/gstack) | 虚拟工程团队 | Staff 级代码审查 + QA + 安全审计 | Bun |
+| [Superpowers](/guide/advanced/superpowers) | 结构化开发方法论 | 强制 TDD + 计划驱动开发 | 无（插件） |
+| [CodeGraph](/guide/advanced/codegraph) | 代码知识图谱 | 快速探索 Java 代码结构 + 影响分析 | Node.js |
+| [Serena](/guide/advanced/serena) | 代码语义工具 | 符号级精确重构（JetBrains 增强） | Python (uv) |
+
+:::tip
+这五个工具可以组合使用——ECC 提供流程编排，Superpowers 保证开发纪律，CodeGraph 和 Serena 提供代码智能，Gstack 负责审查和发布。详见[最佳实践](/tips/best-practices)中的四阶段工作流。
+:::
+
 ## 常见场景
 
 ### Spring Boot REST API 全栈生成
