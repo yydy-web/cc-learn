@@ -509,6 +509,56 @@ tools:
 Serena + CodeGraph 是前端大型项目的黄金组合：用 CodeGraph 快速探索组件依赖关系和路由结构，用 Serena 进行精确的符号级重构（重命名组件、移动 Hook、提取公共逻辑）。两者通过 MCP 并行运行，互不冲突。
 :::
 
+### 工具链组合实战
+
+以下是前端项目中常见的工具组合场景：
+
+#### 场景一：新页面开发（完整流程）
+
+```
+1. Superpowers: /superpowers:brainstorming 探索 UI/UX 需求（布局？交互？响应式？）
+2. Gstack: /plan-design-review 审查设计方案
+3. CodeGraph: codegraph_explore 理解现有路由和组件结构
+4. Superpowers: TDD 驱动实现 → 每个组件先写测试
+5. ECC: typescript-reviewer 审查代码 → security-reviewer 安全审查
+6. Gstack: /qa 在浏览器中测试 → /ship 推送并创建 PR
+```
+
+#### 场景二：组件库重构（语义驱动）
+
+```
+1. CodeGraph: codegraph_impact 分析组件修改影响范围
+2. Serena: find_referencing_symbols 追踪所有 import 引用
+3. Gstack: /plan-eng-review 审查重构方案
+4. Serena: rename_symbol / move_symbol 精确重构
+5. CodeGraph: codegraph_impact 验证变更完整性
+6. Gstack: /review 审查 → /qa 浏览器回归测试
+```
+
+#### 场景三：前端性能优化
+
+```
+1. Gstack: /benchmark 测量 Core Web Vitals 和加载性能
+2. CodeGraph: codegraph_trace 追踪关键渲染路径的组件链
+3. ECC: frontend-patterns skill 分析性能瓶颈
+4. Superpowers: TDD 驱动优化（先写性能基准测试）
+5. Gstack: /benchmark 验证优化效果
+```
+
+#### 场景四：遗留前端项目接管
+
+```
+1. CodeGraph: codegraph_explore 快速理解路由结构和组件关系
+2. Serena: get_symbols_overview 梳理核心组件的 Props 和 Hooks
+3. Gstack: /office-hours 梳理产品需求
+4. ECC: typescript-reviewer 识别代码问题 → security-reviewer 安全扫描
+5. Superpowers: TDD 驱动渐进式重构，每步都有测试覆盖
+```
+
+:::info
+工具组合的核心原则：**CodeGraph / Serena 提供代码智能 → Superpowers / ECC 保证开发纪律 → Gstack 负责审查和发布（内置浏览器测试）**。根据项目规模灵活组合，小型页面可以跳过 Gstack 的规划阶段直接 TDD，大型重构则需要完整的 CodeGraph 影响分析 + Gstack 设计审查。
+:::
+
 ## 常见场景
 
 ### 页面全栈生成、表单处理、状态管理、API 集成、组件库集成
