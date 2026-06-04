@@ -206,6 +206,22 @@ claude mcp add context7 -- npx -y @upstash/context7-mcp@latest
 前端框架迭代速度极快——React 19、Next.js 15、Tailwind v4、Vite 6 等大版本在 2024-2025 年密集发布。Claude Code 的训练数据可能不包含最新 API 变更。建议安装 Context7 MCP 服务器，确保生成的代码使用最新语法。
 :::
 
+## 工具链集成
+
+除了上述构建工具外，Claude Code 生态还提供了多个辅助工具，可以在前端开发的不同阶段发挥作用。以下介绍五个核心工具在前端项目中的集成方式和典型用法。
+
+| 工具 | 定位 | 前端核心价值 | 安装依赖 |
+|------|------|-------------|---------|
+| [ECC](/tips/ecc) | 全能增强系统 | 前端专属 Agent 和 Next.js / React Skills | Node.js |
+| [Gstack](/guide/advanced/gstack) | 虚拟工程团队 | 内置浏览器 QA + 设计审查 + 安全审计 | Bun |
+| [Superpowers](/guide/advanced/superpowers) | 结构化开发方法论 | 强制 TDD + 头脑风暴 + 计划驱动开发 | 无（插件） |
+| [CodeGraph](/guide/advanced/codegraph) | 代码知识图谱 | 快速探索组件依赖关系 + 影响分析 | Node.js |
+| [Serena](/guide/advanced/serena) | 代码语义工具 | 符号级精确重构（VS Code / JetBrains 增强） | Python (uv) |
+
+:::tip
+这五个工具可以组合使用——ECC 提供流程编排，Superpowers 保证开发纪律，CodeGraph 和 Serena 提供代码智能，Gstack 负责审查和发布（内置浏览器可直接测试前端应用）。详见[最佳实践](/tips/best-practices)中的四阶段工作流。
+:::
+
 ## 常见场景
 
 ### 页面全栈生成、表单处理、状态管理、API 集成、组件库集成
