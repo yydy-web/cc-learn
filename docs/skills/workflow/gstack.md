@@ -79,11 +79,11 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 > git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup
 ```
 
-也可通过 [CC-Switch](/skills/skills-marketplace) 市场发现 Gstack 的独立 Skills。
+也可通过 [CC-Switch](/skills/overview/skills-marketplace) 市场发现 Gstack 的独立 Skills。
 
 ## 与其他 Skills 的关系
 
-| 对比 | [Superpowers](/skills/superpowers) | Gstack |
+| 对比 | [Superpowers](/skills/workflow/superpowers) | Gstack |
 |------|-------------------------------------|--------|
 | **定位** | 结构化方法论 | 虚拟工程团队 |
 | **特色** | TDD 强制执行 | 内置浏览器、iOS 测试 |
@@ -92,5 +92,5 @@ Think → Plan → Build → Review → Test → Ship → Reflect
 ## 下一步
 
 - [Gstack 工具包（完整文档）](/guide/advanced/gstack) — 安装、配置和内置浏览器详解
-- [Superpowers 技能生态](/skills/superpowers) — 互补的结构化开发方法论
-- [技能市场](/skills/skills-marketplace) — 浏览和安装社区 Skills
+- [Superpowers 技能生态](/skills/workflow/superpowers) — 互补的结构化开发方法论
+- [技能市场](/skills/overview/skills-marketplace) — 浏览和安装社区 Skills

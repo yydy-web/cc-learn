@@ -51,11 +51,11 @@ Superpowers 的核心是 7 步开发工作流，每一步对应一个或多个 S
 > /plugin install superpowers@claude-plugins-official
 ```
 
-也可通过 [CC-Switch](/skills/skills-marketplace) 市场安装。
+也可通过 [CC-Switch](/skills/overview/skills-marketplace) 市场安装。
 
 ## 与其他 Skills 的关系
 
-| 对比 | Superpowers | [Gstack](/skills/gstack) |
+| 对比 | Superpowers | [Gstack](/skills/workflow/gstack) |
 |------|-------------|--------------------------|
 | **定位** | 结构化方法论 | 虚拟工程团队 |
 | **特色** | TDD 强制执行 | 内置浏览器、QA |
@@ -64,6 +64,6 @@ Superpowers 的核心是 7 步开发工作流，每一步对应一个或多个 S
 ## 下一步
 
 - [Superpowers 插件（完整文档）](/guide/advanced/superpowers) — 安装、配置和七步工作流详解
-- [Gstack 工具包](/skills/gstack) — 互补的工程团队 Skills
-- [自定义技能](/skills/custom-skills) — 创建自己的 Skills
-- [技能市场](/skills/skills-marketplace) — 浏览和安装社区 Skills
+- [Gstack 工具包](/skills/workflow/gstack) — 互补的工程团队 Skills
+- [自定义技能](/skills/overview/custom-skills) — 创建自己的 Skills
+- [技能市场](/skills/overview/skills-marketplace) — 浏览和安装社区 Skills

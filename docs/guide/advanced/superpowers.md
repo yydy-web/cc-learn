@@ -248,7 +248,7 @@ cc-switch skills sync
 ```
 
 :::tip
-Superpowers 的 14 个 Skills 概览和与其他 Skills 工具的关系对比，请参考 [Superpowers 技能生态](/skills/superpowers)。更多 Skills 资源请访问[技能系统](/skills/)。
+Superpowers 的 14 个 Skills 概览和与其他 Skills 工具的关系对比，请参考 [Superpowers 技能生态](/skills/workflow/superpowers)。更多 Skills 资源请访问[技能系统](/skills/)。
 :::
 
 ## 相关资源

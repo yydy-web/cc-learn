@@ -274,4 +274,4 @@ Verify in browser using dev-browser skill
 - [自动化与 CI/CD](/guide/advanced/automation) — 将 Claude Code 集成到自动化流程
 - [Superpowers 插件](/guide/advanced/superpowers) — 互补的结构化开发方法论
 - [OpenSpec 规格驱动开发](/guide/advanced/openspec) — 互补的规格驱动方法
-- [自定义技能](/skills/custom-skills) — 创建和管理自定义 Skills
+- [自定义技能](/skills/overview/custom-skills) — 创建和管理自定义 Skills

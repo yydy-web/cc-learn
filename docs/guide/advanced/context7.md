@@ -243,5 +243,5 @@ npx ctx7 remove
 
 - [MCP 服务器](/guide/advanced/mcp-servers) — 深入了解 MCP 服务器配置
 - [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理 MCP 服务器和 API Provider
-- [自定义技能](/skills/custom-skills) — 创建和管理自定义 Skills
+- [自定义技能](/skills/overview/custom-skills) — 创建和管理自定义 Skills
 - [技巧与最佳实践](/tips/best-practices) — 更多高效使用技巧

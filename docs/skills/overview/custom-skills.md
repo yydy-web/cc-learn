@@ -132,13 +132,13 @@ description: 按照团队规范审查代码改动
 Claude Code 会根据描述自动匹配合适的 Skill。
 
 :::tip
-本页属于[技能系统](/skills/)的一部分。查看更多 Skills 资源：[技能市场](/skills/skills-marketplace) | [Superpowers](/skills/superpowers) | [Gstack](/skills/gstack)
+本页属于[技能系统](/skills/)的一部分。查看更多 Skills 资源：[技能市场](/skills/overview/skills-marketplace) | [Superpowers](/skills/workflow/superpowers) | [Gstack](/skills/workflow/gstack)
 :::
 
 ## 下一步
 
-- [技能市场](/skills/skills-marketplace) — 浏览和安装社区 Skills
-- [Superpowers 插件](/skills/superpowers) — 14 个结构化开发 Skills
-- [Gstack 工具包](/skills/gstack) — 23+ 个工程团队 Skills
+- [技能市场](/skills/overview/skills-marketplace) — 浏览和安装社区 Skills
+- [Superpowers 插件](/skills/workflow/superpowers) — 14 个结构化开发 Skills
+- [Gstack 工具包](/skills/workflow/gstack) — 23+ 个工程团队 Skills
 - [多智能体工作流](/guide/advanced/multi-agent) — 编排多个 Agent 协作完成复杂任务
 - [自动化与 CI/CD](/guide/advanced/automation) — 在自动化流程中使用 Claude Code

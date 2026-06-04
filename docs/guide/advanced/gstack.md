@@ -36,7 +36,7 @@ Garry Tan 使用这套工作流在 60 天内（兼职）发布了 3 个生产服
 在 Claude Code 中粘贴以下命令：
 
 ```
-> git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup
+> git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/workflow/gstack && cd ~/.claude/skills/workflow/gstack && ./setup
 ```
 
 安装脚本会自动：
@@ -65,7 +65,7 @@ Gstack 的核心安装需要运行 `./setup` 脚本来编译浏览器组件。CC
 在项目仓库中启用团队模式，让队友自动获得 Gstack：
 
 ```
-> (cd ~/.claude/skills/gstack && ./setup --team) && ~/.claude/skills/gstack/bin/gstack-team-init required && git add .claude/ CLAUDE.md && git commit -m "require gstack for AI-assisted work"
+> (cd ~/.claude/skills/workflow/gstack && ./setup --team) && ~/.claude/skills/workflow/gstack/bin/gstack-team-init required && git add .claude/ CLAUDE.md && git commit -m "require gstack for AI-assisted work"
 ```
 
 团队模式通过 `SessionStart` Hook 自动更新，无需手动同步。
@@ -267,7 +267,7 @@ Gstack 和 [Superpowers](/guide/advanced/superpowers) 都是 Claude Code 的 Ski
 ## 卸载
 
 ```
-> ~/.claude/skills/gstack/bin/gstack-uninstall
+> ~/.claude/skills/workflow/gstack/bin/gstack-uninstall
 ```
 
 选项：
@@ -275,7 +275,7 @@ Gstack 和 [Superpowers](/guide/advanced/superpowers) 都是 Claude Code 的 Ski
 - `--force`：跳过确认提示
 
 :::tip
-Gstack 的 23+ 个 Skills 按角色分类的概览，请参考 [Gstack 技能生态](/skills/gstack)。更多 Skills 资源请访问[技能系统](/skills/)。
+Gstack 的 23+ 个 Skills 按角色分类的概览，请参考 [Gstack 技能生态](/skills/workflow/gstack)。更多 Skills 资源请访问[技能系统](/skills/)。
 :::
 
 ## 相关资源

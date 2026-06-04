@@ -340,7 +340,7 @@ VueUse 提供了 200+ 个组合式函数，覆盖浏览器 API、状态、传感
 ## 推荐 Vue Skills
 
 :::tip
-更多 Skills 资源请访问[技能系统](/skills/)。Vue Skills 可通过[技能市场](/skills/skills-marketplace)一键安装。
+更多 Skills 资源请访问[技能系统](/skills/)。Vue Skills 可通过[技能市场](/skills/overview/skills-marketplace)一键安装。
 :::
 
 ### Vue Best Practices

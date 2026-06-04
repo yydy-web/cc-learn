@@ -47,12 +47,12 @@ npx ctx7 setup --claude
 
 | 渠道 | 特色 | 适用场景 |
 |------|------|----------|
-| [skills.sh](/skills/skills-marketplace) | 公共注册中心 | 发现社区 Skills |
-| [CC-Switch](/skills/skills-marketplace) | GUI + 跨工具同步 | 批量管理 |
+| [skills.sh](/skills/overview/skills-marketplace) | 公共注册中心 | 发现社区 Skills |
+| [CC-Switch](/skills/overview/skills-marketplace) | GUI + 跨工具同步 | 批量管理 |
 | **ctx7 CLI** | **AI 生成 + 自动推荐** | **智能发现和创建** |
 
 ## 下一步
 
 - [Context7 实时文档（完整文档）](/guide/advanced/context7) — MCP 配置和文档查询
-- [技能市场](/skills/skills-marketplace) — 更多 Skills 发现渠道
-- [自定义技能](/skills/custom-skills) — 手动创建 Skills
+- [技能市场](/skills/overview/skills-marketplace) — 更多 Skills 发现渠道
+- [自定义技能](/skills/overview/custom-skills) — 手动创建 Skills

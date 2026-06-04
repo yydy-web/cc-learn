@@ -49,16 +49,16 @@ description: Ralph 的自主迭代模式——PRD 驱动、新鲜上下文、跨
 > /plugin install ralph-skills@ralph-marketplace
 ```
 
-也可通过 [CC-Switch](/skills/skills-marketplace) 市场发现 Ralph 的 Skills。
+也可通过 [CC-Switch](/skills/overview/skills-marketplace) 市场发现 Ralph 的 Skills。
 
 ## 与其他 Skills 的关系
 
 | 工具 | 侧重点 | 适合场景 |
 |------|--------|----------|
-| [Superpowers](/skills/superpowers) | 单次会话内的结构化方法论 | TDD、头脑风暴、审查 |
-| [Gstack](/skills/gstack) | 交互式工程团队模拟 | 精细控制每个阶段 |
+| [Superpowers](/skills/workflow/superpowers) | 单次会话内的结构化方法论 | TDD、头脑风暴、审查 |
+| [Gstack](/skills/workflow/gstack) | 交互式工程团队模拟 | 精细控制每个阶段 |
 | **Ralph** | **跨迭代的自主循环** | **"放手让它跑"的自主模式** |
-| [OpenSpec](/skills/openspec) | 规格文档管理 | 先定义规格再实现 |
+| [OpenSpec](/skills/workflow/openspec) | 规格文档管理 | 先定义规格再实现 |
 
 :::tip
 可以组合使用：用 OpenSpec 的 `/opsx:propose` 创建需求规格，再用 Ralph 的循环机制自动实现。
@@ -67,5 +67,5 @@ description: Ralph 的自主迭代模式——PRD 驱动、新鲜上下文、跨
 ## 下一步
 
 - [Ralph 自主循环（完整文档）](/guide/advanced/ralph) — 安装、配置和调试技巧
-- [OpenSpec 规格驱动开发](/skills/openspec) — 互补的规格驱动方法
-- [自定义技能](/skills/custom-skills) — 创建自己的 Skills
+- [OpenSpec 规格驱动开发](/skills/workflow/openspec) — 互补的规格驱动方法
+- [自定义技能](/skills/overview/custom-skills) — 创建自己的 Skills
