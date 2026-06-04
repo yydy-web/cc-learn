@@ -13,6 +13,11 @@ npm install          # Install dependencies
 npm run dev          # Start local dev server (rspress dev)
 npm run build        # Production build (rspress build) — output to doc_build/
 npm run preview      # Preview production build locally
+npm run lint         # Lint TypeScript files with oxlint
+npm run lint:fix     # Auto-fix safe lint issues
+npm run fmt          # Format all files with oxfmt
+npm run fmt:check    # Check formatting without modifying files
+npm run check        # Run lint + format check combined
 ```
 
 No test runner is configured. Validate changes by running `npm run build` — a page that works in dev can fail during static generation.
