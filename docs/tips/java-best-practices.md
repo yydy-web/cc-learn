@@ -1056,7 +1056,17 @@ Claude Code 的训练数据可能偏向 Java 8/11 的写法。如果你使用 Ja
 
 # 使用 Context7 获取最新文档
 > 查询 Spring Data JPA 3.2 的 findBy 方法命名规范
+
+# 使用 CodeGraph 快速探索代码
+> codegraph_explore 这个项目的权限控制是怎么实现的？
+
+# 使用 Serena 精确重构
+> 把 UserService.authenticate 重命名为 verifyCredentials，包括所有引用
 ```
+
+:::tip
+在大型 Java 项目中，CodeGraph 可以显著减少 Claude Code 的 Token 消耗——一次 `codegraph_explore` 调用替代多次 `Grep` + `Read`，Token 节省可达 57%。详见 [CodeGraph 代码智能](/guide/advanced/codegraph)。
+:::
 
 ## 提示词模板库
 
