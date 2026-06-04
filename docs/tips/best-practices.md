@@ -193,6 +193,26 @@ Ralph 特别适合"离开电脑，回来时功能已经开发完毕"的场景。
 3. Gstack: /review Staff Engineer 级审查 + /cso 安全审计
 ```
 
+#### 场景五：大型重构（语义驱动）
+
+```
+1. Serena: find_referencing_symbols 分析影响范围
+2. Gstack: /plan-eng-review 审查重构方案
+3. Serena: rename_symbol 精确重命名 → move_symbol 重组模块
+4. CodeGraph: codegraph_impact 验证变更完整性
+5. Gstack: /review 审查 → /qa 测试
+```
+
+#### 场景六：遗留代码接管
+
+```
+1. Serena + CodeGraph: get_symbols_overview + codegraph_explore 快速理解代码结构
+2. Gstack: /office-hours 梳理业务需求
+3. Serena: find_referencing_symbols 追踪核心业务流
+4. OpenSpec: /opsx:propose 基于代码现状创建重构规格
+5. Superpowers: TDD 驱动渐进式重构
+```
+
 ### 实时文档注入（Context7）
 
 安装 [Context7](/guide/advanced/context7) 后，Claude Code 会自动查询最新的库文档：
@@ -202,6 +222,27 @@ npx ctx7 setup --claude
 ```
 
 之后 Claude Code 在使用库/框架时会自动获取最新文档，避免 API 幻觉和过时代码。特别适合使用快速迭代的库（如 Next.js、React Router）。
+
+### 代码语义辅助（Serena）
+
+安装 [Serena](/guide/advanced/serena) 后，Claude Code 获得 IDE 级的符号级代码操作能力：
+
+```bash
+uv tool install -p 3.13 serena-agent
+serena init
+claude mcp add --scope user serena -- serena
+```
+
+Serena 在四阶段工作流中的价值：
+
+- **Gstack 阶段**：用 `find_referencing_symbols` 分析变更影响范围，辅助架构审查
+- **OpenSpec 阶段**：用 `get_symbols_overview` 快速理解现有代码结构，为规格文档提供准确的现状描述
+- **Superpowers 阶段**：用 `rename_symbol`、`replace_symbol_body` 进行精确的符号级重构，比文本替换更安全
+- **Ralph 阶段**：在自主迭代中，语义操作减少误改风险，提高大型重构的可靠性
+
+:::tip
+Serena 特别适合重构密集型任务——重命名跨文件的符号、移动函数到新模块、安全删除废弃代码。这些操作用文本搜索容易出错，Serena 通过 LSP 保证原子化和精确性。
+:::
 
 ## 省钱技巧
 
