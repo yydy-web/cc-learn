@@ -603,9 +603,177 @@ Superpowers 会监控 Git 提交频率。如果检测到大量代码改动但没
 Phase 3 的产出是一组通过测试的组件代码和详细的 Git 提交历史。这些提交记录了从失败测试到完整实现的每一步演进，为 Phase 4 的 Code Review 提供了清晰的变更脉络。Code Review 工具（GStack + Serena）会基于这些提交逐一审查实现质量，确保代码既符合规格文档的要求，又满足团队的编码规范。
 :::
 
-## Phase 4: 审查测试（GStack + Serena）
+## Phase 4: 审查测试（GStack + Serena + ECC）
 
-:::info 内容编写中...
+Phase 3 产出了通过测试的组件代码和完整的 Git 提交历史。进入 Phase 4 后，重心从"写代码"转向"验证代码"——通过 Code Review 发现潜在问题，通过浏览器测试验证真实交互，通过安全审计排除风险。这个阶段涉及三类工具的协同：GStack 负责自动化 QA 和代码审查，Serena 负责基于审查结论的精确重构，ECC（Extra Claude Code）负责安全层面的专项检查。
+
+### GStack 内置浏览器 QA
+
+GStack 内置了完整的 Chromium 浏览器环境，可以通过 `/qa` 命令直接在真实浏览器中测试前端应用。这比手动打开浏览器逐页点击高效得多——GStack 会自动遍历页面、填写表单、点击按钮，并报告发现的问题。
+
+#### /qa 命令
+
+`/qa` 启动一个 Chromium 实例，加载指定的 URL，然后按照你描述的测试步骤自动执行交互。它会截图记录每一步的结果，如果遇到报错、白屏、布局异常等问题会立即标记。
+
+```
+> /qa https://localhost:5173
+```
+
+GStack 会打开本地开发服务器，从首页开始自动遍历所有可达页面，检查是否有 JavaScript 报错、网络请求失败、布局错位等基础问题。
+
+#### 完整示例：商品对比功能 QA
+
+在实际项目中，通常会针对特定功能编写更精确的测试指令：
+
+```
+> /qa https://localhost:5173
+> 测试商品对比功能：
+> - 添加商品到对比面板是否正常
+> - 对比表格在移动端是否变为纵向卡片
+> - 移除商品后面板状态是否正确
+> - 空对比面板是否有友好提示
+```
+
+GStack 会依次执行每个测试步骤：先导航到商品列表页，点击"加入对比"按钮，验证对比面板是否出现；然后模拟移动端视口（375px 宽度），检查对比表格是否切换为纵向卡片布局；接着移除一件商品，验证面板状态是否正确更新；最后清空所有商品，验证空状态是否有友好的提示文案。每一步都会截图，你可以直接在终端中看到浏览器的实际渲染结果。
+
+:::tip 测试环境要求
+使用 `/qa` 前确保开发服务器已启动（`npm run dev` 或 `pnpm dev`）。GStack 的 Chromium 实例会连接到你指定的 URL，如果服务器未启动会直接报连接失败。
+:::
+
+### GStack 代码审查
+
+浏览器 QA 验证的是"功能是否正常工作"，代码审查则关注"代码是否写得足够好"。GStack 提供了三个层次的审查命令，从代码质量到安全漏洞逐层深入。
+
+#### /review：Staff Engineer 级别审查
+
+`/review` 模拟一位高级工程师的 Code Review 视角，审查代码的可读性、可维护性、性能和架构设计。
+
+```
+> /review
+> 审查 feature/product-comparison 分支的前端代码变更
+```
+
+GStack 会分析该分支相对于 main 的所有变更，输出类似以下结构的审查意见：
+
+```
+审查报告 — feature/product-comparison
+
+🟡 建议改进:
+  - src/features/comparison/ComparisonTable.tsx:142
+    useComparisonData Hook 内部有 3 层嵌套的 .map()，建议提取为独立的转换函数
+  - src/features/comparison/ComparisonBar.tsx:67
+    拖拽排序使用了 index 作为 key，在动态列表中可能导致渲染异常
+
+🟢 亮点:
+  - 类型定义完整，ComparisonProduct 接口覆盖了所有使用场景
+  - 对比差异高亮的实现简洁高效，使用 CSS 变量而非内联样式
+```
+
+#### /cso：OWASP Top 10 安全审计
+
+`/cso`（Chief Security Officer）专注于安全层面的审查，对标 OWASP Top 10 风险清单。对于前端项目，重点关注 XSS、CSRF、不安全的第三方依赖等风险。
+
+```
+> /cso
+> 审查 feature/product-comparison 分支的安全风险
+```
+
+GStack 会扫描代码中的安全敏感点：是否有未转义的用户输入直接渲染到 DOM？是否有 `dangerouslySetInnerHTML` 的使用？API 请求是否携带了 CSRF Token？依赖版本是否存在已知漏洞？
+
+#### /benchmark：Core Web Vitals 测量
+
+`/benchmark` 在真实浏览器环境中测量页面的核心性能指标（LCP、FID、CLS），帮你发现性能回退。
+
+```
+> /benchmark https://localhost:5173/compare
+```
+
+GStack 会加载对比页面，记录 Largest Contentful Paint、First Input Delay 和 Cumulative Layout Shift 的实际数值，并与行业基准（Good / Needs Improvement / Poor）做对比。如果某个指标超标，会指出具体是哪个元素导致的。
+
+### Serena 精确重构
+
+GStack 的 `/review` 会产出具体的改进意见，但修改代码时需要精确操作——不能只是模糊地说"重命名这个组件"，而要确保所有引用点都同步更新。这正是 Serena 的强项。
+
+当审查发现问题时，用 Serena 的符号级操作进行精确重构：
+
+```
+> 审查发现 ComparisonTable 命名不够语义化：
+> 1. 用 find_referencing_symbols 找出所有引用
+> 2. 用 rename_symbol 重命名为 ProductComparisonTable
+> 3. 验证所有测试仍然通过
+```
+
+这个流程确保了重命名的安全性：第一步列出所有引用位置（import 语句、JSX 使用、类型引用、测试文件），第二步一次性替换所有引用，第三步运行测试确认没有遗漏。整个过程由 Serena 的 LSP 能力保证精确——不会出现手动替换遗漏某个引用导致的运行时错误。
+
+#### move_symbol：移动文件位置
+
+审查意见中另一类常见问题是文件组织不合理——比如一个通用 Hook 被放在了某个业务组件目录下。Serena 的 `move_symbol` 可以安全地将符号移动到新位置，同时更新所有导入路径：
+
+```
+> 审查发现 useComparisonData 放在了 features/comparison/ 目录下，
+> 但它是一个通用 Hook，应该移到 hooks/ 目录：
+> 1. 用 move_symbol 将 useComparisonData 移到 src/hooks/useComparisonData.ts
+> 2. 确认所有导入路径已自动更新
+> 3. 运行测试验证
+```
+
+### ECC 安全审查
+
+ECC（Extra Claude Code）是一组专门的审查 Agent，每个 Agent 聚焦一个特定维度。相比 GStack 的 `/review` 做全面审查，ECC 的 Agent 更适合做深度专项检查。
+
+#### typescript-reviewer：类型安全检查
+
+检查 TypeScript 类型定义是否完整、是否有滥用 `any` 的地方、泛型约束是否合理、类型守卫是否正确。
+
+```
+> 使用 typescript-reviewer 检查商品对比功能的类型安全性
+```
+
+typical findings: 某个 API 响应的类型定义缺少可选字段标记、某个事件处理函数的参数类型过于宽泛（`e: any` 而非 `e: React.ChangeEvent`）。
+
+#### security-reviewer：XSS 风险检查
+
+专门扫描 XSS 攻击面。重点检查：`dangerouslySetInnerHTML` 的使用是否安全、URL 参数是否经过转义、用户输入是否直接拼接到 HTML 中、第三方组件库是否已知存在 XSS 漏洞。
+
+```
+> 使用 security-reviewer 检查 XSS 风险
+```
+
+前端项目中最常见的 XSS 风险来自两个地方：一是富文本渲染（使用了 `dangerouslySetInnerHTML` 但未做 sanitize），二是 URL 参数直接渲染到页面（`location.search` 未经转义就显示在页面上）。security-reviewer 会精确定位这些位置并给出修复建议。
+
+#### frontend-patterns：组件设计模式检查
+
+审查组件设计是否符合 React 最佳实践：组件是否过大需要拆分、状态是否放在了正确的层级、是否有不必要的 re-render、自定义 Hook 的职责是否单一。
+
+```
+> 使用 frontend-patterns 检查组件设计模式
+```
+
+frontend-patterns 会检查：组件行数是否超过 300 行（建议拆分）、`useEffect` 的依赖数组是否完整、是否在渲染过程中创建了新的对象引用（导致不必要的 re-render）、Context 的 value 是否做了 memoization。
+
+### Git PR 创建
+
+审查和重构全部完成后，最后一步是将代码合并到主干。Claude Code 可以直接通过 `gh` CLI 创建 Pull Request：
+
+```
+> 帮我创建一个 PR，目标分支是 main，标题和描述用英文
+```
+
+Claude Code 会自动执行以下步骤：
+
+1. 推送当前分支到远程仓库（`git push -u origin feature/product-comparison`）
+2. 分析该分支相对于 main 的所有提交，生成 PR 描述
+3. 调用 `gh pr create` 创建 PR，自动填充标题、描述和变更摘要
+4. 返回 PR 链接供你审查
+
+生成的 PR 描述会包含：功能概述、技术方案摘要、变更文件列表、测试覆盖情况。你可以在 GitHub 上补充截图、关联 Issue、指派 Reviewer。
+
+:::warning 合并前的最终检查
+在点击 Merge 按钮之前，建议在 PR 页面确认三件事：CI 流水线是否全部通过、GStack 的 `/review` 意见是否都已处理、是否有未解决的 TODO 注释。这三道关卡确保合并到 main 的代码是经过充分验证的。
+:::
+
+:::tip 阶段衔接
+Phase 4 的产出是一个已审查、已测试、已创建 PR 的功能分支。这个分支包含了通过浏览器 QA 验证的功能实现、通过代码审查和安全审计的高质量代码、以及完整的 PR 描述和讨论记录。这些一起构成 Phase 5 发布自动化的输入——PR 合并后触发 CI/CD 流水线，自动完成构建、部署和发布后的监控。
 :::
 
 ## Phase 5: 发布自动化（Ralph + Git + CI/CD）
