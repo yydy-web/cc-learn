@@ -205,9 +205,222 @@ Tailwind CSS v4 用 CSS-native 的 `@theme` 指令替代了 `tailwind.config.js`
 探索分析阶段的产出直接喂入下一阶段的规划工作：CodeGraph 生成的依赖图谱帮助 OpenSpec 划定变更范围和编写精确的规格文档；Serena 的符号信息帮助 GStack 架构审查时快速定位关键模块；Context7 查询到的最新 API 确保规格文档中的技术方案基于当前版本而非过时用法。
 :::
 
-## Phase 2: 规划规格（GStack + OpenSpec）
+## Phase 2: 规划规格（GStack + OpenSpec + Spec-Kit + Git 分支）
 
-:::info 内容编写中...
+Phase 1 产出了代码结构理解、符号信息和最新 API 知识。Phase 2 的任务是将这些探索发现转化为**结构化的开发计划**——明确要做什么、怎么做、分几步做。这个阶段同时建立 Git 分支隔离，确保开发过程不影响主干代码。
+
+整个规划阶段的产出物有两样：一份可追溯的规格文档（由 OpenSpec 或 Spec-Kit 生成）和一个独立的 Git 分支。两者一起构成进入 Phase 3 实现阶段的输入。
+
+### Git 分支策略
+
+Claude Code 可以直接操作 Git，无需手动切换终端。规划阶段的第一步就是创建特性分支。
+
+#### 创建特性分支
+
+```
+> 从 main 创建 feature/user-settings 分支
+```
+
+Claude Code 会执行 `git checkout -b feature/user-settings`，后续所有改动都提交到这个分支上。分支命名建议遵循 `feature/`、`fix/`、`refactor/` 等前缀，保持语义清晰。
+
+#### Git Worktree 隔离开发
+
+当你需要同时处理多个特性分支时，Git Worktree 可以避免反复 `stash` 和 `checkout`。Superpowers 提供了 `using-git-worktrees` 技能，会自动创建工作树并切换到隔离的工作目录：
+
+```
+> 使用 worktree 开发 feature/payment-flow 分支
+```
+
+Superpowers 会在 `.claude/worktrees/` 下创建独立的工作目录，当前会话自动切换进去。你可以在一个终端继续处理 `feature/user-settings`，在另一个终端处理 `feature/payment-flow`，互不干扰。
+
+#### Conventional Commits
+
+提交代码时，Claude Code 会按照 Conventional Commits 格式自动生成 commit message：
+
+```
+> 提交改动，commit message 用英文，格式遵循 Conventional Commits
+```
+
+生成的 commit message 示例：
+
+```
+feat(product): add product comparison table component
+
+- Implement ComparisonTable with drag-and-drop column reorder
+- Add comparison attribute selector dropdown
+- Support up to 4 products side by side
+```
+
+规范的 commit history 让后续的变更追溯、自动生成 CHANGELOG 和语义化版本管理成为可能。
+
+### GStack 需求探索
+
+在写规格文档之前，先用 GStack 的需求探索命令挖掘真实需求。很多团队直接跳过这一步就开始写代码，结果做到一半发现需求理解有偏差，不得不推翻重来。GStack 的 `/office-hours` 通过 6 个核心问题帮你避免这种情况。
+
+#### /office-hours：6 个核心问题挖掘需求
+
+```
+> /office-hours
+> 我想给电商前端添加商品对比功能
+```
+
+GStack 会依次引导你回答以下问题：
+
+1. **用户是谁？** —— 目标用户群体、使用场景
+2. **用户要解决什么问题？** —— 当前没有对比功能时，用户怎么做？痛点在哪？
+3. **成功的样子是什么？** —— 可量化的指标（对比完成率、转化率提升）
+4. **有什么约束？** —— 技术限制、时间限制、设计规范
+5. **哪些是必须做的？哪些是可选的？** —— MVP 范围划定
+6. **有哪些已知风险？** —— 第三方依赖、性能瓶颈、数据一致性
+
+每个问题 GStack 会追问细节，帮你把模糊的想法变成清晰的需求定义。整个过程通常需要 10-15 分钟，比事后返工划算得多。
+
+#### /plan-ceo-review：商业价值审查
+
+需求明确后，从商业视角审视方案的合理性：
+
+```
+> /plan-ceo-review
+```
+
+GStack 会评估：这个功能对业务指标（转化率、客单价、留存）的预期影响是什么？是否有投入产出比更高的替代方案？是否符合产品路线图的整体方向？
+
+#### /plan-eng-review：技术架构审查
+
+确认商业价值可行后，从技术视角审查架构方案：
+
+```
+> /plan-eng-review
+```
+
+GStack 会审查：技术选型是否合理？与现有架构是否兼容？性能影响如何？是否有更简洁的实现方式？这个审查的结论直接指导规格文档中的技术方案章节。
+
+#### /plan-design-review：UI 设计质量审查
+
+如果涉及 UI 变更，还需要审查设计方案的用户体验：
+
+```
+> /plan-design-review
+```
+
+GStack 会评估：交互流程是否符合用户习惯？响应式适配方案是否完整？无障碍访问（a11y）是否达标？视觉层次是否清晰？
+
+### OpenSpec 规格文档
+
+需求探索完成后，用 OpenSpec 将分析结果沉淀为结构化的规格文档。规格文档不是一次性产物——它会被提交到 Git，成为项目的持久化文档，后续维护和迭代时都可以回溯。
+
+#### 安装与初始化
+
+```bash
+npm install -g @fission-ai/openspec@latest
+openspec init
+```
+
+`openspec init` 会在项目根目录创建 `.openspec/` 目录，包含配置文件和规格模板。
+
+#### 三步工作流
+
+OpenSpec 的核心工作流只有三步：
+
+| 步骤 | 命令 | 作用 |
+|------|------|------|
+| 1. Propose | `openspec propose` | 基于需求分析生成规格草案 |
+| 2. Apply | `openspec apply` | 将规格应用到项目中（生成目录结构、组件骨架等） |
+| 3. Archive | `openspec archive` | 归档当前规格，为下一轮迭代腾出空间 |
+
+#### 完整示例：商品对比功能规格
+
+以 Phase 1 探索分析 + GStack 需求探索的结果为输入，生成规格文档：
+
+```
+> /openspec-propose
+> 基于 office-hours 的讨论结果，为商品对比功能生成规格文档
+```
+
+OpenSpec 会生成类似以下结构的规格文档（保存在 `.openspec/specs/product-comparison.md`）：
+
+```markdown
+# 商品对比功能规格
+
+## 概述
+允许用户选择最多 4 件商品进行属性对比，帮助购买决策。
+
+## 用户故事
+- 作为消费者，我想要对比多件商品的关键属性，以便做出更好的购买决策
+- 作为消费者，我想要保存对比列表，以便稍后继续查看
+
+## 功能需求
+### 对比栏（Comparison Bar）
+- 页面底部悬浮栏，显示已选商品缩略图
+- 支持拖拽排序、单个移除、全部清空
+- 最多 4 件商品，达到上限时提示用户
+
+### 对比页面（/compare）
+- 表格布局，左侧为属性名称，右侧为各商品值
+- 属性分组：基本信息、规格参数、价格信息、用户评分
+- 高亮差异行（可切换仅显示差异）
+- 支持导出为图片（html2canvas）
+
+## 技术方案
+- 状态管理：Zustand store（compareStore），持久化到 localStorage
+- 路由：/compare 作为独立页面，对比栏组件全局挂载
+- 组件：ComparisonBar、ComparisonTable、AttributeGroup、DiffHighlight
+- API：复用现有商品详情接口，批量查询（POST /products/batch）
+
+## 验收标准
+- [ ] 对比栏支持拖拽排序
+- [ ] 对比表格在移动端水平滚动
+- [ ] 差异高亮默认开启
+- [ ] 导出图片包含品牌 Logo 和时间戳
+```
+
+规格文档生成后，执行 `openspec apply` 将其应用到项目中——OpenSpec 会根据规格中的组件列表创建骨架文件。最后将规格文档提交到 Git：
+
+```
+> 将 .openspec/ 目录下的规格文档提交到 Git
+```
+
+规格文档作为项目文档的一部分被版本控制，任何人都可以通过 `git log` 追踪需求的演变过程。
+
+### Spec-Kit 替代方案
+
+:::tip 复杂项目推荐 Spec-Kit
+对于涉及多个服务、需要大量需求澄清的复杂项目，可以使用 Spec-Kit 替代 OpenSpec。Spec-Kit 提供了更细粒度的需求分析流程：
+:::
+
+Spec-Kit 的工作流分为四步：
+
+1. **`/speckit.specify`** —— 编写初始规格，描述功能意图
+2. **`/speckit.clarify`** —— 自动追问需求细节，填补规格空白
+3. **`/speckit.plan`** —— 基于完整规格生成技术方案
+4. **`/speckit.tasks`** —— 将方案拆解为可执行的开发任务
+
+其中 `/speckit.clarify` 是关键步骤。它会自动识别规格中的模糊点并追问：
+
+```
+> /speckit.clarify
+
+自动生成的澄清问题：
+- 对比属性是否支持用户自定义？还是固定为系统预设？
+- 是否支持导出对比结果？导出格式是什么（图片/PDF/CSV）？
+- 对比数据是否需要登录后才能保存？
+- 对比栏在商品下架后如何处理？移除还是显示下架标记？
+```
+
+这些追问帮你提前发现遗漏需求，避免开发到一半才发现规格不完整。
+
+### 阶段总结
+
+Phase 2 的产出包括：
+
+- **Git 特性分支** —— 独立的开发环境，不影响主干
+- **规格文档** —— 结构化的需求定义和技术方案，已提交到 Git
+- **GStack 审查结论** —— 商业价值、技术架构、UI 设计三个维度的审查结果
+
+这些产出物一起构成 Phase 3 TDD 实现阶段的完整输入：规格文档定义了"做什么"，技术方案定义了"怎么做"，Git 分支提供了"在哪里做"。
+
+:::tip 阶段衔接
+规格文档中的验收标准会直接转化为 Phase 3 的测试用例。GStack 的技术方案审查结论指导 Superpowers 选择正确的 TDD 策略。Git 分支确保整个实现过程在隔离环境中进行，随时可以安全地回退。
 :::
 
 ## Phase 3: TDD 实现（Superpowers + CodeGraph + Context7）
