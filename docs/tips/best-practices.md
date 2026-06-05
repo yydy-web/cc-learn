@@ -207,7 +207,8 @@ Ralph 特别适合"离开电脑，回来时功能已经开发完毕"的场景。
 ```
 1. CodeGraph: 快速探索代码结构
 2. Code Review Graph: Blast-Radius 影响分析
-3. Gstack: /review Staff Engineer 级审查 + /cso 安全审计
+3. Graphify: 多模态知识图谱（适用于混合材料场景）
+4. Gstack: /review Staff Engineer 级审查 + /cso 安全审计
 ```
 
 #### 场景五：大型重构（语义驱动）
@@ -333,8 +334,9 @@ Spec-Kit 在四阶段工作流中的价值：
 2. Serena: find_referencing_symbols 追踪敏感数据流向
 3. ECC: security-reviewer agent 逐模块审查安全问题
 4. Code Review Graph: Blast-RADIUS 影响分析
-5. Superpowers: TDD 驱动安全修复 → 回归测试
-6. ECC: security-review skill 最终审查
+5. Graphify: 多模态知识图谱（适用于混合材料场景）
+6. Superpowers: TDD 驱动安全修复 → 回归测试
+7. ECC: security-review skill 最终审查
 ```
 
 #### 业务场景三：跨语言微服务重构
