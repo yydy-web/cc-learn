@@ -423,9 +423,184 @@ Phase 2 的产出包括：
 规格文档中的验收标准会直接转化为 Phase 3 的测试用例。GStack 的技术方案审查结论指导 Superpowers 选择正确的 TDD 策略。Git 分支确保整个实现过程在隔离环境中进行，随时可以安全地回退。
 :::
 
-## Phase 3: TDD 实现（Superpowers + CodeGraph + Context7）
+## Phase 3: TDD 实现（Superpowers + CodeGraph + Context7 + Git 提交）
 
-:::info 内容编写中...
+Phase 2 产出了规格文档和特性分支，现在进入实际编码阶段。这个阶段的核心原则是**测试驱动开发（TDD）**——先写测试，再写实现，最后重构。Superpowers 强制执行 TDD 纪律，CodeGraph 在实现过程中提供实时的代码结构导航，Context7 确保你使用的 API 是最新版本，Git 频繁提交则保证每一步都可追溯、可回退。
+
+### Superpowers TDD 铁律
+
+Superpowers 的 TDD 工作流有三条铁律，违反任何一条都会被强制回退：
+
+| 铁律 | 含义 | 后果 |
+|------|------|------|
+| **没有设计不写代码** | 必须先有规格文档或明确的设计方案 | Superpowers 会拒绝执行，要求先完成 Phase 2 |
+| **没有测试不写代码** | 必须先编写失败的测试用例 | 先写的实现代码会被删除，强制回到测试步骤 |
+| **没有验证不算完成** | 所有测试必须通过才能进入下一步 | 无法进入 Code Review 或下一阶段 |
+
+#### 前端 TDD 循环
+
+前端 TDD 遵循经典的三色循环，但工具链换成了 Vitest + React Testing Library：
+
+```
+🔴 RED    → 编写失败的测试（Vitest + React Testing Library）
+🟢 GREEN  → 编写最少量的代码让测试通过
+🔵 REFACTOR → 重构代码，保持测试绿色
+```
+
+每个循环聚焦一个小功能点，通常 15–30 分钟完成一轮。整个组件的实现由多个这样的小循环串联而成。
+
+#### 完整示例：商品对比面板
+
+以 Phase 2 规格文档中的商品对比功能为例，展示 Superpowers 的完整 TDD 流程：
+
+```
+> 使用 Superpowers 工作流，实现商品对比面板：
+> 1. 头脑风暴确认需求（对比属性列表？最多几个？响应式？）
+> 2. 编写组件测试（Vitest + React Testing Library）
+> 3. 运行 pnpm test 确认失败
+> 4. 实现静态 UI（JSX + Tailwind CSS）
+> 5. 添加交互逻辑（添加/移除商品、属性切换）
+> 6. 接入 API 层（React Query）
+> 7. 运行 pnpm test 确认全部通过
+```
+
+Superpowers 会严格按照这个顺序执行。第一步的头脑风暴会回顾 Phase 2 的规格文档，确认验收标准。第二步先写测试，典型测试用例如下：
+
+```tsx
+// ComparisonPanel.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { ComparisonPanel } from './ComparisonPanel';
+
+describe('ComparisonPanel', () => {
+  it('渲染对比表格，左侧为属性名称', () => {
+    render(<ComparisonPanel products={mockProducts} />);
+    expect(screen.getByText('价格')).toBeInTheDocument();
+    expect(screen.getByText('重量')).toBeInTheDocument();
+  });
+
+  it('支持添加商品到对比列表（最多 4 件）', () => {
+    render(<ComparisonPanel />);
+    fireEvent.click(screen.getByText('添加对比'));
+    expect(screen.getAllByTestId('comparison-item')).toHaveLength(1);
+  });
+
+  it('超过 4 件时显示提示', () => {
+    render(<ComparisonPanel products={fiveProducts} />);
+    expect(screen.getByText('最多支持 4 件商品对比')).toBeInTheDocument();
+  });
+});
+```
+
+写完测试后执行 `pnpm test`，三个测试全部失败（RED）。然后 Superpowers 依次编写静态 UI、交互逻辑和 API 接入，每一步完成后都运行测试验证（GREEN）。最后进行代码重构——提取子组件、优化渲染性能——同时确保测试依然通过（REFACTOR）。
+
+:::warning Superpowers 强制"测试先行"
+Superpowers 会在每次代码提交前检查是否有对应的测试文件。如果发现先写了实现代码而没有测试，Superpowers 会删除已写的代码并要求你先补写测试。这不是建议，而是强制规则——它的设计理念是"测试是代码的规格说明"，没有规格的代码等同于没有设计。
+:::
+
+### CodeGraph 实时辅助
+
+在 TDD 的实现阶段，CodeGraph 从 Phase 1 的"前期探索"转变为"实时辅助"角色。你不再需要手动搜索文件和翻阅代码——CodeGraph 在实现过程中持续提供结构化的代码导航。
+
+#### 组件结构探索
+
+在编写新组件之前，用 `codegraph_explore` 快速了解现有组件的组织方式：
+
+```
+> 用 codegraph_explore 查看 src/features/product/ 目录下的组件结构
+```
+
+CodeGraph 会输出该目录下所有组件的层级关系、导出接口和依赖关系，帮助你决定新组件应该放在哪里、如何与现有结构保持一致。
+
+#### 调用方追踪
+
+当你需要复用某个 UI 组件但不确定它的使用方式时，`codegraph_callers` 可以快速找到所有使用该组件的地方：
+
+```
+> 用 codegraph_callers 找出哪些页面使用了 ProductCard 组件
+```
+
+CodeGraph 会列出所有引用 `ProductCard` 的文件和具体的使用方式（传了哪些 props、在什么上下文中使用）。这比手动 Grep + Read 效率高得多——一次 `codegraph_explore` 调用通常可以替代 3-4 次 Grep 和 Read 的组合操作，节省约 57% 的 token 消耗。
+
+#### Token 效率对比
+
+| 方式 | 操作次数 | Token 消耗 | 准确度 |
+|------|---------|-----------|--------|
+| 手动搜索 | Grep + Read × 多次 | 基准值 | 依赖搜索关键词 |
+| CodeGraph | 1 次 explore | 节省 57% | 结构化输出，无遗漏 |
+
+在长对话中，token 效率的累积优势非常明显。一个组件的实现过程可能需要 5-8 次代码结构查询，使用 CodeGraph 可以将这部分的 token 消耗从约 8000 降到约 3500。
+
+### Context7 文档注入
+
+实现阶段经常需要查阅框架 API 文档——一个新的 Hook 怎么用、某个 CSS 特性的浏览器兼容性、第三方库的最新配置方式。Context7 在 TDD 循环中持续提供最新的文档支持。
+
+#### React 19 新 API 查询
+
+```
+> 查询 React 19 的 useActionState 用法
+```
+
+Context7 会拉取 React 官方文档中 `useActionState` 的完整说明，包括函数签名、参数解释、使用示例和注意事项。这比让 Claude 基于训练数据回答更可靠，因为 React 19 的 API 在正式发布前后经历了多次调整。
+
+#### Tailwind CSS v4 新语法查询
+
+```
+> 查询 Tailwind CSS v4 的 @theme 指令
+```
+
+Tailwind CSS v4 用 CSS-native 的 `@theme` 指令替代了 JavaScript 配置文件，配置方式完全不同。在实现 UI 组件时，Context7 确保你使用正确的 v4 语法，而不是沿用 v3 的 `tailwind.config.js` 写法。
+
+#### 在 TDD 循环中的使用时机
+
+Context7 的查询通常发生在 TDD 循环的 GREEN 阶段——你已经写好了失败的测试（RED），现在需要用正确的 API 实现功能。在写实现代码之前，花 30 秒查询一次 Context7，可以避免写错 API 然后花 10 分钟调试的尴尬。
+
+### Git 频繁提交
+
+TDD 的每个小循环完成后都应该提交一次 Git。频繁提交的好处是：每一步都有可回退的检查点，出了问题可以精确定位是哪一步引入的。
+
+#### 提交时机
+
+| 时机 | 提交内容 | 示例 |
+|------|---------|------|
+| RED 完成后 | 失败的测试用例 | `test(comparison): add initial test cases for ComparisonPanel` |
+| GREEN 完成后 | 通过测试的实现代码 | `feat(comparison): implement ComparisonPanel static UI` |
+| REFACTOR 完成后 | 重构后的代码 | `refactor(comparison): extract AttributeGroup subcomponent` |
+| 功能完整后 | 完整的功能模块 | `feat(comparison): add comparison bar with drag-and-drop` |
+
+#### 提交示例
+
+```
+> 提交商品对比面板的类型定义和静态 UI
+```
+
+Claude Code 会自动生成 Conventional Commits 格式的 commit message：
+
+```
+feat(comparison): add product comparison panel static UI
+
+- Define ComparisonProduct and ComparisonAttribute types
+- Implement ComparisonPanel with table layout
+- Add responsive grid for mobile scrolling
+```
+
+```
+> 提交交互逻辑和状态管理代码
+```
+
+```
+feat(comparison): add interaction logic and state management
+
+- Implement add/remove product actions in compareStore
+- Add attribute group toggle (expand/collapse)
+- Wire React Query for batch product data fetching
+```
+
+#### 与 Superpowers 的协作
+
+Superpowers 会监控 Git 提交频率。如果检测到大量代码改动但没有对应的提交，它会提醒你先提交当前进度。这避免了"一口气写完再提交"导致的巨型 commit——巨型 commit 一旦需要回退，代价极高。
+
+:::tip 阶段衔接
+Phase 3 的产出是一组通过测试的组件代码和详细的 Git 提交历史。这些提交记录了从失败测试到完整实现的每一步演进，为 Phase 4 的 Code Review 提供了清晰的变更脉络。Code Review 工具（GStack + Serena）会基于这些提交逐一审查实现质量，确保代码既符合规格文档的要求，又满足团队的编码规范。
 :::
 
 ## Phase 4: 审查测试（GStack + Serena）
