@@ -776,7 +776,249 @@ Claude Code 会自动执行以下步骤：
 Phase 4 的产出是一个已审查、已测试、已创建 PR 的功能分支。这个分支包含了通过浏览器 QA 验证的功能实现、通过代码审查和安全审计的高质量代码、以及完整的 PR 描述和讨论记录。这些一起构成 Phase 5 发布自动化的输入——PR 合并后触发 CI/CD 流水线，自动完成构建、部署和发布后的监控。
 :::
 
-## Phase 5: 发布自动化（Ralph + Git + CI/CD）
+## Phase 5: 发布自动化（Ralph + Hooks + CI/CD）
 
-:::info 内容编写中...
+Phase 4 产出了已审查、已测试、已创建 PR 的功能分支。Phase 5 的任务是将发布流程自动化——从批量任务执行、代码格式化、类型检查到 CI/CD 流水线和 PR 创建，尽可能减少人工操作环节。这个阶段的核心工具是 Ralph（自主循环执行批量任务）、Claude Code Hooks（自动化代码质量检查）和 GitHub Actions（CI/CD 集成）。
+
+### Ralph 自主循环
+
+Ralph 是一个让 Claude Code 自主迭代执行任务的插件。它的工作方式是：将大任务拆分为 PRD（产品需求文档），然后通过脚本驱动 Claude Code 逐个完成子任务，每轮迭代使用全新的上下文窗口，通过 Git 历史和 `progress.txt` 积累知识。这解决了长对话中上下文衰减的问题。
+
+#### 安装
+
+```bash
+/plugin marketplace add snarktank/ralph
+/plugin install ralph-skills@ralph-marketplace
+```
+
+安装完成后会获得 `/prd` 和 `/ralph` 两个命令，以及 `ralph.sh` 执行脚本。
+
+#### 工作流
+
+Ralph 的工作流分为三步：
+
+1. **`/prd`** —— 将任务列表转化为结构化的 PRD 文档
+2. **`/ralph`** —— 将 PRD 转化为机器可读的 `prd.json`
+3. **`ralph.sh`** —— 自主循环执行，逐个完成子任务
+
+```
+/prd 生成 PRD → /ralph 转化为 prd.json → ./scripts/ralph/ralph.sh --tool claude 自主执行
+```
+
+每轮迭代中，Ralph 会启动一个全新的 Claude Code 实例，读取 `prd.json` 和 `progress.txt`，执行当前子任务，提交 Git，然后更新进度文件。下一轮迭代通过 Git 历史和进度文件了解已完成的工作，继续处理下一个子任务。这种"无状态迭代 + 有状态持久化"的设计避免了长对话中的上下文溢出问题。
+
+#### 前端使用场景
+
+Ralph 特别适合以下类型的前端批量任务：
+
+| 场景 | 示例 |
+|------|------|
+| 批量实现多个页面 | 电商后台的订单管理、退款管理、物流管理等多个页面 |
+| 组件库迁移 | 将项目中的 Ant Design 组件逐一替换为 Radix UI |
+| API 层重构 | 将所有直接的 `fetch` 调用迁移到 React Query 封装 |
+| 测试补全 | 为现有组件批量补充单元测试 |
+
+#### 完整示例：商品对比子任务批量实现
+
+假设 Phase 3 的 TDD 实现只完成了商品对比功能的核心部分（对比表格、对比栏），还有几个子任务待完成。用 Ralph 批量处理：
+
+```
+> /prd
+> 将商品对比功能的剩余子任务转为 PRD：
+> - 对比历史记录（localStorage 持久化）
+> - 对比结果分享（URL 参数编码）
+> - 对比数据导出（CSV/PDF）
+```
+
+`/prd` 会生成一份结构化的 PRD，包含每个子任务的描述、验收标准和技术方案。然后执行 `/ralph` 将其转化为 `prd.json`：
+
+```json
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "对比历史记录",
+      "description": "将用户的对比记录持久化到 localStorage，支持查看历史对比",
+      "acceptance": ["对比数据持久化到 localStorage", "刷新页面后对比记录保留", "支持清除历史记录"]
+    },
+    {
+      "id": 2,
+      "title": "对比结果分享",
+      "description": "通过 URL 参数编码当前对比商品 ID，生成可分享的链接",
+      "acceptance": ["URL 包含对比商品 ID 参数", "打开链接自动加载对比数据", "支持 2-4 件商品的编码"]
+    },
+    {
+      "id": 3,
+      "title": "对比数据导出",
+      "description": "支持将对比表格导出为 CSV 和 PDF 格式",
+      "acceptance": ["CSV 导出包含所有对比属性", "PDF 导出包含表格样式和品牌 Logo", "导出时显示进度提示"]
+    }
+  ]
+}
+```
+
+最后启动 Ralph 自主执行：
+
+```bash
+./scripts/ralph/ralph.sh --tool claude
+```
+
+Ralph 会依次处理三个子任务。每轮迭代的 Claude Code 实例只关注当前子任务，完成后提交 Git 并更新 `progress.txt`。整个过程无需人工干预，你可以去做其他事情。完成后查看 `progress.txt` 和 Git 日志了解执行结果。
+
+:::warning Ralph 迭代中的测试策略
+Ralph 的每轮迭代默认会运行项目已有的测试来验证改动。建议在启动 Ralph 之前确保测试套件是绿色的（全部通过），否则迭代可能因为已有的失败测试而误判新代码有问题。
+:::
+
+### Hooks 自动化
+
+Claude Code Hooks 是在特定事件触发时自动执行的脚本。对于前端项目，最有价值的两个 Hook 是：文件修改后自动格式化（PostToolUse）和 Claude Code 结束后自动类型检查（Stop）。
+
+#### PostToolUse Hook：自动格式化
+
+当 Claude Code 修改了 `.tsx`、`.ts`、`.css` 文件后，自动运行 Prettier 格式化代码。这确保了 AI 生成的代码始终符合项目的格式规范，无需手动执行 `npm run fmt`。
+
+#### Stop Hook：自动类型检查
+
+当 Claude Code 完成所有操作后（Stop 事件），自动运行 TypeScript 类型检查。这是一道安全网——即使 Claude Code 的实现逻辑正确，也可能因为类型不匹配导致构建失败。Stop Hook 可以在你提交代码之前捕获这些问题。
+
+#### 完整配置
+
+在 `.claude/settings.json` 中配置这两个 Hook：
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx prettier --write \"$CLAUDE_FILE_PATHS\" 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx tsc --noEmit --pretty"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+配置说明：
+
+- `matcher: "Write|Edit"` —— 只在 Claude Code 使用 Write 或 Edit 工具修改文件时触发，避免读取文件时也触发格式化
+- `$CLAUDE_FILE_PATHS` —— Claude Code 注入的环境变量，包含本次操作涉及的文件路径
+- `2>/dev/null || true` —— 如果文件不是 Prettier 支持的格式，静默忽略错误
+- `npx tsc --noEmit` —— 只做类型检查，不生成编译产物
+
+:::tip Hook 的执行时机
+PostToolUse 在每次工具调用后立即执行，Stop 在 Claude Code 整个会话结束时执行一次。这意味着如果一次会话中修改了 10 个文件，PostToolUse 会触发 10 次（每次针对对应的文件），而 Stop 只会在最后执行一次全量类型检查。
+:::
+
+### CI/CD 集成
+
+本地的 Hooks 处理了开发阶段的自动化，CI/CD 则覆盖了代码推送后的自动化流程。通过 GitHub Actions 集成 Claude Code Action，可以在 PR 阶段自动进行 AI 驱动的代码审查。
+
+#### GitHub Actions AI Code Review
+
+使用 `anthropics/claude-code-action@v1` 可以在每个 PR 上自动触发 AI 审查。Claude 会分析 PR 的变更内容，检查代码质量、潜在 bug、安全风险和最佳实践。
+
+创建 `.github/workflows/ai-review.yml`：
+
+```yaml
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: AI Code Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          review_prompt: |
+            请审查这个前端 PR 的代码变更，重点关注以下方面：
+
+            1. **组件结构**: 组件是否过大需要拆分？职责是否单一？
+            2. **TypeScript 类型**: 类型定义是否完整？是否有滥用 any 的地方？
+            3. **不必要的 re-render**: 是否在渲染过程中创建了新的对象引用？useEffect 依赖数组是否完整？
+            4. **XSS 风险**: 是否有未转义的用户输入直接渲染到 DOM？dangerouslySetInnerHTML 使用是否安全？
+            5. **测试覆盖**: 新增代码是否有对应的测试？边界条件是否覆盖？
+            6. **无障碍访问**: 交互元素是否有 aria 属性？表单控件是否有 label？
+
+            请用中文输出审查意见，格式分为"必须修改"和"建议改进"两个层级。
+```
+
+这个工作流的触发条件是 PR 创建或更新时（`opened, synchronize`），每次推送新代码到 PR 分支都会自动重新审查。审查结果会作为 PR 评论发布，团队成员可以直接在评论中讨论和修改。
+
+#### Review Prompt 模板说明
+
+审查提示词（`review_prompt`）的设计覆盖了前端项目最常见的六类问题：
+
+| 维度 | 检查内容 | 对应的 ECC Agent |
+|------|---------|-----------------|
+| 组件结构 | 单一职责、合理拆分 | frontend-patterns |
+| TypeScript 类型 | 类型完整性、避免 any | typescript-reviewer |
+| 不必要的 re-render | useMemo/useCallback 使用、对象引用稳定性 | frontend-patterns |
+| XSS 风险 | 输入转义、dangerouslySetInnerHTML | security-reviewer |
+| 测试覆盖 | 新代码的测试覆盖、边界条件 | — |
+| 无障碍访问 | aria 属性、键盘导航、表单标签 | — |
+
+你可以根据团队的实际情况调整这个提示词，增加或删除检查维度。
+
+### GStack 发布
+
+所有审查和测试完成后，GStack 的 `/ship` 命令可以一键完成发布前的收尾工作：运行完整测试套件、审计测试覆盖率、推送代码并创建 PR。
+
+```
+> /ship
+> 运行完整测试套件，审计覆盖率，创建 PR
+```
+
+`/ship` 会依次执行：
+
+1. **运行测试** —— 执行 `pnpm test`（或项目配置的测试命令），确认所有测试通过
+2. **审计覆盖率** —— 检查新增代码的测试覆盖率，如果低于阈值会发出警告
+3. **推送代码** —— 将当前分支推送到远程仓库
+4. **创建 PR** —— 分析 Git 提交历史，生成 PR 标题和描述，调用 `gh pr create` 创建 PR
+5. **返回 PR 链接** —— 输出 PR 的 URL，方便你跳转到 GitHub 补充信息
+
+与手动执行 `git push` + `gh pr create` 相比，`/ship` 的优势在于它会在推送之前运行测试和覆盖率审计，避免推送有问题的代码到远程。如果测试失败或覆盖率不达标，`/ship` 会中断流程并报告问题，而不是等到 CI 流水线失败才发现。
+
+:::tip 发布后的监控
+PR 合并到 main 后，CI/CD 流水线会自动触发构建和部署。建议在部署完成后执行 GStack 的 `/benchmark` 命令测量 Core Web Vitals，确认新功能没有引入性能回退。这形成了一个完整的闭环：实现 → 审查 → 发布 → 验证。
+:::
+
+### 阶段总结
+
+Phase 5 的产出包括：
+
+- **Ralph 批量任务执行** —— 通过自主循环完成多个子任务，每轮迭代使用全新上下文，通过 Git 和进度文件保持状态
+- **Hooks 自动化** —— PostToolUse 自动格式化、Stop 自动类型检查，确保代码质量的一致性
+- **CI/CD 集成** —— GitHub Actions AI Code Review 在 PR 阶段自动审查代码，覆盖组件结构、类型安全、XSS 风险、测试覆盖和无障碍访问
+- **GStack `/ship` 一键发布** —— 测试、覆盖率审计、推送、PR 创建一站式完成
+
+至此，五阶段工作流形成完整闭环。从 Phase 1 的代码探索，到 Phase 2 的规划规格，到 Phase 3 的 TDD 实现，到 Phase 4 的审查测试，再到 Phase 5 的发布自动化——每个阶段都有明确的输入产出和对应的工具支撑，前后阶段通过结构化产物无缝衔接。
+
+:::tip 阶段衔接
+Phase 5 的产出（已合并的 PR、已部署的功能、CI/CD 流水线）直接触发下一轮迭代的起点。GStack 的 `/benchmark` 测量结果可以作为 Phase 1 探索分析的输入——如果发现性能指标不佳，下一轮迭代可以从分析性能瓶颈开始。CI/CD 流水线中的 AI Review 积累的审查意见也可以反馈到团队的编码规范中，持续提升代码质量。
 :::
