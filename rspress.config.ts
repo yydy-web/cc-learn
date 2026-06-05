@@ -15,7 +15,7 @@ export default defineConfig({
   plugins: [
     pluginLlms(),
     pluginSitemap({
-      siteUrl: 'https://cc-learn.pages.dev',
+      siteUrl: 'https://claude-learn.pages.dev',
     }),
   ],
   themeConfig: {

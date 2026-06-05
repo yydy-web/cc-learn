@@ -2,7 +2,7 @@
 
 > 📚 一份由浅入深的 Claude Code 使用教程 — 从入门到精通
 
-[![Deploy](https://img.shields.io/badge/🔗%20在线阅读-cc--learn.pages.dev-0f766e)](https://cc-learn.pages.dev)
+[![Deploy](https://img.shields.io/badge/🔗%20在线阅读-claude--learn.pages.dev-0f766e)](https://claude-learn.pages.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Rspress](https://img.shields.io/badge/Built%20with-Rspress%20v2-ff6b35)](https://rspress.dev)
 
@@ -10,7 +10,7 @@
 
 CC Learn 是一份中文 Claude Code 使用教程，涵盖从安装配置到高级工作流的全部内容。无论你是初次接触 AI 编程助手，还是想要深入掌握 Hooks、MCP 服务器和多智能体协作，这里都能找到对应的指南。
 
-**🔗 在线访问：[cc-learn.pages.dev](https://cc-learn.pages.dev)**
+**🔗 在线访问：[claude-learn.pages.dev](https://claude-learn.pages.dev)**
 
 ## 📖 内容目录
 
