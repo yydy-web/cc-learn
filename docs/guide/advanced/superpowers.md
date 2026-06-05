@@ -289,6 +289,190 @@ Superpowers 会按照 4 阶段系统性排查：
 3. 形成假设并验证
 4. 修复并添加防护测试
 
+### 实战案例：电商库存同步服务
+
+以下是一个完整的端到端案例，展示如何使用 Superpowers 的 7 步工作流开发一个真实的后端功能——**库存同步服务**。
+
+> 需求：电商平台需要将多个仓库的库存数据同步到中央数据库，支持增量同步、冲突检测和告警。
+
+#### 第一步：头脑风暴（brainstorming）
+
+```text
+> /superpowers:brainstorming
+> 我需要一个库存同步服务，把多个仓库的库存数据同步到中央数据库
+```
+
+Superpowers 不会直接写代码，而是先提问：
+
+```text
+→ 数据源是什么格式？（REST API / 消息队列 / 数据库直连？）
+→ 同步频率？（实时 / 准实时 / 定时批量？）
+→ 冲突怎么处理？（以哪个仓库为准？时间戳？版本号？）
+→ 失败策略？（重试？告警？降级？）
+→ 数据量级？（每天多少条记录？峰值 QPS？）
+```
+
+你回答后，Superpowers 提出 2-3 个方案并分析利弊：
+
+```text
+方案 A：基于消息队列的事件驱动同步
+  ✅ 实时性好，解耦
+  ❌ 复杂度高，需要维护 MQ
+
+方案 B：定时轮询 + 增量标记
+  ✅ 简单可靠，易调试
+  ❌ 有延迟（取决于轮询间隔）
+
+方案 C：CDC（Change Data Capture）实时同步
+  ✅ 几乎零延迟，不侵入业务
+  ❌ 需要数据库支持 binlog
+```
+
+你选择方案 B，Superpowers 将设计写入 `docs/superpowers/specs/` 目录，你确认后继续。
+
+:::info
+这个步骤是硬门控。如果 Superpowers 觉得你的需求不够清晰，它会继续提问，直到双方对齐。
+:::
+
+#### 第二步：编写计划（writing-plans）
+
+```text
+> /superpowers:writing-plans
+> 基于头脑风暴的设计，为库存同步服务编写详细计划
+```
+
+Superpowers 将设计拆分为 2-5 分钟的小任务，每个任务包含：
+
+```markdown
+### Task 1: 创建库存数据模型
+
+**Files:**
+- Create: `src/models/inventory.ts`
+- Create: `src/models/__tests__/inventory.test.ts`
+
+- [ ] **Step 1: 写测试** — 定义 Inventory 类型和验证函数
+- [ ] **Step 2: 运行测试确认失败**
+- [ ] **Step 3: 实现** — 创建 Inventory 接口和 zod schema
+- [ ] **Step 4: 运行测试确认通过**
+- [ ] **Step 5: 提交** — `git commit -m "feat(inventory): add data model and validation"`
+```
+
+计划保存到 `docs/superpowers/plans/` 目录。
+
+:::warning
+计划必须详细到"陌生人也能执行"——精确的文件路径、完整的代码块、运行命令和预期输出、Git 提交指令。没有占位符，没有"类似 Task N"。
+:::
+
+#### 第三步：Git Worktree 隔离（using-git-worktrees）
+
+```text
+> /superpowers:using-git-worktrees
+```
+
+Superpowers 自动：
+1. 创建新分支 `feature/inventory-sync`
+2. 创建 worktree 目录
+3. 安装依赖
+4. 确认测试基线干净
+
+#### 第四步：子智能体驱动开发（subagent-driven-development）
+
+每个任务由独立的子智能体执行，实现上下文隔离：
+
+- 子智能体 A 只看 Task 1 的上下文，完成数据模型
+- 子智能体 B 只看 Task 2 的上下文，完成同步引擎
+- 每个子智能体完成后经过两阶段审查
+
+子智能体报告状态：
+
+| 状态                  | 含义             | 后续动作          |
+| --------------------- | ---------------- | ----------------- |
+| `DONE`                | 任务完成         | 进入下一个任务    |
+| `DONE_WITH_CONCERNS`  | 完成但有顾虑     | 人工审查后继续    |
+| `NEEDS_CONTEXT`       | 需要更多上下文   | 补充信息后重试    |
+| `BLOCKED`             | 被阻塞           | 解决阻塞后继续    |
+
+#### 第五步：测试驱动开发（TDD）
+
+每个任务严格遵循 RED-GREEN-REFACTOR：
+
+```typescript title="inventory-sync.test.ts"
+// 🔴 RED — 先写失败的测试
+describe('InventorySyncService', () => {
+  it('应将仓库库存同步到中央数据库', async () => {
+    const warehouseData = [
+      { sku: 'SKU001', quantity: 100, warehouseId: 'WH-A' },
+    ];
+    await syncService.sync(warehouseData);
+    const central = await inventoryRepo.findBySku('SKU001');
+    expect(central.quantity).toBe(100);
+  });
+});
+```
+
+运行测试：`pnpm test` → ❌ FAIL（syncService 不存在）
+
+```typescript title="inventory-sync.ts"
+// 🟢 GREEN — 写最少的代码让测试通过
+export class InventorySyncService {
+  async sync(data: WarehouseInventory[]): Promise<void> {
+    for (const item of data) {
+      await this.repo.upsert(item);
+    }
+  }
+}
+```
+
+运行测试：`pnpm test` → ✅ PASS
+
+```text
+// 🔵 REFACTOR — 重构优化
+// 添加批量操作、错误处理、日志记录，保持测试通过
+```
+
+#### 第六步：代码审查（requesting-code-review + receiving-code-review）
+
+```text
+> /superpowers:requesting-code-review
+```
+
+Superpowers 使用独立的审查子智能体，对照原始计划审查代码：
+
+- **关键问题**：安全漏洞、数据丢失风险 → 阻止合并
+- **重要问题**：性能问题、错误处理不完善 → 需要修复
+- **建议**：代码风格、命名改进 → 可选修复
+
+:::tip
+`receiving-code-review` 鼓励你**挑战审查者**。如果审查建议不合理（比如引入不必要的复杂度），可以反驳并说明理由。好的代码审查是对话，不是命令。
+:::
+
+#### 第七步：验证与完成（verification-before-completion）
+
+```text
+> /superpowers:verification-before-completion
+```
+
+Superpowers 要求你提供新鲜的证据：
+
+```text
+请运行以下命令并将输出粘贴：
+1. pnpm test — 全部测试通过
+2. pnpm type-check — 无类型错误
+3. pnpm lint — 无 lint 错误
+```
+
+只有提供了实际运行的命令输出，任务才算完成。然后进入分支收尾：
+
+```text
+> /superpowers:finishing-a-development-branch
+```
+
+选择：本地合并 / 创建 PR / 保留现状 / 丢弃。
+
+:::info
+这个案例展示了 Superpowers 的完整 Pipeline：从需求探索到代码交付，每一步都有对应的 Skill 驱动。实际使用中，你可以根据项目复杂度跳过某些步骤（如简单的 CRUD 可以跳过头脑风暴），但三大铁律不可违反。
+:::
+
 ## 与 Gstack 的对比
 
 Superpowers 和 [Gstack](/guide/advanced/gstack) 都是 Claude Code 的 Skill 插件，可以互补使用：
