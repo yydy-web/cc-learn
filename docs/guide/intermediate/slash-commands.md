@@ -70,5 +70,7 @@ description: Claude Code 内置的 Slash 命令速查和使用技巧
 
 ## 下一步
 
+- [斜杠命令完整参考](/commands/slash-commands) — 所有内置命令和捆绑技能的完整列表
+- [CLI 参考](/commands/cli-reference) — CLI 子命令和启动参数
 - [CLAUDE.md 与项目约定](/guide/intermediate/claude-md) — 用项目配置提升 Claude Code 效果
 - [上下文管理](/guide/intermediate/context-management) — 管理对话上下文和记忆
