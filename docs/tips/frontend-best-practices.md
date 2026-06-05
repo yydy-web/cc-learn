@@ -214,6 +214,10 @@ claude mcp add context7 -- npx -y @upstash/context7-mcp@latest
 前端框架迭代速度极快——React 19、Next.js 15、Tailwind v4、Vite 6 等大版本在 2024-2025 年密集发布。Claude Code 的训练数据可能不包含最新 API 变更。建议安装 Context7 MCP 服务器，确保生成的代码使用最新语法。
 :::
 
+:::tip
+本文介绍各工具的独立集成方式。如果你需要了解**工具之间的协作流程**和**完整的实战案例**，请参考 [前端工具链集成全景](/tips/frontend-practices/) — 包含五阶段集成工作流和 6 个详细实战场景。
+:::
+
 ## 工具链集成
 
 除了上述构建工具外，Claude Code 生态还提供了多个辅助工具，可以在前端开发的不同阶段发挥作用。以下介绍五个核心工具在前端项目中的集成方式和典型用法。
@@ -582,11 +586,105 @@ specify init . --integration claude
 前端开发中，Spec-Kit 的 `/speckit.specify` 可以替代"手写 PRD + 口头对齐"的模式。把页面的交互规格写成结构化文档后，Claude Code 生成的组件代码更准确，减少反复修改。特别适合多人协作的大型前端项目。
 :::
 
+### Git 工作流集成
+
+前端项目的 Git 工作流直接影响多人协作效率和代码质量。Claude Code 可以自动化大部分 Git 操作，结合工具链实现从开发到发布的无缝衔接。
+
+#### 前端项目分支策略
+
+推荐使用 **feature branch → PR → review → merge** 的标准流程：
+
+```
+main (生产)
+  └── develop (开发主线)
+       ├── feature/user-settings  (功能分支)
+       ├── feature/order-list     (功能分支)
+       └── fix/mobile-layout      (修复分支)
+```
+
+:::tip
+对前端项目，建议按功能模块（而非页面）创建分支。一个功能分支可能涉及多个页面和组件，但它们在业务逻辑上是内聚的。这样 PR 审查时更容易理解变更的完整上下文。
+:::
+
+#### Conventional Commits 规范
+
+前端项目推荐使用 Conventional Commits，便于自动生成 changelog 和语义化版本管理：
+
+| 类型       | 说明                        | 前端示例                                  |
+| ---------- | --------------------------- | ----------------------------------------- |
+| `feat`     | 新功能                      | `feat(dashboard): add real-time chart widget` |
+| `fix`      | Bug 修复                    | `fix(auth): prevent token expiry redirect loop` |
+| `refactor` | 重构（不改变功能）          | `refactor(hooks): extract usePagination logic` |
+| `perf`     | 性能优化                    | `perf(list): virtualize long product list` |
+| `style`    | 样式调整                    | `style(header): adjust mobile nav spacing` |
+| `test`     | 测试相关                    | `test(login): add E2E test for SSO flow` |
+| `docs`     | 文档更新                    | `docs(readme): update setup instructions` |
+
+Claude Code 默认会使用 Conventional Commits 格式，你可以在提示词中指定 scope：
+
+```
+> 提交当前更改，scope 使用 dashboard，类型使用 feat
+```
+
+#### Git Worktree 隔离开发
+
+Superpowers 推荐使用 Git Worktree 隔离开发环境，避免分支切换时的依赖冲突：
+
+```bash
+# 创建 worktree（Superpowers 会自动执行）
+git worktree add ../project-feature-user-settings -b feature/user-settings
+
+# 在 worktree 中独立开发
+cd ../project-feature-user-settings
+# 安装依赖、启动开发服务器、运行测试 — 互不影响
+
+# 开发完成后清理
+git worktree remove ../project-feature-user-settings
+```
+
+:::info
+Git Worktree 对前端项目特别有价值——不同分支可能有不同的 `node_modules` 依赖版本，频繁 `git checkout` 会导致 `node_modules` 不一致。Worktree 让每个分支拥有独立的工作目录，彻底避免这个问题。
+:::
+
+#### Claude Code Git 操作示例
+
+```
+# 提交更改
+> 提交当前更改，使用 feat 类型，scope 为 dashboard
+
+# 创建分支
+> 从 develop 创建新分支 feature/product-filter
+
+# 推送并创建 PR
+> 推送当前分支到远程，并创建 PR，标题为 "feat(dashboard): add product filter"
+
+# 解决冲突
+> 当前分支与 develop 有冲突，帮我解决冲突并提交
+```
+
+#### 工具链协作
+
+Superpowers + GStack 的 Git 集成工作流：
+
+1. **Superpowers** 在 `feature/*` 分支上进行 TDD 开发，每个组件完成后自动提交
+2. **GStack `/ship`** 运行全量测试、审计覆盖率、推送代码并自动创建 PR
+3. **GStack `/review`** 在 PR 上进行代码审查，聚焦生产 Bug 和性能问题
+
+```
+> /superpowers:test-driven-development
+> 实现用户设置页面的头像上传功能
+> 开发完成后 /ship 推送并创建 PR
+```
+
+这个工作流确保了：功能分支隔离 → TDD 保证质量 → 自动化 PR 创建 → 代码审查闭环。
+
 ### 工具链组合实战
 
 以下是前端项目中常见的工具组合场景：
 
 #### 场景一：新页面开发（完整流程）
+
+**适用条件：** 从零构建新功能页面，涉及多个组件和 API 对接 | **预计用时：** 2-4 小时
 
 ```
 1. Superpowers: /superpowers:brainstorming 探索 UI/UX 需求（布局？交互？响应式？）
@@ -599,6 +697,8 @@ specify init . --integration claude
 
 #### 场景二：组件库重构（语义驱动）
 
+**适用条件：** 已有组件库需要重命名、移动或提取公共逻辑 | **预计用时：** 3-6 小时
+
 ```
 1. CodeGraph: codegraph_impact 分析组件修改影响范围
 2. Serena: find_referencing_symbols 追踪所有 import 引用
@@ -610,6 +710,8 @@ specify init . --integration claude
 
 #### 场景三：前端性能优化
 
+**适用条件：** 页面加载慢、Lighthouse 评分低、用户反馈卡顿 | **预计用时：** 1-3 小时
+
 ```
 1. Gstack: /benchmark 测量 Core Web Vitals 和加载性能
 2. CodeGraph: codegraph_trace 追踪关键渲染路径的组件链
@@ -620,6 +722,8 @@ specify init . --integration claude
 
 #### 场景四：遗留前端项目接管
 
+**适用条件：** 接手他人维护的前端项目，需要快速理解代码结构 | **预计用时：** 1-2 小时（探索阶段）
+
 ```
 1. CodeGraph: codegraph_explore 快速理解路由结构和组件关系
 2. Serena: get_symbols_overview 梳理核心组件的 Props 和 Hooks
@@ -629,6 +733,8 @@ specify init . --integration claude
 ```
 
 #### 场景五：大型前端功能开发（规格驱动）
+
+**适用条件：** 跨多个模块的复杂功能，需要结构化需求分析 | **预计用时：** 4-8 小时
 
 ```
 1. Gstack: /office-hours 探索产品需求 → /plan-design-review 审查设计方案
