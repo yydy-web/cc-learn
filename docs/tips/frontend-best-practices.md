@@ -610,15 +610,15 @@ main (生产)
 
 前端项目推荐使用 Conventional Commits，便于自动生成 changelog 和语义化版本管理：
 
-| 类型       | 说明                        | 前端示例                                  |
-| ---------- | --------------------------- | ----------------------------------------- |
-| `feat`     | 新功能                      | `feat(dashboard): add real-time chart widget` |
-| `fix`      | Bug 修复                    | `fix(auth): prevent token expiry redirect loop` |
-| `refactor` | 重构（不改变功能）          | `refactor(hooks): extract usePagination logic` |
-| `perf`     | 性能优化                    | `perf(list): virtualize long product list` |
-| `style`    | 样式调整                    | `style(header): adjust mobile nav spacing` |
-| `test`     | 测试相关                    | `test(login): add E2E test for SSO flow` |
-| `docs`     | 文档更新                    | `docs(readme): update setup instructions` |
+| 类型       | 说明               | 前端示例                                        |
+| ---------- | ------------------ | ----------------------------------------------- |
+| `feat`     | 新功能             | `feat(dashboard): add real-time chart widget`   |
+| `fix`      | Bug 修复           | `fix(auth): prevent token expiry redirect loop` |
+| `refactor` | 重构（不改变功能） | `refactor(hooks): extract usePagination logic`  |
+| `perf`     | 性能优化           | `perf(list): virtualize long product list`      |
+| `style`    | 样式调整           | `style(header): adjust mobile nav spacing`      |
+| `test`     | 测试相关           | `test(login): add E2E test for SSO flow`        |
+| `docs`     | 文档更新           | `docs(readme): update setup instructions`       |
 
 Claude Code 默认会使用 Conventional Commits 格式，你可以在提示词中指定 scope：
 
