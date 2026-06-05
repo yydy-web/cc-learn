@@ -18,6 +18,79 @@ Superpowers 是一个开源的 Claude Code 插件，为 AI 编程助手提供结
 
 Superpowers 通过 **7 步工作流** 强制执行纪律：先设计、再计划、用 TDD 实现、最后审查。
 
+## 核心理念：管道而非工具箱
+
+大多数人把 Superpowers 当成工具箱——需要时取出一个工具用一下。这是对 Superpowers 最大的误解。
+
+Superpowers 的 14 个 Skills 不是并列的工具，而是一条**接力管道（Pipeline）**。它们之间是严格的接力关系：
+
+````text
+入口 → 设计 → 规划 → 隔离 → 执行 → 实现 → 测试 → 调试 → 审查 → 并行 → 验证 → 收尾
+ ↑                                                                          ↓
+ └──────────────────────── 元技能：using-superpowers ──────────────────────────┘
+````
+
+| 阶段       | Skill                        | 上游依赖         |
+| ---------- | ---------------------------- | ---------------- |
+| 入口       | `using-superpowers`          | —                |
+| 设计       | `brainstorming`              | 入口             |
+| 规划       | `writing-plans`              | 设计             |
+| 隔离       | `using-git-worktrees`        | 规划             |
+| 执行       | `executing-plans` / `subagent-driven-development` | 规划 + 隔离 |
+| 实现       | `test-driven-development`    | 执行             |
+| 测试       | `test-driven-development`    | 实现             |
+| 调试       | `systematic-debugging`       | 测试             |
+| 审查       | `requesting-code-review` / `receiving-code-review` | 测试 + 调试 |
+| 并行       | `dispatching-parallel-agents` | 规划            |
+| 验证       | `verification-before-completion` | 审查         |
+| 收尾       | `finishing-a-development-branch` | 验证         |
+| 元技能     | `writing-skills`             | —                |
+
+每一环的输出是下一环的输入。跳过任何一步，后续步骤的质量都会打折扣。
+
+:::tip
+理解 Pipeline 心智模型是高效使用 Superpowers 的关键。不要试图"挑选"某个 Skill 单独使用——它们设计为协作的整体。
+:::
+
+## 三大铁律
+
+Superpowers 的 7 步工作流背后有三条不可违反的铁律：
+
+### 铁律一：没有设计，不写代码
+
+`brainstorming` 是硬门控——设计未获批准前，Superpowers 会阻止任何代码实现。
+
+这不是"建议"，而是"规则"。如果你跳过头脑风暴直接要求写代码，Superpowers 会：
+1. 提醒你需要先完成设计
+2. 问你一系列澄清问题
+3. 直到设计确认后才允许继续
+
+**为什么重要：** 大部分返工都源于"需求没搞清楚就开始写"。10 分钟的头脑风暴可以节省 2 小时的重构。
+
+### 铁律二：没有测试，不写代码
+
+`test-driven-development` 严格执行 RED-GREEN-REFACTOR 循环：
+
+````text
+1. 🔴 RED    — 先写失败的测试（证明需求存在且未被满足）
+2. 🟢 GREEN  — 写最少的代码让测试通过（不做多余的事）
+3. 🔵 REFACTOR — 在测试保护下重构（改善结构而不改变行为）
+````
+
+如果代码在测试之前写好，Superpowers 会**要求你删除重来**。
+
+**为什么重要：** 没有测试的代码是"一次性代码"——你不知道它是否正确，也无法安全地修改它。
+
+### 铁律三：没有验证，不说完成
+
+`verification-before-completion` 要求你提供**新鲜的证据**（刚运行的命令输出）才能声称任务完成。
+
+"我觉得代码没问题了" 不算完成。
+"测试全部通过了" 不算完成（除非你刚运行过）。
+"这是刚运行的 mvn test 输出，全部绿色" 算完成。
+
+**为什么重要：** AI 的"自信"不可靠——它可能在没有实际运行的情况下声称测试通过。只有真实运行的输出才能证明。
+
 ## 安装
 
 ### 方式一：直接安装（推荐）
