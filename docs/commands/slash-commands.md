@@ -1,0 +1,261 @@
+---
+title: 斜杠命令
+description: Claude Code 所有内置斜杠命令和捆绑技能的完整参考，涵盖对话管理、模型配置、并行工作流等
+---
+
+# 斜杠命令
+
+在 Claude Code 对话中输入 `/` 开头的命令可以快速执行操作。输入 `/` 查看所有可用命令，或输入 `/` 后继续输入字母进行过滤。
+
+命令只在消息开头被识别。命令名称后面的文本会作为参数传递给命令。
+
+:::tip
+以下标记含义：
+- **[技能]** — 捆绑技能，由提示词驱动，Claude 也可以在相关场景自动调用
+- **[工作流]** — 捆绑工作流，跨多个子代理并行执行
+:::
+
+## 对话与上下文
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/clear [name]` | 开始新对话，清空上下文。之前的对话可通过 `/resume` 恢复。可传入名称标记之前的对话。别名：`/reset`、`/new` |
+| `/compact [instructions]` | 压缩当前对话上下文，释放 token 空间。可传入指令指定摘要重点 |
+| `/context [all]` | 以彩色网格可视化当前上下文使用情况，显示优化建议。传入 `all` 展开详细信息 |
+| `/resume [session]` | 按 ID 或名称恢复对话，或打开会话选择器。别名：`/continue` |
+| `/branch [name]` | 在当前位置创建对话分支，可尝试不同方向而不丢失当前对话状态 |
+| `/fork <directive>` | 生成后台子代理继承完整对话上下文，按指令执行任务，完成后结果返回对话 |
+| `/rewind` | 将对话和/或代码回退到之前的检查点，或从选定消息生成摘要。别名：`/checkpoint`、`/undo` |
+| `/rename [name]` | 重命名当前会话并显示在提示栏上。不传名称则自动生成 |
+| `/export [filename]` | 将当前对话导出为纯文本。传入文件名直接写入文件，不传则打开复制/保存对话框 |
+| `/copy [N]` | 复制最近的助手回复到剪贴板。传入数字 N 复制第 N 条最近回复 |
+| `/recap` | 按需生成当前会话的单行摘要 |
+| `/btw <question>` | 提问一个快速的附带问题，不会添加到对话历史中 |
+| `/cost` | 查看当前会话的 token 使用量和费用。别名：`/usage`、`/stats` |
+| `/help` | 显示帮助信息和可用命令 |
+| `/exit` | 退出 CLI。在附加的后台会话中，这将分离会话（会话继续运行）。别名：`/quit` |
+
+## 模型与配置
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/model [model]` | 切换 AI 模型并保存为新会话默认值。无参数时打开选择器，按 `s` 仅切换当前会话。支持左右箭头调整推理强度 |
+| `/config` | 打开设置界面，调整主题、模型、输出风格等偏好。别名：`/settings` |
+| `/permissions` | 管理工具权限的允许、询问和拒绝规则。打开交互式对话框查看和编辑规则。别名：`/allowed-tools` |
+| `/effort [level\|auto]` | 设置模型推理强度。可选：`low`、`medium`、`high`、`xhigh`、`max`、`ultracode`。`auto` 恢复默认值 |
+| `/theme` | 更换配色主题，包括自动匹配终端明暗模式、色盲友好主题、ANSI 主题等 |
+| `/color [color\|default]` | 设置当前会话的提示栏颜色。可用：`red`、`blue`、`green`、`yellow`、`purple`、`orange`、`pink`、`cyan` |
+
+## 工作模式与计划
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/plan [description]` | 进入计划模式，Claude 只分析不修改文件。可传入描述立即开始规划任务 |
+| `/fast [on\|off]` | 切换快速模式，使用更快的模型输出 |
+| `/goal [condition\|clear]` | 设置目标条件，Claude 会持续工作直到条件满足。`clear` 移除当前目标 |
+| `/sandbox` | 切换沙箱模式 |
+| `/focus` | 切换焦点视图，仅显示最后的提示、工具调用摘要和最终回复 |
+
+## 并行工作与后台任务
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/agents` | 管理子代理配置 |
+| `/tasks` | 列出和管理后台任务。别名：`/bashes` |
+| `/background [prompt]` | 将当前会话分离为后台代理运行，释放终端。可传入提示指令。别名：`/bg` |
+| `/batch <instruction>` | **[技能]** 编排大规模代码变更：研究代码库、分解为 5-30 个独立单元、每个单元在独立 worktree 中执行并创建 PR |
+| `/loop [interval] [prompt]` | **[技能]** 在会话保持打开期间重复运行提示。省略间隔则自动调步。省略提示则运行自主维护检查。别名：`/proactive` |
+| `/workflows` | 打开工作流进度视图，查看、暂停、恢复或保存运行中的工作流 |
+| `/schedule [description]` | 创建、更新、列出或运行定时任务（在 Anthropic 托管的云基础设施上执行）。别名：`/routines` |
+
+## 代码审查与质量
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/code-review [low\|medium\|high\|xhigh\|max\|ultra] [--fix] [--comment] [target]` | **[技能]** 审查当前 diff 的正确性 bug 和代码清理机会。`--fix` 应用修复，`--comment` 发布 GitHub PR 行内评论，`ultra` 运行深度云端审查 |
+| `/simplify [target]` | **[技能]** 审查变更代码的清理机会并应用修复。四个审查代理并行运行：复用已有辅助函数、简化代码、效率优化、抽象层级检查 |
+| `/review [PR]` | 在当前会话中本地审查 PR。深度云端审查请使用 `/code-review ultra` |
+| `/security-review` | 分析当前分支上待提交变更的安全漏洞，识别注入、认证和数据暴露等风险 |
+| `/diff` | 打开交互式 diff 查看器，显示未提交变更和逐轮次 diff。左右箭头切换，上下箭头浏览文件 |
+| `/ultrareview [PR]` | 在云端沙箱中运行深度多代理代码审查。推荐使用 `/code-review ultra` 代替 |
+| `/ultraplan <prompt>` | 在 ultraplan 会话中起草计划，在浏览器中审查，然后远程执行或发送回终端 |
+
+## 开发工具与集成
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/init` | 用 `CLAUDE.md` 指南初始化项目。设置 `CLAUDE_CODE_NEW_INIT=1` 可进入交互式流程，同时配置技能、钩子和个人记忆文件 |
+| `/memory` | 编辑 `CLAUDE.md` 记忆文件，启用或禁用自动记忆，查看自动记忆条目 |
+| `/mcp` | 管理 MCP 服务器连接和 OAuth 认证 |
+| `/hooks` | 查看工具事件的钩子配置 |
+| `/plugin` | 管理 Claude Code 插件 |
+| `/reload-plugins` | 重新加载所有活动插件以应用待处理的变更 |
+| `/reload-skills` | 重新扫描技能和命令目录，使新增或修改的技能在当前会话中生效 |
+| `/skills` | 列出可用技能。按 `t` 按 token 数排序，按 `Space` 隐藏技能 |
+| `/ide` | 管理 IDE 集成并显示状态 |
+| `/terminal-setup` | 配置终端快捷键（Shift+Enter 等），仅在需要的终端中显示（VS Code、Cursor 等） |
+| `/chrome` | 配置 Chrome 浏览器集成设置 |
+| `/add-dir <path>` | 为当前会话添加工作目录以获取文件访问权限 |
+| `/keybindings` | 打开或创建快捷键配置文件 |
+| `/tui [default\|fullscreen]` | 设置终端 UI 渲染器并重新启动。`fullscreen` 启用无闪烁的 alt-screen 渲染器 |
+| `/scroll-speed` | 交互式调整鼠标滚轮滚动速度（仅全屏渲染模式） |
+
+## 运行与验证
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/run` | **[技能]** 启动并驱动项目应用，查看变更在运行应用中的效果（不仅仅是测试中） |
+| `/verify` | **[技能]** 通过构建和运行项目应用来确认代码变更是否正确，而非仅依赖测试或类型检查 |
+| `/run-skill-generator` | **[技能]** 教 `/run` 和 `/verify` 如何从干净环境构建、启动和驱动项目应用 |
+| `/claude-api [migrate\|managed-agents-onboard]` | **[技能]** 加载 Claude API 参考资料。`migrate` 升级现有代码到新模型，`managed-agents-onboard` 交互式创建新托管代理 |
+| `/deep-research <question>` | **[工作流]** 展开网络搜索、获取和交叉验证来源，综合生成引用报告 |
+| `/fewer-permission-prompts` | **[技能]** 扫描历史记录中常见的只读工具调用，添加允许列表以减少权限提示 |
+| `/debug [description]` | **[技能]** 启用调试日志并通过读取会话调试日志排查问题 |
+
+## 认证与账户
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/login` | 登录 Anthropic 账户 |
+| `/logout` | 退出 Anthropic 账户 |
+| `/status` | 打开设置界面（状态标签），显示版本、模型、账户和连接状态 |
+| `/upgrade` | 打开升级页面以切换到更高计划 |
+| `/usage` | 显示会话费用、计划使用限额和活动统计。Pro/Max/Team/Enterprise 计划包含按技能、子代理、插件和 MCP 服务器的细分。`/cost` 和 `/stats` 是别名 |
+| `/usage-credits` | 配置使用额度，以便在达到限额后继续工作 |
+| `/privacy-settings` | 查看和更新隐私设置（仅 Pro 和 Max 订阅者） |
+| `/setup-bedrock` | 配置 Amazon Bedrock 认证、区域和模型（需设置 `CLAUDE_CODE_USE_BEDROCK=1`） |
+| `/setup-vertex` | 配置 Google Vertex AI 认证、项目、区域和模型（需设置 `CLAUDE_CODE_USE_VERTEX=1`） |
+| `/web-setup` | 使用本地 `gh` CLI 凭据将 GitHub 账户连接到 Claude Code 网页版 |
+
+## 远程与跨设备
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/remote-control` | 使当前会话可从 claude.ai 远程控制。别名：`/rc` |
+| `/remote-env` | 配置网页会话的默认远程环境 |
+| `/teleport` | 将 Claude Code 网页会话拉取到本地终端。别名：`/tp` |
+| `/desktop` | 在 Claude Code 桌面应用中继续当前会话（需 macOS 或 Windows）。别名：`/app` |
+| `/mobile` | 显示二维码下载 Claude 移动应用。别名：`/ios`、`/android` |
+
+## 诊断与反馈
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/doctor` | 诊断和验证 Claude Code 安装和设置，按 `f` 可让 Claude 修复报告的问题 |
+| `/feedback [report]` | 提交反馈、报告 bug 或分享对话。别名：`/bug`、`/share` |
+| `/heapdump` | 将 JavaScript 堆快照和内存分析写入桌面目录，用于诊断高内存使用 |
+| `/insights` | 生成分析 Claude Code 会话的报告，包括项目区域、交互模式和摩擦点 |
+| `/release-notes` | 在交互式版本选择器中查看更新日志 |
+| `/team-onboarding` | 从使用历史生成团队入门指南 |
+
+## 其他
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/autofix-pr [prompt]` | 启动网页会话监控当前分支的 PR，CI 失败或评审评论时自动推送修复 |
+| `/install-github-app` | 为仓库设置 Claude GitHub Actions 应用 |
+| `/install-slack-app` | 安装 Claude Slack 应用 |
+| `/powerup` | 通过快速交互式课程发现 Claude Code 功能 |
+| `/passes` | 与朋友分享一周免费 Claude Code（仅符合条件的账户可见） |
+| `/radio` | 在浏览器中打开 Claude FM lo-fi 电台 |
+| `/stickers` | 订购 Claude Code 贴纸 |
+| `/stop` | 停止当前后台会话（仅在附加到后台会话时可用） |
+| `/voice [hold\|tap\|off]` | 切换语音听写，或以特定模式启用（需 Claude.ai 账户） |
+
+## 第三方技能生态
+
+除了内置命令，Claude Code 还支持通过插件安装第三方技能生态系统。以下列出主要技能包及其核心命令，详细用法请参阅对应的技能文档。
+
+### Superpowers — 现代软件工程最佳实践
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/superpowers:brainstorming` | 结构化需求探索和设计讨论 |
+| `/superpowers:writing-plans` | 编写详细的实现计划文档 |
+| `/superpowers:test-driven-development` | 测试驱动开发，先写测试再实现 |
+| `/superpowers:executing-plans` | 按计划逐任务执行实现 |
+| `/superpowers:subagent-driven-development` | 每个任务分配独立子代理执行（推荐） |
+| `/superpowers:dispatching-parallel-agents` | 并行调度多个代理处理独立任务 |
+| `/superpowers:verification-before-completion` | 完成前验证所有工作正确性 |
+| `/superpowers:systematic-debugging` | 系统化调试流程 |
+| `/superpowers:requesting-code-review` | 请求代码审查 |
+| `/superpowers:receiving-code-review` | 处理代码审查反馈 |
+| `/superpowers:finishing-a-development-branch` | 完成开发分支的收尾工作 |
+| `/superpowers:using-git-worktrees` | 使用 git worktree 隔离工作 |
+| `/superpowers:writing-skills` | 编写新的技能文件 |
+| `/superpowers:using-superpowers` | Superpowers 使用指南 |
+
+详细文档参见 [Superpowers 技能](/guide/advanced/superpowers)
+
+### Gstack — 高速创业工程工作流
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/spec` | 启动规格定义流程，生成 SPEC.md |
+| `/plan-ceo-review` / `/plan-eng-review` / `/plan-design-review` / `/plan-devex-review` | 多视角计划审查 |
+| `/autoplan` | 自动规划执行 |
+| `/review` / `/investigate` | 代码审查和问题调查 |
+| `/qa` / `/qa-only` | 质量保证测试 |
+| `/ship` / `/land-and-deploy` / `/canary` | 发布和部署流程 |
+| `/codex` | 使用 Codex 工具执行任务 |
+| `/retro` | 项目回顾分析 |
+| `/context-save` / `/context-restore` | 上下文保存和恢复 |
+| `/gstack-upgrade` | 升级 Gstack 技能包 |
+
+详细文档参见 [Gstack 技能](/skills/workflow/gstack)
+
+### OpenSpec — 规格驱动开发
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/opsx:propose` | 提出新变更提案 |
+| `/opsx:apply` | 应用规格变更 |
+| `/opsx:explore` | 探索代码库 |
+| `/opsx:verify` | 验证实现是否符合规格 |
+| `/opsx:new` / `/opsx:continue` | 创建或继续规格文档 |
+| `/opsx:archive` / `/opsx:bulk-archive` | 归档已完成的规格 |
+
+详细文档参见 [OpenSpec 技能](/skills/workflow/openspec)
+
+### Spec-Kit — 结构化开发工具包
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/speckit.constitution` | 定义项目宪法（核心约束和价值观） |
+| `/speckit.specify` | 编写功能规格 |
+| `/speckit.clarify` | 澄清规格中的模糊点 |
+| `/speckit.plan` | 从规格生成实现计划 |
+| `/speckit.tasks` | 从计划生成任务列表 |
+| `/speckit.implement` | 按任务列表执行实现 |
+| `/speckit.analyze` | 分析规格和实现的差距 |
+
+详细文档参见 [Spec-Kit 技能](/guide/advanced/spec-kit)
+
+### Ralph — PRD 驱动开发
+
+| 命令 | 说明 |
+| :--- | :--- |
+| `/prd` | 从 PRD 文档生成结构化规格和任务计划 |
+| `/ralph` | Ralph 助手，提供开发工作流指导 |
+
+详细文档参见 [Ralph 技能](/guide/advanced/ralph)
+
+### 其他技能
+
+| 命令 | 来源 | 说明 |
+| :--- | :--- | :--- |
+| `/context7:docs` | Context7 插件 | 查询第三方库的最新文档 |
+| `/graphify` | Graphify | 代码知识图谱分析和查询 |
+| `/serena` | Serena | 语言服务器驱动的代码智能 |
+
+详细文档参见各自技能页面：
+- [Context7](/guide/advanced/context7)
+- [Graphify](/guide/advanced/graphify)
+- [Serena](/guide/advanced/serena)
+
+## 下一步
+
+- [CLI 参考](/commands/cli-reference) — CLI 子命令和启动参数
+- [环境变量](/commands/env-vars) — 所有可配置的环境变量
+- [Slash 命令教程](/guide/intermediate/slash-commands) — 常用命令的实际使用场景
+- [技能概览](/skills/) — 所有技能生态系统文档
