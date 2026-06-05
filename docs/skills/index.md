@@ -75,3 +75,7 @@ OpenSpec（规格定义）  →  Ralph（自主实现）
 自定义 Skills  →  CC-Switch（跨项目共享）
 Serena（精确重构）  +  CodeGraph（代码探索）  +  Code Review Graph（审查分析）
 ```
+
+:::tip
+当多个工具共存时，使用 [AGENTS 全局路由协议](/guide/advanced/agents-routing) 定义分工。理解 SDD、OpenSpec、Spec-Kit、Superpowers 的关系？参考 [SDD 方法论与工具辨析](/guide/advanced/sdd-guide)。
+:::

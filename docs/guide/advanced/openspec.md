@@ -337,6 +337,214 @@ POST /api/auth/reset-password
 - [ ] 更新 API 文档
 ```
 
+## 实战场景
+
+### 场景一：将 OpenSpec 引入现有代码库
+
+项目已经开发了一半，想引入 OpenSpec 规范后续变更：
+
+```text
+> /opsx:explore
+> 我有一个已运行 3 个月的 Express API，想用 OpenSpec 管理后续变更
+```
+
+OpenSpec 会分析现有代码结构，生成当前系统的"现状快照"作为基线规格。之后的变更都从这个基线出发。
+
+:::tip
+用 `/opsx:explore` 不会生成任何文件——它是零副作用的探索。确认方案后再用 `/opsx:propose` 创建正式规格。
+:::
+
+### 场景二：技术预研与可行性调研
+
+不确定某个技术方案是否可行：
+
+```text
+> /opsx:explore
+> 调研一下用 Redis Streams 替换当前的消息队列方案是否可行
+```
+
+探索模式会帮你分析技术选型的利弊，不会创建任何变更文件夹。调研结果留在聊天记录中，确认可行后再 propose。
+
+### 场景三：需求方向明确，细节需要澄清
+
+知道要做什么，但细节还不够清楚：
+
+```text
+> /opsx:explore
+> 我们要添加多语言支持，但具体方案还没定
+
+> /opsx:new add-i18n
+> 基于探索的结果，创建变更文件夹
+
+> /opsx:continue
+> 继续生成 proposal.md
+
+> /opsx:continue
+> 继续生成 specs/ 和 design.md
+```
+
+通过 `new → continue → continue` 逐步生成制品，每一步都可以审阅和修改。
+
+### 场景四：需求清晰，快速实现
+
+知道自己要什么，直接走快速通道：
+
+```text
+> /opsx:propose add-rate-limiting
+> 为 API 添加频率限制，每用户每分钟 100 次
+
+> /opsx:apply
+> 按照任务清单实现
+
+> /opsx:archive
+> 归档变更
+```
+
+### 场景五：中断后恢复进度
+
+开会到一半被打断了？`apply` 会自动从 tasks.md 的断点继续：
+
+```text
+> /opsx:apply
+```
+
+OpenSpec 读取 tasks.md，找到第一个未勾选的复选框，从那里继续。不需要记住上次做到哪里。
+
+### 场景六：实现后发现规格有遗漏
+
+代码写到一半发现规格少定义了一个接口：
+
+1. 手动编辑 `tasks.md`，添加遗漏的任务
+2. 继续执行 `/opsx:apply`
+3. 或者用 `/opsx:verify` 验证实现与规格的一致性
+
+```text
+> /opsx:verify
+> 检查当前实现是否完整匹配规格
+```
+
+### 场景七：多任务并行
+
+同时推进多个不相关的功能：
+
+```text
+openspec/changes/
+  add-auth/          # 认证功能——由 Alice 负责
+  add-i18n/          # 多语言——由 Bob 负责
+  fix-pagination/    # 分页修复——由 Charlie 负责
+```
+
+三个变更文件夹互相独立，各自推进。完成后：
+
+```text
+> /opsx:bulk-archive
+> 一次性归档所有完成的变更
+```
+
+### 场景八：系统化 Bug 修复
+
+Bug 也可以用 OpenSpec 管理：
+
+```text
+> /opsx:explore
+> 用户报告登录偶尔超时，帮我排查可能的原因
+
+> /opsx:propose fix-login-timeout
+> 基于排查结果，创建修复方案的规格
+
+> /opsx:apply
+> 按规格修复
+
+> /opsx:verify
+> 验证修复是否完整
+
+> /opsx:archive
+> 归档
+```
+
+### 场景九：大规模重构
+
+重构不能一步到位，需要分阶段：
+
+```text
+> /opsx:propose refactor-auth-module
+> 将认证模块从 monolithic 拆分为微服务架构
+```
+
+在 tasks.md 中将任务分阶段：
+
+```markdown
+# Phase 1: 抽离接口层
+
+- [ ] 定义认证服务接口
+- [ ] 将现有实现适配到接口
+
+# Phase 2: 新实现
+
+- [ ] 实现 JWT 认证服务
+- [ ] 实现 OAuth2 认证服务
+
+# Phase 3: 切换
+
+- [ ] 灰度切换到新实现
+- [ ] 移除旧实现
+```
+
+每个 Phase 执行一次 `/opsx:apply`，确认无误后再进入下一阶段。
+
+### 场景十：多人协作与代码审查
+
+团队协作时，每人负责不同的变更：
+
+```text
+# Alice 的变更
+> /opsx:propose add-user-profile
+
+# Bob 的变更
+> /opsx:propose add-notification
+
+# 合并前验证
+> /opsx:sync
+> 检查变更之间是否有冲突
+
+# 批量归档
+> /opsx:bulk-archive
+```
+
+`openspec sync` 会检测多个变更之间的依赖和冲突，`bulk-archive` 在确认无冲突后批量归档。
+
+## 最佳实践
+
+### 配置项目上下文
+
+第一次使用 OpenSpec 时，在 `config.yaml` 中配置项目上下文——这是一次性投入，长期受益：
+
+```yaml
+context:
+  stack: 'Next.js + TypeScript + Prisma'
+  api_style: 'REST'
+  testing: 'Vitest'
+  language: '中文（简体）'
+```
+
+配置后，AI 生成的所有规格文档都会使用你的技术栈和语言，不需要每次重复说明。
+
+### 先探索后动手
+
+不确定要做什么时，先用 `/opsx:explore`——它是零副作用的。确认方向后再 propose，避免在错误方向上浪费时间。
+
+### 单一职责原则
+
+每个变更文件夹只做一件事。"添加用户认证 + 重构数据库 + 修复分页 Bug" 应该拆成 3 个变更。
+
+### 归档是知识积累
+
+归档不只是清理——归档后的规格描述了系统当前的行为。下次变更时，新提案基于这些规格生成增量变更。定期 `openspec list` 检查未归档的变更。
+
+### 清理对话历史
+
+执行 `/opsx:apply` 前用 `/clear` 清理对话历史，避免无关上下文干扰 AI 的执行质量。
+
 ## 与其他工具的关系
 
 ### OpenSpec vs Superpowers

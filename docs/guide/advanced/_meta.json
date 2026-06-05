@@ -8,6 +8,8 @@
   "spec-kit",
   "openspec",
   "openspec-superpowers",
+  "agents-routing",
+  "sdd-guide",
   "ralph",
   "codegraph",
   "code-review-graph",
