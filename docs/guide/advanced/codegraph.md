@@ -282,24 +282,25 @@ codegraph uninstall
 npm uninstall -g @colbymchenry/codegraph
 ```
 
-## 与 Code Review Graph 的对比
+## 与 Code Review Graph、Graphify 的对比
 
-[Code Review Graph](/guide/advanced/code-review-graph)（CRG）是另一个基于 tree-sitter 的本地代码图谱工具。两者都通过 MCP 为 Claude Code 提供代码智能，但设计重点不同：
+[Code Review Graph](/guide/advanced/code-review-graph)（CRG）和 [Graphify](/guide/advanced/graphify) 是另外两个基于代码图谱的工具。三者都通过 MCP 为 Claude Code 提供代码理解能力，但设计重点不同：
 
-| 方面           | CodeGraph                               | Code Review Graph                         |
-| -------------- | --------------------------------------- | ----------------------------------------- |
-| **定位**       | 日常代码探索                            | 代码审查和架构分析                        |
-| **语言**       | TypeScript (npm)                        | Python (pip)                              |
-| **MCP 工具数** | 10                                      | 30                                        |
-| **核心工具**   | `codegraph_explore`（一次调用回答问题） | `get_minimal_context`（~100 Token 概览）  |
-| **特色能力**   | 简洁、快速、零配置                      | Blast-Radius、社区检测、执行流、Wiki 生成 |
-| **Token 优化** | 35% 费用降低                            | 38x-528x Token 节省                       |
-| **语言支持**   | 20+                                     | 30+                                       |
-| **框架路由**   | 14 个框架                               | 无                                        |
-| **社区检测**   | 无                                      | Leiden 算法                               |
-| **可视化**     | 无                                      | D3.js 交互式图谱                          |
-| **安装方式**   | 独立二进制/npm                          | pip install                               |
-| **最佳场景**   | 日常开发中的快速代码探索                | PR 审查、影响分析、架构文档               |
+| 方面           | CodeGraph                               | Code Review Graph                         | Graphify                          |
+| -------------- | --------------------------------------- | ----------------------------------------- | --------------------------------- |
+| **定位**       | 日常代码探索                            | 代码审查和架构分析                        | 多模态知识图谱                    |
+| **语言**       | TypeScript (npm)                        | Python (pip)                              | Python (pip)                      |
+| **输入类型**   | 代码文件                                | 代码文件                                  | 代码 + 文档 + PDF + 图片          |
+| **MCP 工具数** | 10                                      | 30                                        | MCP 服务器模式                    |
+| **核心工具**   | `codegraph_explore`（一次调用回答问题） | `get_minimal_context`（~100 Token 概览）  | 自然语言 query + 路径发现         |
+| **特色能力**   | 简洁、快速、零配置                      | Blast-Radius、社区检测、执行流、Wiki 生成 | 多模态、意外连接发现、Obsidian 导出 |
+| **Token 优化** | 35% 费用降低                            | 38x-528x Token 节省                       | 71.5x Token 节省                  |
+| **语言支持**   | 20+                                     | 30+                                       | 13+                               |
+| **框架路由**   | 14 个框架                               | 无                                        | 无                                |
+| **社区检测**   | 无                                      | Leiden 算法                               | Leiden 算法                       |
+| **可视化**     | 无                                      | D3.js 交互式图谱                          | vis.js + SVG + GraphML + Neo4j    |
+| **安装方式**   | 独立二进制/npm                          | pip install                               | pip install                       |
+| **最佳场景**   | 日常开发中的快速代码探索                | PR 审查、影响分析、架构文档               | 研究材料整理、跨文档关联发现      |
 
 ### 选型建议
 
@@ -317,11 +318,23 @@ npm uninstall -g @colbymchenry/codegraph
 - 你想了解代码库的架构模块划分（社区检测）
 - 你需要 Wiki 自动生成和可视化
 
-**两者都用：**
+**选择 Graphify 如果：**
+
+- 你有混合类型的材料（代码 + 论文 + PDF + 图片）
+- 你需要发现跨文档类型的关联
+- 你想要 Obsidian 或 Neo4j 格式的输出
+- 你正在做研究或知识管理工作
+
+**组合使用：**
 
 - CodeGraph 用于日常开发中的快速代码探索
 - CRG 用于代码审查、PR 审核和架构分析
-- 两者通过 MCP 并行运行，互不冲突
+- Graphify 用于研究材料整理和跨文档知识整合
+- 三者通过 MCP 并行运行，互不冲突
+
+:::tip
+更多三工具详细对比、差异分析和兼容性说明，请参考[代码图谱工具对比](/guide/advanced/code-graph-tools)。
+:::
 
 ## 相关资源
 
@@ -331,6 +344,9 @@ npm uninstall -g @colbymchenry/codegraph
 
 ## 下一步
 
+- [代码图谱工具对比](/guide/advanced/code-graph-tools) — CodeGraph、CRG、Graphify 三工具详细对比
+- [Code Review Graph](/guide/advanced/code-review-graph) — 代码审查专用工具
+- [Graphify 知识图谱](/guide/advanced/graphify) — 多模态知识图谱工具
 - [MCP 服务器](/guide/advanced/mcp-servers) — 深入了解 MCP 服务器配置
 - [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理 MCP 服务器和 API Provider
 - [技巧与最佳实践](/tips/best-practices) — 更多高效使用技巧
