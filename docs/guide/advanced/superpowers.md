@@ -622,6 +622,7 @@ Superpowers 的 14 个 Skills 概览和与其他 Skills 工具的关系对比，
 
 ## 下一步
 
+- [OpenSpec + Superpowers 双层规划](/guide/advanced/openspec-superpowers) — 企业级双层规划工作流
 - [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理 API Provider 和 Skills
 - [多智能体工作流](/guide/advanced/multi-agent) — 编排多个 Agent 协作
 - [自动化与 CI/CD](/guide/advanced/automation) — 在 CI/CD 中使用 Claude Code

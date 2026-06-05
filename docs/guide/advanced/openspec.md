@@ -366,6 +366,7 @@ POST /api/auth/reset-password
 
 ## 下一步
 
+- [OpenSpec + Superpowers 双层规划](/guide/advanced/openspec-superpowers) — 企业级双层规划工作流
 - [Superpowers 插件](/guide/advanced/superpowers) — 互补的结构化开发方法论
 - [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理 API Provider 和 Skills
 - [自定义技能](/skills/overview/custom-skills) — 创建和管理自定义 Skills
