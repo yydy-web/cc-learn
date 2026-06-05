@@ -25,22 +25,22 @@ Superpowers 的核心是 7 步开发工作流，每一步对应一个或多个 S
 
 Superpowers 的 14 个 Skills 按照开发 Pipeline 的阶段组织：
 
-| 阶段       | Skill                            | 斜杠命令                               |
-| ---------- | -------------------------------- | -------------------------------------- |
-| 入口       | `using-superpowers`              | —                                      |
-| 设计       | `brainstorming`                  | `/superpowers:brainstorming`           |
-| 规划       | `writing-plans`                  | `/superpowers:writing-plans`           |
-| 隔离       | `using-git-worktrees`            | —                                      |
-| 执行       | `executing-plans`                | `/superpowers:executing-plans`         |
+| 阶段       | Skill                            | 斜杠命令                                   |
+| ---------- | -------------------------------- | ------------------------------------------ |
+| 入口       | `using-superpowers`              | —                                          |
+| 设计       | `brainstorming`                  | `/superpowers:brainstorming`               |
+| 规划       | `writing-plans`                  | `/superpowers:writing-plans`               |
+| 隔离       | `using-git-worktrees`            | —                                          |
+| 执行       | `executing-plans`                | `/superpowers:executing-plans`             |
 | 执行       | `subagent-driven-development`    | `/superpowers:subagent-driven-development` |
-| 并行       | `dispatching-parallel-agents`    | —                                      |
-| 实现与测试 | `test-driven-development`        | `/superpowers:test-driven-development` |
-| 调试       | `systematic-debugging`           | `/superpowers:systematic-debugging`    |
-| 审查       | `requesting-code-review`         | —                                      |
-| 审查       | `receiving-code-review`          | —                                      |
-| 验证       | `verification-before-completion` | —                                      |
-| 收尾       | `finishing-a-development-branch` | —                                      |
-| 元技能     | `writing-skills`                 | —                                      |
+| 并行       | `dispatching-parallel-agents`    | —                                          |
+| 实现与测试 | `test-driven-development`        | `/superpowers:test-driven-development`     |
+| 调试       | `systematic-debugging`           | `/superpowers:systematic-debugging`        |
+| 审查       | `requesting-code-review`         | —                                          |
+| 审查       | `receiving-code-review`          | —                                          |
+| 验证       | `verification-before-completion` | —                                          |
+| 收尾       | `finishing-a-development-branch` | —                                          |
+| 元技能     | `writing-skills`                 | —                                          |
 
 ## 安装
 

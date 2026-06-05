@@ -62,11 +62,11 @@ PyPI 包名暂时为 `graphifyy`（`graphify` 名称正在回收中），但 CLI
 
 **平台注意事项：**
 
-| 平台    | 注意事项                                                                    |
-| ------- | --------------------------------------------------------------------------- |
+| 平台    | 注意事项                                                                                 |
+| ------- | ---------------------------------------------------------------------------------------- |
 | macOS   | 如果 `pip install` 失败（externally-managed-environment），使用 `pipx install graphifyy` |
-| Windows | 可能需要将 Python Scripts 目录添加到 PATH，或使用 `pipx install graphifyy`  |
-| Linux   | 直接 `pip install graphifyy` 即可                                           |
+| Windows | 可能需要将 Python Scripts 目录添加到 PATH，或使用 `pipx install graphifyy`               |
+| Linux   | 直接 `pip install graphifyy` 即可                                                        |
 
 ### 手动安装
 
@@ -82,29 +82,29 @@ curl -fsSL https://raw.githubusercontent.com/safishamsi/graphify/main/install.sh
 
 Graphify 为 Claude Code 提供以下 Slash 命令：
 
-| 命令                            | 用途                             |
-| ------------------------------- | -------------------------------- |
-| `/graphify`                     | 对当前目录构建知识图谱           |
-| `/graphify ./raw`               | 对指定文件夹构建知识图谱         |
-| `/graphify ./raw --mode deep`   | 深度模式——更激进的推断边提取     |
-| `/graphify ./raw --update`      | 增量更新——仅重新处理变更文件     |
-| `/graphify add <url>`           | 获取论文（arXiv）或推文（X）并更新图谱 |
-| `/graphify query "..."`         | 自然语言查询图谱                 |
-| `/graphify path "A" "B"`        | 查找两个概念之间的路径           |
-| `/graphify explain "..."`       | 解释特定概念                     |
+| 命令                          | 用途                                   |
+| ----------------------------- | -------------------------------------- |
+| `/graphify`                   | 对当前目录构建知识图谱                 |
+| `/graphify ./raw`             | 对指定文件夹构建知识图谱               |
+| `/graphify ./raw --mode deep` | 深度模式——更激进的推断边提取           |
+| `/graphify ./raw --update`    | 增量更新——仅重新处理变更文件           |
+| `/graphify add <url>`         | 获取论文（arXiv）或推文（X）并更新图谱 |
+| `/graphify query "..."`       | 自然语言查询图谱                       |
+| `/graphify path "A" "B"`      | 查找两个概念之间的路径                 |
+| `/graphify explain "..."`     | 解释特定概念                           |
 
 ## 输出结构
 
 运行 Graphify 后，会在目标目录生成 `graphify-out/` 目录：
 
-| 输出文件          | 说明                                       |
-| ----------------- | ------------------------------------------ |
-| `graph.html`      | 交互式可视化——支持节点点击、搜索、社区过滤 |
-| `obsidian/`       | Obsidian vault 结构——可在 Obsidian 中浏览  |
+| 输出文件          | 说明                                                 |
+| ----------------- | ---------------------------------------------------- |
+| `graph.html`      | 交互式可视化——支持节点点击、搜索、社区过滤           |
+| `obsidian/`       | Obsidian vault 结构——可在 Obsidian 中浏览            |
 | `wiki/`           | Wikipedia 风格的文章——供 Agent 导航（`--wiki` 标志） |
-| `GRAPH_REPORT.md` | 分析报告——God 节点、意外连接、建议问题     |
-| `graph.json`      | 持久化图谱数据——支持数周后查询无需重新读取 |
-| `cache/`          | SHA256 缓存——重运行仅处理变更文件          |
+| `GRAPH_REPORT.md` | 分析报告——God 节点、意外连接、建议问题               |
+| `graph.json`      | 持久化图谱数据——支持数周后查询无需重新读取           |
+| `cache/`          | SHA256 缓存——重运行仅处理变更文件                    |
 
 ### 分析报告内容
 
@@ -182,15 +182,15 @@ CC-Switch 特别适合在多个 AI 工具之间同步 Graphify 的 MCP 配置—
 
 ## 导出格式
 
-| 格式                          | 命令           | 用途                        |
-| ----------------------------- | -------------- | --------------------------- |
-| HTML（默认）                  | `/graphify`    | 交互式 vis.js 可视化        |
-| SVG                           | `--svg`        | 静态矢量图                  |
-| GraphML                       | `--graphml`    | 导入 Gephi、yEd 等工具      |
-| Neo4j Cypher                  | `--neo4j`      | 生成 `cypher.txt` 导入 Neo4j |
-| MCP Server                    | `--mcp`        | stdio 模式 MCP 服务器       |
-| Obsidian Vault                | 自动生成       | Obsidian 知识库             |
-| Wiki（Markdown）              | `--wiki`       | Agent 可爬取的 Wiki         |
+| 格式             | 命令        | 用途                         |
+| ---------------- | ----------- | ---------------------------- |
+| HTML（默认）     | `/graphify` | 交互式 vis.js 可视化         |
+| SVG              | `--svg`     | 静态矢量图                   |
+| GraphML          | `--graphml` | 导入 Gephi、yEd 等工具       |
+| Neo4j Cypher     | `--neo4j`   | 生成 `cypher.txt` 导入 Neo4j |
+| MCP Server       | `--mcp`     | stdio 模式 MCP 服务器        |
+| Obsidian Vault   | 自动生成    | Obsidian 知识库              |
+| Wiki（Markdown） | `--wiki`    | Agent 可爬取的 Wiki          |
 
 ## 使用示例
 
@@ -228,13 +228,13 @@ CC-Switch 特别适合在多个 AI 工具之间同步 Graphify 的 MCP 配置—
 
 ## 技术栈
 
-| 组件          | 技术                            |
-| ------------- | ------------------------------- |
-| 图操作        | NetworkX                        |
-| 社区检测      | Leiden 算法（via graspologic）  |
-| 代码解析      | tree-sitter                     |
-| 语义提取      | Claude（LLM + Vision）          |
-| 可视化        | vis.js                          |
+| 组件     | 技术                           |
+| -------- | ------------------------------ |
+| 图操作   | NetworkX                       |
+| 社区检测 | Leiden 算法（via graspologic） |
+| 代码解析 | tree-sitter                    |
+| 语义提取 | Claude（LLM + Vision）         |
+| 可视化   | vis.js                         |
 
 :::info
 无需 Neo4j、无需服务器——完全在本地运行。
@@ -244,19 +244,19 @@ CC-Switch 特别适合在多个 AI 工具之间同步 Graphify 的 MCP 配置—
 
 [CodeGraph](/guide/advanced/codegraph) 和 [Code Review Graph](/guide/advanced/code-review-graph) 是另外两个基于代码图谱的智能工具。三者都通过 MCP 为 Claude Code 提供代码理解能力，但设计定位和适用场景不同：
 
-| 方面           | CodeGraph                    | Code Review Graph                | Graphify                          |
-| -------------- | ---------------------------- | -------------------------------- | --------------------------------- |
-| **定位**       | 日常代码探索                 | 代码审查和架构分析               | 多模态知识图谱                    |
-| **语言**       | TypeScript (npm)             | Python (pip)                     | Python (pip)                      |
-| **输入类型**   | 代码文件                     | 代码文件                         | 代码 + 文档 + PDF + 图片          |
-| **MCP 工具数** | 10                           | 30                               | MCP 服务器模式                    |
-| **核心能力**   | `codegraph_explore` 一次调用 | `get_minimal_context` ~100 Token | 跨文档知识图谱 + 自然语言查询     |
+| 方面           | CodeGraph                    | Code Review Graph                | Graphify                            |
+| -------------- | ---------------------------- | -------------------------------- | ----------------------------------- |
+| **定位**       | 日常代码探索                 | 代码审查和架构分析               | 多模态知识图谱                      |
+| **语言**       | TypeScript (npm)             | Python (pip)                     | Python (pip)                        |
+| **输入类型**   | 代码文件                     | 代码文件                         | 代码 + 文档 + PDF + 图片            |
+| **MCP 工具数** | 10                           | 30                               | MCP 服务器模式                      |
+| **核心能力**   | `codegraph_explore` 一次调用 | `get_minimal_context` ~100 Token | 跨文档知识图谱 + 自然语言查询       |
 | **特色**       | 零配置、框架路由             | Blast-Radius、社区检测、Wiki     | 多模态、意外连接发现、Obsidian 导出 |
-| **Token 优化** | 35% 费用降低                 | 38x-528x Token 节省              | 71.5x Token 节省                  |
-| **社区检测**   | 无                           | Leiden 算法                      | Leiden 算法（via graspologic）    |
-| **可视化**     | 无                           | D3.js 交互式图谱                 | vis.js 交互式 + SVG + GraphML     |
-| **安装方式**   | 独立二进制 / npm             | pip install                      | pip install                       |
-| **最佳场景**   | 日常开发中的快速代码探索     | PR 审查、影响分析、架构文档      | 研究材料整理、跨文档关联发现      |
+| **Token 优化** | 35% 费用降低                 | 38x-528x Token 节省              | 71.5x Token 节省                    |
+| **社区检测**   | 无                           | Leiden 算法                      | Leiden 算法（via graspologic）      |
+| **可视化**     | 无                           | D3.js 交互式图谱                 | vis.js 交互式 + SVG + GraphML       |
+| **安装方式**   | 独立二进制 / npm             | pip install                      | pip install                         |
+| **最佳场景**   | 日常开发中的快速代码探索     | PR 审查、影响分析、架构文档      | 研究材料整理、跨文档关联发现        |
 
 ### 选型建议
 

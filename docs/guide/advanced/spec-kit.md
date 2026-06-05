@@ -93,22 +93,22 @@ specs/
 
 ### 基础流程命令
 
-| 命令                    | 用途                                   |
-| ----------------------- | -------------------------------------- |
-| `/speckit.constitution` | 创建/更新项目治理原则                  |
-| `/speckit.specify`      | 定义需求规格（用户故事、行为描述）     |
-| `/speckit.clarify`      | 结构化 Q&A 澄清模糊需求               |
-| `/speckit.plan`         | 生成技术实现方案（含技术选型理由）     |
-| `/speckit.tasks`        | 生成依赖有序的任务列表                 |
-| `/speckit.implement`    | 按任务列表 TDD 驱动实现               |
+| 命令                    | 用途                               |
+| ----------------------- | ---------------------------------- |
+| `/speckit.constitution` | 创建/更新项目治理原则              |
+| `/speckit.specify`      | 定义需求规格（用户故事、行为描述） |
+| `/speckit.clarify`      | 结构化 Q&A 澄清模糊需求            |
+| `/speckit.plan`         | 生成技术实现方案（含技术选型理由） |
+| `/speckit.tasks`        | 生成依赖有序的任务列表             |
+| `/speckit.implement`    | 按任务列表 TDD 驱动实现            |
 
 ### 辅助命令
 
-| 命令                      | 用途                             |
-| ------------------------- | -------------------------------- |
-| `/speckit.analyze`        | 跨工件一致性和覆盖率分析         |
-| `/speckit.checklist`      | 生成质量检查清单                 |
-| `/speckit.taskstoissues`  | 将任务列表转换为 GitHub Issues   |
+| 命令                     | 用途                           |
+| ------------------------ | ------------------------------ |
+| `/speckit.analyze`       | 跨工件一致性和覆盖率分析       |
+| `/speckit.checklist`     | 生成质量检查清单               |
+| `/speckit.taskstoissues` | 将任务列表转换为 GitHub Issues |
 
 ## 完整工作流示例
 
@@ -209,23 +209,23 @@ specify preset search             # 浏览可用预设
 specify preset add <name>         # 安装预设
 ```
 
-| 目标                     | 使用   |
-| ------------------------ | ------ |
-| 添加新命令或工作流       | Extension |
-| 定制规格/计划/任务格式   | Preset    |
+| 目标                    | 使用      |
+| ----------------------- | --------- |
+| 添加新命令或工作流      | Extension |
+| 定制规格/计划/任务格式  | Preset    |
 | 集成外部工具（Jira 等） | Extension |
-| 强制组织/合规标准        | Preset    |
+| 强制组织/合规标准       | Preset    |
 
 ## 与其他工具的关系
 
 Spec-Kit 与 CC Learn 文档中介绍的其他工具互补：
 
-| 工具         | 与 Spec-Kit 的关系                                              |
-| ------------ | --------------------------------------------------------------- |
-| **OpenSpec** | 同属规格驱动，OpenSpec 轻量（proposal → specs → design → tasks），Spec-Kit 更完整（含 Constitution、Clarify、Analyze） |
-| **Superpowers** | Superpowers 提供开发纪律（TDD、代码审查），Spec-Kit 的 `/speckit.implement` 可调用 Superpowers 执行 |
-| **Gstack**   | Gstack 的 `/office-hours` 可作为 Spec-Kit 的需求探索前置步骤   |
-| **ECC**      | ECC 的 Agent 和 Skill 可在 Spec-Kit 的实现阶段增强代码质量     |
+| 工具            | 与 Spec-Kit 的关系                                                                                                     |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **OpenSpec**    | 同属规格驱动，OpenSpec 轻量（proposal → specs → design → tasks），Spec-Kit 更完整（含 Constitution、Clarify、Analyze） |
+| **Superpowers** | Superpowers 提供开发纪律（TDD、代码审查），Spec-Kit 的 `/speckit.implement` 可调用 Superpowers 执行                    |
+| **Gstack**      | Gstack 的 `/office-hours` 可作为 Spec-Kit 的需求探索前置步骤                                                           |
+| **ECC**         | ECC 的 Agent 和 Skill 可在 Spec-Kit 的实现阶段增强代码质量                                                             |
 
 :::tip
 如果项目较简单，用 OpenSpec 的 proposal → specs → tasks 流程就够了。如果项目复杂、团队多人协作、需要严格的规格治理和可追溯性，Spec-Kit 的 Constitution + 7 步工作流更合适。

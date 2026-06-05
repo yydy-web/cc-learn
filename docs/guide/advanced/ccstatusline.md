@@ -69,20 +69,20 @@ CCStatusline 通过 Claude Code 的 `statusLine` 配置项工作。安装后，`
 }
 ```
 
-| 字段                | 说明                                          |
-| ------------------- | --------------------------------------------- |
-| `type`              | 固定为 `"command"`                            |
-| `command`           | 运行命令，支持 `npx`、`bunx` 或全局安装的 `ccstatusline` |
-| `padding`           | 状态栏边距，默认 `0`                          |
-| `refreshInterval`   | 刷新间隔（秒），范围 1–60，需要 Claude Code 2.1.97+ |
+| 字段              | 说明                                                     |
+| ----------------- | -------------------------------------------------------- |
+| `type`            | 固定为 `"command"`                                       |
+| `command`         | 运行命令，支持 `npx`、`bunx` 或全局安装的 `ccstatusline` |
+| `padding`         | 状态栏边距，默认 `0`                                     |
+| `refreshInterval` | 刷新间隔（秒），范围 1–60，需要 Claude Code 2.1.97+      |
 
 ### 环境变量
 
-| 变量                     | 用途                                   |
-| ------------------------ | -------------------------------------- |
-| `CLAUDE_CONFIG_DIR`      | 自定义 Claude Code 配置目录            |
-| `HTTPS_PROXY`            | 代理地址（用于用量 API 请求）          |
-| `CCSTATUSLINE_WIDTH`     | 手动指定终端宽度                       |
+| 变量                 | 用途                          |
+| -------------------- | ----------------------------- |
+| `CLAUDE_CONFIG_DIR`  | 自定义 Claude Code 配置目录   |
+| `HTTPS_PROXY`        | 代理地址（用于用量 API 请求） |
+| `CCSTATUSLINE_WIDTH` | 手动指定终端宽度              |
 
 ### 自定义配置路径
 
@@ -111,59 +111,59 @@ CCStatusline 提供了丰富的 Widget，按类别分组：
 
 ### 模型与会话
 
-| Widget             | 显示内容                               |
-| ------------------ | -------------------------------------- |
-| **Model**          | 当前模型名称，自动去除 `(1M context)` 等后缀 |
-| **Session Name**   | 当前会话名称                           |
-| **Session Cost**   | 当前会话费用（USD），需要 Claude Code 1.0.85+ |
-| **Compaction**     | 压缩次数，支持隐藏为零时               |
+| Widget           | 显示内容                                      |
+| ---------------- | --------------------------------------------- |
+| **Model**        | 当前模型名称，自动去除 `(1M context)` 等后缀  |
+| **Session Name** | 当前会话名称                                  |
+| **Session Cost** | 当前会话费用（USD），需要 Claude Code 1.0.85+ |
+| **Compaction**   | 压缩次数，支持隐藏为零时                      |
 
 ### Token 用量
 
-| Widget                 | 显示内容                                    |
-| ---------------------- | ------------------------------------------- |
-| **Session Usage**      | 当前会话的 Token 用量                       |
-| **Weekly Usage**       | 每周用量，支持按 Sonnet / Opus 分别显示     |
-| **Extra Usage**        | 额度使用率和剩余量                          |
-| **Token Speed**        | Token 输入/输出速率，支持 0–120 秒滑动窗口  |
+| Widget            | 显示内容                                   |
+| ----------------- | ------------------------------------------ |
+| **Session Usage** | 当前会话的 Token 用量                      |
+| **Weekly Usage**  | 每周用量，支持按 Sonnet / Opus 分别显示    |
+| **Extra Usage**   | 额度使用率和剩余量                         |
+| **Token Speed**   | Token 输入/输出速率，支持 0–120 秒滑动窗口 |
 
 ### Git 信息
 
-| Widget              | 显示内容                                    |
-| ------------------- | ------------------------------------------- |
-| **Git Branch**      | 当前分支名，支持点击跳转 GitHub / GitLab    |
-| **Git Status**      | 工作区整体状态                              |
-| **Staged / Unstaged / Untracked** | 文件变更数量              |
-| **Ahead / Behind**  | 与远程分支的提交差异                        |
-| **Conflicts**       | 合并冲突数量                                |
-| **Worktree**        | Git Worktree 模式、名称和分支               |
+| Widget                            | 显示内容                                 |
+| --------------------------------- | ---------------------------------------- |
+| **Git Branch**                    | 当前分支名，支持点击跳转 GitHub / GitLab |
+| **Git Status**                    | 工作区整体状态                           |
+| **Staged / Unstaged / Untracked** | 文件变更数量                             |
+| **Ahead / Behind**                | 与远程分支的提交差异                     |
+| **Conflicts**                     | 合并冲突数量                             |
+| **Worktree**                      | Git Worktree 模式、名称和分支            |
 
 ### 上下文窗口
 
-| Widget               | 显示内容                                  |
-| -------------------- | ----------------------------------------- |
-| **Context Percentage** | 上下文窗口使用百分比                    |
-| **Context Bar**      | 可视化进度条，支持紧凑模式               |
-| **Context Window**   | 模型上下文窗口总大小                     |
-| **Context Length**   | 当前已使用的上下文长度                   |
+| Widget                 | 显示内容                   |
+| ---------------------- | -------------------------- |
+| **Context Percentage** | 上下文窗口使用百分比       |
+| **Context Bar**        | 可视化进度条，支持紧凑模式 |
+| **Context Window**     | 模型上下文窗口总大小       |
+| **Context Length**     | 当前已使用的上下文长度     |
 
 ### 计时器
 
-| Widget               | 显示内容                                  |
-| -------------------- | ----------------------------------------- |
-| **Block Timer**      | 5 小时 Block 的进度，支持两种进度条样式  |
-| **Block Reset**      | 下次 Block 重置的时间                    |
-| **Weekly Reset**     | 每周额度重置时间，支持 IANA 时区         |
+| Widget           | 显示内容                                |
+| ---------------- | --------------------------------------- |
+| **Block Timer**  | 5 小时 Block 的进度，支持两种进度条样式 |
+| **Block Reset**  | 下次 Block 重置的时间                   |
+| **Weekly Reset** | 每周额度重置时间，支持 IANA 时区        |
 
 ### 其他
 
-| Widget               | 显示内容                                  |
-| -------------------- | ----------------------------------------- |
-| **CWD**              | 当前工作目录，支持 fish 风格缩写          |
-| **Thinking Effort**  | 思考强度（包括 `xhigh`）                  |
-| **Vim Mode**         | Vim 模式指示器                            |
-| **Voice Status**     | 语音输入状态                              |
-| **Custom Text**      | 自定义文本，支持 Emoji                    |
+| Widget              | 显示内容                         |
+| ------------------- | -------------------------------- |
+| **CWD**             | 当前工作目录，支持 fish 风格缩写 |
+| **Thinking Effort** | 思考强度（包括 `xhigh`）         |
+| **Vim Mode**        | Vim 模式指示器                   |
+| **Voice Status**    | 语音输入状态                     |
+| **Custom Text**     | 自定义文本，支持 Emoji           |
 
 ## Powerline 风格
 
