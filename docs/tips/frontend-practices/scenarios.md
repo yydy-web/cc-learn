@@ -1059,3 +1059,770 @@ Closes #456
 | 排查 | Superpowers | 系统化排除法，不遗漏任何瓶颈 |
 | 实现 | Git | 逐项优化、逐项提交，可追溯可回滚 |
 | 验证 | GStack | 量化对比，确保优化效果达标 |
+
+## 场景四：系统化 Bug 修复（跨浏览器兼容性）
+
+本场景演示如何系统性地修复一个跨浏览器兼容性 Bug。当用户报告"页面在 Safari 上样式错乱，Chrome 正常"时，盲目猜测原因往往浪费大量时间。通过这个场景，你将看到如何利用工具链先复现问题、再定位根因、最后用 TDD 确保修复可靠且不会回归。
+
+### 预计用时与工具分布
+
+| 阶段 | 预计用时 | 主要工具 | 产出物 |
+|------|---------|---------|--------|
+| 分支创建 | 1 分钟 | Git | fix/safari-layout-bug 分支 |
+| 系统化调试 | 10-15 分钟 | Superpowers | 排查诊断报告 |
+| 复现验证 | 10-15 分钟 | GStack | 多浏览器复现截图 |
+| 根因定位 | 15-20 分钟 | CodeGraph | 样式应用链分析 |
+| TDD 修复 | 30-45 分钟 | Superpowers、Git | 通过测试的修复代码 |
+| 预防措施 | 20-30 分钟 | GStack、Git | 跨浏览器 E2E 测试 |
+| 发布 | 5 分钟 | Git | PR + 合并 |
+
+### Step 1：创建修复分支
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b fix/safari-layout-bug
+```
+
+**为什么单独建分支：** 即使是一个"小 Bug"，也应该在独立分支上修复。这确保了修复过程中的实验性代码不会污染 main，也让后续的 PR 可以清晰地展示修复内容。
+
+### Step 2：Superpowers 系统化调试
+
+> /superpowers:systematic-debugging
+> 页面在 Safari 上样式错乱，Chrome 正常
+
+Superpowers 的系统化调试流程不会让你盲目猜测。它会按照"排除法"建立一个调试清单，逐项排查：
+
+1. **确认问题范围**：是所有页面还是特定页面？是所有 Safari 版本还是特定版本？是桌面端还是移动端？
+2. **检查已知兼容性问题**：Safari 对 CSS Flexbox gap、CSS Grid、`-webkit-` 前缀、`position: sticky` 等特性的支持差异
+3. **检查 CSS 解析差异**：Safari 的 WebKit 引擎在某些 CSS 属性的解析上与 Chrome 的 Blink 引擎有差异
+4. **检查 JavaScript API 差异**：某些 Web API 在 Safari 中可能不存在或行为不同
+
+**预期输出：** 一份结构化的排查清单，按可能性从高到低排序，每个条目附带验证方法。
+
+:::details Superpowers 系统化调试的底层原理
+
+Superpowers 的调试流程基于"假设-验证"循环：
+
+1. **建立假设列表**：根据症状描述，列出所有可能的原因
+2. **优先级排序**：按照统计概率和验证成本排序
+3. **逐一验证**：每个假设用最小成本的方式验证（读代码 > 加日志 > 设断点）
+4. **收敛到根因**：排除所有不可能后，剩下的就是根因
+
+这种方法避免了"我觉得可能是 XX"的猜测式调试，确保不遗漏任何可能性。
+:::
+
+### Step 3：GStack 多浏览器复现
+
+> /qa https://localhost:5173/product/123
+> 在 Safari 和 Chrome 中分别测试以下内容：
+> - 页面整体布局是否正确
+> - 导航栏、侧边栏、内容区的对齐方式
+> - 卡片组件的间距和排列
+> - 响应式断点切换时的布局变化
+
+GStack 的 `/qa` 会在真实的 Playwright 浏览器中执行测试。虽然 Playwright 默认使用 Chromium，但你可以要求它在 WebKit 引擎模式下运行（Playwright 支持 Chromium、Firefox 和 WebKit 三种引擎）。
+
+**预期输出：**
+
+```text
+浏览器兼容性测试报告 — /product/123
+├── Chromium (Chrome 模拟)
+│   ├── 布局: ✅ 正常
+│   ├── 卡片间距: ✅ gap: 16px
+│   └── 响应式: ✅ 断点切换正常
+├── WebKit (Safari 模拟)
+│   ├── 布局: ❌ 卡片堆叠，未按网格排列
+│   ├── 卡片间距: ❌ gap 属性未生效
+│   └── 响应式: ⚠️ 768px 断点时侧边栏未隐藏
+└── 差异截图: [Safari vs Chrome 对比]
+```
+
+**关键发现：** WebKit 模式下 `gap` 属性在 Flexbox 容器中未生效，导致卡片之间没有间距并堆叠在一起。这是一个已知的 Safari 兼容性问题——Safari 14.1 之前不支持 Flexbox 的 `gap` 属性。
+
+### Step 4：CodeGraph 样式链追踪
+
+> 追踪卡片组件的样式应用链，找出 gap 属性的使用位置
+
+Claude Code 会调用 CodeGraph 的 `codegraph_trace` 工具，从卡片容器组件出发，追踪所有相关的 CSS/样式定义。
+
+**预期输出：**
+
+```text
+样式应用链分析:
+├── ProductGrid.tsx
+│   └── className="grid grid-cols-3 gap-4"  ← 使用 Tailwind gap-4
+│       └── 编译为: display: grid; gap: 1rem;
+│           └── ⚠️ Safari 14.1 以下不支持 gap 在 Flexbox 中
+├── ProductCard.tsx
+│   └── className="flex flex-col gap-2"  ← 内部也使用 gap
+│       └── 编译为: display: flex; flex-direction: column; gap: 0.5rem;
+└── 问题定位: ProductGrid 和 ProductCard 都依赖 CSS gap 属性
+```
+
+:::details Safari Flexbox gap 兼容性问题
+
+Safari 14.1（2021 年 4 月发布）才开始支持 Flexbox 的 `gap` 属性。在此之前的 Safari 版本中：
+
+- `grid` 布局的 `gap` 属性支持良好（Safari 12.1+）
+- `flex` 布局的 `gap` 属性不支持（Safari < 14.1）
+
+如果项目需要支持 Safari 14 或更早版本，需要使用 `margin` 作为 fallback。Tailwind CSS 提供了 `gap-x` 和 `gap-y` 工具类，但底层仍然使用 `gap` 属性。
+
+兼容性写法：
+```css
+/* Fallback for Safari < 14.1 */
+.product-grid > * + * {
+  margin-left: 1rem;
+}
+/* Modern browsers */
+.product-grid {
+  display: grid;
+  gap: 1rem;
+}
+```
+:::
+
+### Step 5：TDD 驱动修复
+
+Superpowers 严格执行"先测试后代码"的 TDD 流程。在修复 Bug 之前，先编写一个能暴露问题的测试。
+
+#### 5.1 编写失败的测试（RED）
+
+```typescript title="src/components/ProductGrid.test.tsx"
+import { render, screen } from '@testing-library/react'
+import { ProductGrid } from './ProductGrid'
+
+describe('ProductGrid — 跨浏览器兼容性', () => {
+  const mockProducts = [
+    { id: '1', name: '商品 A', price: 99 },
+    { id: '2', name: '商品 B', price: 199 },
+    { id: '3', name: '商品 C', price: 299 },
+  ]
+
+  it('卡片之间应有可见间距（兼容 Safari < 14.1）', () => {
+    render(<ProductGrid products={mockProducts} />)
+    const cards = screen.getAllByRole('article')
+    const grid = cards[0].parentElement!
+
+    // 即使 CSS gap 不生效，卡片之间也应有间距
+    const styles = window.getComputedStyle(grid)
+    const firstCardRect = cards[0].getBoundingClientRect()
+    const secondCardRect = cards[1].getBoundingClientRect()
+
+    // 验证两卡片之间有水平间距
+    expect(secondCardRect.left - firstCardRect.right).toBeGreaterThan(0)
+  })
+
+  it('在窄屏下卡片应垂直堆叠', () => {
+    // 模拟窄屏
+    window.innerWidth = 375
+    window.dispatchEvent(new Event('resize'))
+
+    render(<ProductGrid products={mockProducts} />)
+    const cards = screen.getAllByRole('article')
+
+    // 窄屏下卡片应垂直排列
+    const firstCardRect = cards[0].getBoundingClientRect()
+    const secondCardRect = cards[1].getBoundingClientRect()
+
+    expect(secondCardRect.top).toBeGreaterThan(firstCardRect.bottom)
+  })
+})
+```
+
+运行测试，预期第一个测试失败——因为当前实现完全依赖 `gap` 属性，在不支持的浏览器中间距为 0。
+
+#### 5.2 实现修复（GREEN）
+
+```tsx title="src/components/ProductGrid.tsx — 修复后"
+import { type Product } from '@/types/product'
+import { ProductCard } from './ProductCard'
+
+interface ProductGridProps {
+  products: Product[]
+}
+
+export function ProductGrid({ products }: ProductGridProps) {
+  return (
+    <div
+      className="product-grid"
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+      }}
+    >
+      {products.map((product, index) => (
+        <div
+          key={product.id}
+          className="product-grid-item"
+          style={{
+            // Fallback: 使用 margin 保证 Safari < 14.1 的间距
+            marginLeft: index % 3 !== 0 ? '1rem' : undefined,
+            marginTop: index >= 3 ? '1rem' : undefined,
+          }}
+        >
+          <ProductCard product={product} />
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+```css title="src/styles/product-grid.css — 现代浏览器增强"
+/* 现代浏览器使用 gap，覆盖 margin fallback */
+@supports (gap: 1rem) {
+  .product-grid {
+    gap: 1rem;
+  }
+  .product-grid-item {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+  }
+}
+```
+
+运行测试，预期全部通过。
+
+#### 5.3 重构（REFACTOR）
+
+在测试保护下重构：将兼容性逻辑提取为可复用的 Hook 或工具类。
+
+```typescript title="src/hooks/use-flex-gap-fallback.ts"
+import { useEffect, useState } from 'react'
+
+/**
+ * 检测浏览器是否支持 Flexbox/Grid 的 gap 属性
+ * Safari < 14.1 不支持 Flexbox gap
+ */
+export function useGapSupported(): boolean {
+  const [supported, setSupported] = useState(true)
+
+  useEffect(() => {
+    const el = document.createElement('div')
+    el.style.display = 'flex'
+    el.style.gap = '1px'
+    document.body.appendChild(el)
+    const isSupported = el.offsetHeight === 1 // gap 生效时高度为 1px
+    document.body.removeChild(el)
+    setSupported(isSupported)
+  }, [])
+
+  return supported
+}
+```
+
+### Step 6：添加跨浏览器 E2E 测试
+
+预防胜于治疗。为避免类似问题再次出现，添加跨浏览器 E2E 测试。
+
+```typescript title="e2e/cross-browser-layout.spec.ts"
+import { test, expect } from '@playwright/test'
+
+// 在三种浏览器引擎中运行此测试
+test.describe('跨浏览器布局兼容性', () => {
+  test('商品卡片网格布局在所有浏览器中一致', async ({ page }) => {
+    await page.goto('/product-list')
+
+    const cards = page.getByRole('article')
+    await expect(cards.first()).toBeVisible()
+
+    // 验证卡片之间有间距
+    const firstCard = await cards.first().boundingBox()
+    const secondCard = await cards.nth(1).boundingBox()
+
+    expect(secondCard!.x - (firstCard!.x + firstCard!.width)).toBeGreaterThan(0)
+  })
+
+  test('响应式断点切换在所有浏览器中一致', async ({ page }) => {
+    await page.goto('/product-list')
+
+    // 桌面端：卡片应水平排列
+    await page.setViewportSize({ width: 1280, height: 720 })
+    const desktopCards = page.getByRole('article')
+    const firstDesktop = await desktopCards.first().boundingBox()
+    const secondDesktop = await desktopCards.nth(1).boundingBox()
+    expect(secondDesktop!.x).toBeGreaterThan(firstDesktop!.x + firstDesktop!.width)
+
+    // 移动端：卡片应垂直堆叠
+    await page.setViewportSize({ width: 375, height: 667 })
+    const firstMobile = await desktopCards.first().boundingBox()
+    const secondMobile = await desktopCards.nth(1).boundingBox()
+    expect(secondMobile!.y).toBeGreaterThan(firstMobile!.y + firstMobile!.height)
+  })
+})
+```
+
+在 `playwright.config.ts` 中配置多浏览器引擎：
+
+```typescript title="playwright.config.ts"
+export default defineConfig({
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+    { name: 'mobile-safari', use: { ...devices['iPhone 13'] } },
+  ],
+})
+```
+
+### Step 7：Git 提交与 PR
+
+```bash
+# 失败的测试（RED）
+git add src/components/ProductGrid.test.tsx
+git commit -m "test(product): add cross-browser layout test that exposes Safari gap bug"
+
+# 修复实现（GREEN）
+git add src/components/ProductGrid.tsx src/styles/product-grid.css
+git commit -m "fix(product): use margin fallback for Safari < 14.1 Flexbox gap"
+
+# 重构（REFACTOR）
+git add src/hooks/use-flex-gap-fallback.ts
+git commit -m "refactor: extract useGapSupported hook for cross-browser detection"
+
+# E2E 测试
+git add e2e/cross-browser-layout.spec.ts playwright.config.ts
+git commit -m "test: add cross-browser E2E tests for layout compatibility"
+
+# 推送并创建 PR
+git push origin fix/safari-layout-bug
+gh pr create --title "fix: Safari Flexbox gap fallback for layout compatibility" --body "..."
+```
+
+### 场景四总结
+
+通过这个场景，你可以看到系统化 Bug 修复的完整链路：
+
+| 阶段 | 工具 | 作用 |
+|------|------|------|
+| 诊断 | Superpowers | 系统化排查，避免盲目猜测 |
+| 复现 | GStack | 多浏览器复现，量化问题差异 |
+| 定位 | CodeGraph | 样式链追踪，精确定位问题属性 |
+| 修复 | Superpowers | TDD 流程，先写失败测试再修复 |
+| 预防 | GStack + Git | 跨浏览器 E2E 测试，防止回归 |
+
+## 场景五：遗留前端项目接管
+
+本场景演示如何接管一个没有文档、没有测试的遗留 React 项目。面对一个陌生的代码库，最常见的错误是直接开始改代码——这往往会导致"改了 A 坏了 B"的连锁问题。通过这个场景，你将看到如何利用工具链先建立全局认知、再识别风险、最后渐进式重构，将一个"无人敢碰"的遗留项目转化为可维护的现代代码库。
+
+### 预计用时与工具分布
+
+| 阶段 | 预计用时 | 主要工具 | 产出物 |
+|------|---------|---------|--------|
+| 代码探索 | 15-20 分钟 | CodeGraph、Serena | 项目架构全景图 |
+| 业务梳理 | 20-30 分钟 | GStack | 核心业务逻辑文档 |
+| 代码审查 | 15-20 分钟 | ECC | 代码质量 + 安全审计报告 |
+| 规格定义 | 15-20 分钟 | OpenSpec | 渐进式重构规格文档 |
+| 渐进式重构 | 持续进行 | Superpowers、Git | TDD 驱动的重构代码 |
+
+### Step 1：CodeGraph 快速探索
+
+> 这个项目的整体架构是什么？有哪些路由和核心模块？
+
+接手遗留项目的第一步不是读代码，而是建立全局认知。Claude Code 会调用 CodeGraph 的 `codegraph_explore` 工具，从入口文件出发，自动遍历整个项目的依赖关系图。
+
+**预期输出：**
+
+```text
+项目架构全景:
+├── 入口: src/main.tsx → App.tsx
+├── 路由层: react-router-dom v5 (⚠️ 旧版本)
+│   ├── / → DashboardPage (核心页面)
+│   ├── /users → UserManagement (用户管理)
+│   ├── /products → ProductManagement (商品管理)
+│   ├── /orders → OrderManagement (订单管理)
+│   └── /settings → SettingsPage (系统设置)
+├── 状态管理: Redux (⚠️ 非 Redux Toolkit)
+│   ├── store/userSlice.ts
+│   ├── store/productSlice.ts
+│   └── store/orderSlice.ts
+├── API 层: axios + 手写拦截器
+│   ├── api/user.ts
+│   ├── api/product.ts
+│   └── api/order.ts
+├── 组件: 无统一组件库，各页面自行实现
+│   ├── pages/ (页面组件，平均 500+ 行)
+│   └── components/ (零散组件，无目录规范)
+└── 测试: ❌ 无任何测试文件
+```
+
+:::details CodeGraph 探索的价值
+
+手动探索一个陌生项目通常需要 2-4 小时：翻目录、读 import、追踪调用链。CodeGraph 的 `codegraph_explore` 在 1-2 分钟内完成同样的工作，且不遗漏任何依赖关系。这对于遗留项目尤其重要——因为遗留代码往往有大量隐式依赖和"幽灵代码"（import 了但没使用的模块）。
+:::
+
+### Step 2：Serena 符号大纲
+
+> 查看 src/ 下所有顶层模块的符号大纲
+
+CodeGraph 给出了项目结构的"骨架"，Serena 的 `get_symbols_overview` 则给出每个文件的"器官清单"——所有导出的函数、类、接口和类型。
+
+**预期输出：**
+
+```text
+src/ 符号大纲:
+├── App.tsx
+│   └── export function App()
+├── pages/
+│   ├── DashboardPage.tsx
+│   │   ├── export function DashboardPage()
+│   │   └── export default DashboardPage  (⚠️ 默认导出，无类型)
+│   ├── UserManagement.tsx
+│   │   ├── export function UserManagement()
+│   │   ├── function UserTable()  (⚠️ 内联组件，未提取)
+│   │   ├── function UserForm()  (⚠️ 内联组件，未提取)
+│   │   └── function UserDetail()  (⚠️ 内联组件，未提取)
+│   └── ...
+├── store/
+│   ├── userSlice.ts
+│   │   ├── export const userSlice
+│   │   ├── export const { addUser, deleteUser } = userSlice.actions
+│   │   └── export default userSlice.reducer
+│   └── ...
+└── api/
+    ├── user.ts
+    │   ├── export function fetchUsers()
+    │   ├── export function createUser()
+    │   └── export function deleteUser()
+    └── ...
+```
+
+**关键发现：**
+
+- 多个页面组件内部定义了多个子组件（500+ 行的巨型文件），违反单一职责原则
+- 全部使用默认导出（`export default`），不利于 Tree Shaking 和自动导入
+- 没有自定义 Hooks，业务逻辑直接写在组件中
+- Store 使用旧版 Redux（手写 action types、reducers、action creators），而非 Redux Toolkit
+
+### Step 3：CodeGraph 依赖分析
+
+> 这个项目的核心依赖关系是什么？哪些模块耦合最严重？
+
+Claude Code 会调用 CodeGraph 的 `codegraph_impact` 工具，分析模块间的依赖关系和耦合程度。
+
+**预期输出：**
+
+```text
+依赖关系分析:
+├── 耦合度最高的模块 (fan-in > 10):
+│   ├── api/request.ts → 被 23 个文件依赖（所有 API 调用的公共层）
+│   ├── store/index.ts → 被 18 个文件依赖（全局 Store 配置）
+│   └── utils/common.ts → 被 15 个文件依赖（混合了各种工具函数）
+├── 循环依赖:
+│   ├── UserManagement ↔ UserDetail (互相 import)
+│   └── ProductManagement ↔ ProductForm (互相 import)
+├── 孤立模块 (fan-in = 0):
+│   ├── utils/legacy-helper.ts (⚠️ 可能是死代码)
+│   └── components/OldModal.tsx (⚠️ 可能是死代码)
+└── 风险评估:
+    ├── 高风险: api/request.ts — 修改可能影响所有 API 调用
+    ├── 中风险: store/index.ts — 修改可能影响所有页面状态
+    └── 低风险: 各页面组件 — 相对独立，可逐个重构
+```
+
+:::details 循环依赖的危害
+
+循环依赖（A import B，B 也 import A）是遗留项目的常见问题。它会导致：
+
+1. **打包问题**：Webpack/Rollup 可能产生未定义的模块引用
+2. **测试困难**：无法单独测试任何一个模块（mock 一个就需要 mock 另一个）
+3. **重构阻塞**：修改一个模块必然影响另一个模块，无法独立演进
+
+解决循环依赖的常见策略：
+- 提取公共依赖到第三个模块
+- 使用依赖注入打破直接引用
+- 重新划分模块边界
+:::
+
+### Step 4：GStack 产品发现
+
+> /office-hours
+> 帮我梳理这个遗留项目的核心业务逻辑和用户流程
+
+GStack 的 `/office-hours` 会以产品经理的视角，通过 6 个核心问题帮你理解项目的业务价值：
+
+1. **目标用户是谁？** — 系统管理员？普通用户？运营人员？
+2. **核心任务是什么？** — 用户管理、商品上架、订单处理
+3. **成功指标是什么？** — 订单处理效率、用户留存率
+4. **有什么约束？** — 不能停服迁移、需要向后兼容
+5. **有什么风险？** — 核心业务逻辑可能隐藏在代码中而不在文档中
+6. **优先级是什么？** — 哪些模块最常修改？哪些最影响用户体验？
+
+**预期输出：** 一份核心业务逻辑文档，包含：
+
+- 用户流程图（从登录到完成核心操作的完整路径）
+- 核心业务规则（如订单状态流转、库存扣减逻辑）
+- 数据模型关系（用户-商品-订单的关联关系）
+- 高频修改区域（需要优先重构的部分）
+
+### Step 5：ECC 代码审查
+
+> 使用 typescript-reviewer 审查核心模块，识别代码问题
+
+ECC（Engineering Code Companion）的 `typescript-reviewer` 会以 Staff Engineer 的视角审查代码质量。
+
+**预期输出：**
+
+```text
+代码审查报告 — 核心模块
+├── DashboardPage.tsx (523 行)
+│   ├── ⚠️ 巨型组件: 应拆分为 3-4 个子组件
+│   ├── ⚠️ 无类型: Props 使用 any，缺少类型约束
+│   ├── ❌ 内存泄漏: useEffect 中未清理 WebSocket 监听器
+│   └── ❌ 性能: 列表渲染无 key，每次渲染重建 DOM
+├── UserManagement.tsx (687 行)
+│   ├── ⚠️ 巨型组件: 内联了 Table、Form、Detail 三个子组件
+│   ├── ❌ 副作用: 业务逻辑直接写在事件处理器中
+│   ├── ❌ 错误处理: API 调用无 try-catch，失败时无用户反馈
+│   └── ⚠️ 硬编码: API URL 硬编码在组件中
+├── store/userSlice.ts
+│   ├── ⚠️ 旧版 Redux: 应迁移到 Redux Toolkit
+│   ├── ⚠️ 无 Immer: 手动展开运算符更新状态，易出错
+│   └── ❌ 副作用: 异步操作在 reducer 中执行（应使用 thunk/saga）
+└── api/request.ts
+    ├── ⚠️ 无重试: 网络失败无自动重试机制
+    ├── ⚠️ 无超时: 请求无超时配置
+    └── ❌ Token 管理: Token 存储在 localStorage（XSS 风险）
+```
+
+### Step 6：ECC 安全扫描
+
+> 使用 security-reviewer 检查 XSS、CSRF 等安全风险
+
+ECC 的 `security-reviewer` 会进行 OWASP Top 10 安全审计。
+
+**预期输出：**
+
+```text
+安全审计报告
+├── XSS 风险 (高)
+│   ├── UserManagement.tsx:45 — dangerouslySetInnerHTML 渲染用户输入
+│   ├── DashboardPage.tsx:120 — eval() 解析 API 返回的配置
+│   └── ProductManagement.tsx:78 — 未转义的 URL 拼接
+├── CSRF 风险 (中)
+│   ├── 所有 POST/PUT/DELETE 请求无 CSRF Token
+│   └── Cookie 未设置 SameSite 属性
+├── 数据暴露 (中)
+│   ├── API 响应包含密码哈希字段
+│   └── 错误信息暴露服务器路径
+├── 认证缺陷 (高)
+│   ├── Token 存储在 localStorage（可被 XSS 读取）
+│   ├── Token 无过期机制
+│   └── 无刷新 Token 流程
+└── 依赖漏洞 (低)
+    ├── react-router-dom@5.2.0 — 已知路由注入漏洞
+    └── axios@0.21.1 — 已知 SSRF 漏洞
+```
+
+:::details 遗留项目安全问题的优先级处理
+
+遗留项目的安全问题往往很多，不可能一次性全部修复。推荐的优先级：
+
+1. **立即修复**：XSS（`dangerouslySetInnerHTML`、`eval`）、认证缺陷（Token 管理）
+2. **尽快修复**：CSRF 防护、敏感数据暴露
+3. **计划修复**：依赖漏洞升级、安全头部配置
+4. **持续改进**：安全测试自动化、安全代码审查流程
+
+不要试图在重构的同时修复所有安全问题。先修复高危漏洞，再在重构过程中逐步改善。
+:::
+
+### Step 7：OpenSpec 创建重构规格
+
+> /opsx:propose legacy-refactor
+> 基于代码现状创建渐进式重构规格
+
+OpenSpec 会根据前面的探索和审查结果，生成一份渐进式的重构规格文档。
+
+:::details 渐进式重构规格示例
+
+```yaml
+spec:
+  name: legacy-refactor
+  description: 遗留 React 项目渐进式重构
+  phases:
+    - id: PHASE-01
+      name: 安全加固
+      priority: P0
+      requirements:
+        - id: SEC-001
+          title: 消除 XSS 风险
+          description: 移除 dangerouslySetInnerHTML 和 eval
+          acceptance:
+            - 所有用户输入使用 React 的自动转义或 DOMPurify
+            - 移除所有 eval() 调用
+        - id: SEC-002
+          title: 改善 Token 管理
+          description: 将 Token 从 localStorage 迁移到 HttpOnly Cookie
+          acceptance:
+            - Token 不可通过 JavaScript 读取
+            - 实现自动刷新 Token 机制
+
+    - id: PHASE-02
+      name: 基础设施升级
+      priority: P1
+      requirements:
+        - id: INFRA-001
+          title: 升级 react-router 到 v6
+          description: 从 react-router-dom v5 迁移到 v6
+          migration:
+            - Switch → Routes
+            - useHistory → useNavigate
+            - component → element
+        - id: INFRA-002
+          title: 迁移到 Redux Toolkit
+          description: 将手写 Redux 迁移到 Redux Toolkit
+          migration:
+            - createSlice 替代手写 reducer + actions
+            - createAsyncThunk 替代手写 thunk
+
+    - id: PHASE-03
+      name: 组件重构
+      priority: P2
+      requirements:
+        - id: COMP-001
+          title: 拆分巨型组件
+          description: 将 500+ 行的页面组件拆分为多个子组件
+          acceptance:
+            - 单个组件不超过 200 行
+            - 业务逻辑提取到自定义 Hooks
+        - id: COMP-002
+          title: 建立组件库
+          description: 提取通用 UI 组件
+
+    - id: PHASE-04
+      name: 测试覆盖
+      priority: P2
+      requirements:
+        - id: TEST-001
+          title: 核心业务逻辑测试
+          description: 为订单状态流转、库存扣减等核心逻辑添加单元测试
+          acceptance:
+            - 核心业务逻辑测试覆盖率 > 80%
+            - 关键用户流程有 E2E 测试
+```
+
+每个 Phase 独立可交付，上一个 Phase 的完成不影响下一个 Phase 的启动。
+:::
+
+### Step 8：Superpowers 渐进式重构
+
+按照 TDD 流程逐模块重构。每个重构步骤都遵循 RED-GREEN-REFACTOR 循环。
+
+#### 8.1 安全加固（Phase 1）
+
+```text
+> 使用 Superpowers TDD 修复 XSS 风险
+
+🔴 RED — 编写测试:
+  - 输入 <script>alert('xss')</script> 应被转义而非执行
+  - 输入包含 HTML 标签的用户名称应正确显示为文本
+
+🟢 GREEN — 实现修复:
+  - 移除 dangerouslySetInnerHTML，使用 React 自动转义
+  - 引入 DOMPurify 处理必须渲染 HTML 的场景
+  - 移除 eval()，改用 JSON.parse()
+
+🔵 REFACTOR — 提取安全工具:
+  - 创建 sanitizeHtml() 工具函数
+  - 创建 safeRender() 高阶组件
+```
+
+#### 8.2 基础设施升级（Phase 2）
+
+```text
+> 使用 Superpowers TDD 升级 react-router
+
+🔴 RED — 编写路由测试:
+  - 所有现有路由应正确匹配
+  - 页面导航应正常工作
+  - 404 页面应正确显示
+
+🟢 GREEN — 逐步迁移:
+  - v5 的 <Switch> → v6 的 <Routes>
+  - v5 的 <Route component={X}> → v6 的 <Route element={<X/>}>
+  - v5 的 useHistory → v6 的 useNavigate
+  - v5 的 useParams 保持不变（API 兼容）
+
+🔵 REFACTOR — 清理:
+  - 移除 v5 的兼容层代码
+  - 使用 v6 的新特性（嵌套路由、相对路径）
+```
+
+#### 8.3 组件重构（Phase 3）
+
+```text
+> 使用 Superpowers TDD 拆分 UserManagement
+
+🔴 RED — 为子组件编写测试:
+  - UserTable: 渲染用户列表、排序、分页
+  - UserForm: 表单验证、提交、错误处理
+  - UserDetail: 展示用户详情、编辑、删除
+
+🟢 GREEN — 提取子组件:
+  - 从 UserManagement.tsx 中提取 UserTable、UserForm、UserDetail
+  - 提取 useUsers() 自定义 Hook 管理用户状态
+  - 提取 useUserForm() 自定义 Hook 管理表单逻辑
+
+🔵 REFACTOR — 优化:
+  - 统一组件命名和导出方式
+  - 添加 Props 类型定义
+  - 优化 re-render（React.memo、useCallback）
+```
+
+### Step 9：Git 分支策略
+
+遗留项目的重构不应该在一个巨大的分支上完成。推荐的分支策略是每个 Phase 一个分支，逐步合并。
+
+```bash
+# Phase 1: 安全加固
+git checkout main
+git checkout -b refactor/phase-1-security
+# ... 完成安全修复 ...
+git push origin refactor/phase-1-security
+gh pr create --title "refactor(phase-1): security hardening — XSS and auth fixes"
+
+# Phase 2: 基础设施升级（等 Phase 1 合并后）
+git checkout main
+git pull origin main
+git checkout -b refactor/phase-2-infrastructure
+# ... 完成 router 和 Redux 升级 ...
+git push origin refactor/phase-2-infrastructure
+gh pr create --title "refactor(phase-2): upgrade react-router v6 and Redux Toolkit"
+
+# Phase 3: 组件重构（等 Phase 2 合并后）
+git checkout main
+git pull origin main
+git checkout -b refactor/phase-3-components
+# ... 完成组件拆分和测试 ...
+git push origin refactor/phase-3-components
+gh pr create --title "refactor(phase-3): split mega-components and add test coverage"
+```
+
+:::details 为什么不能在一个分支上完成所有重构
+
+遗留项目重构的最大风险是"分支存活时间过长"：
+
+1. **合并冲突**：如果重构分支存活数周，main 上的新提交会产生大量合并冲突
+2. **审查困难**：一个包含 50 个文件变更的 PR 很难被有效审查
+3. **回滚代价高**：如果某个重构引入了问题，需要回滚整个分支
+4. **团队信心**：小步快跑的渐进式合并让团队对重构有信心
+
+每个 Phase 独立分支、独立 PR、独立合并，确保重构过程中项目始终处于可部署状态。
+:::
+
+### 场景五总结
+
+通过这个场景，你可以看到遗留项目接管的系统化方法：
+
+| 阶段 | 工具 | 作用 |
+|------|------|------|
+| 探索 | CodeGraph | 快速建立全局架构认知 |
+| 探索 | Serena | 符号级模块清单，发现代码问题 |
+| 分析 | CodeGraph | 依赖关系和耦合度分析 |
+| 理解 | GStack | 业务逻辑梳理，理解项目价值 |
+| 审查 | ECC | 代码质量和安全审计 |
+| 规划 | OpenSpec | 渐进式重构规格，分阶段交付 |
+| 实施 | Superpowers | TDD 驱动重构，每步有测试保护 |
+| 管理 | Git | 分支策略，小步快跑逐步合并 |
