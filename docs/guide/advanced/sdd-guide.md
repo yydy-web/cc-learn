@@ -24,24 +24,10 @@ AI 编程中有两个独立的问题：
 | **规格工具层** | [OpenSpec](/guide/advanced/openspec) / [Spec-Kit](/guide/advanced/spec-kit) | 规格怎么生成、存储、审查、演进      |
 | **执行纪律层** | [Superpowers](/guide/advanced/superpowers) Skills                           | AI 怎么按步骤执行、测试、验证、交付 |
 
-```text
-                        ┌─────────────────────────┐
-                        │       方法论层           │
-                        │    SDD（规格驱动开发）   │
-                        │   "先写规格，再写代码"   │
-                        └────────────┬────────────┘
-                                     │ 指导
-                        ┌────────────▼────────────┐
-                        │       规格工具层         │
-                        │  OpenSpec / Spec-Kit     │
-                        │  "规格怎么存、怎么演进"  │
-                        └────────────┬────────────┘
-                                     │ 桥接
-                        ┌────────────▼────────────┐
-                        │       执行纪律层         │
-                        │    Superpowers Skills    │
-                        │  "AI 怎么按步骤交付"     │
-                        └─────────────────────────┘
+```mermaid
+flowchart TD
+    A["方法论层\nSDD（规格驱动开发）\n先写规格，再写代码"] -->|指导| B["规格工具层\nOpenSpec / Spec-Kit\n规格怎么存、怎么演进"]
+    B -->|桥接| C["执行纪律层\nSuperpowers Skills\nAI 怎么按步骤交付"]
 ```
 
 :::tip
