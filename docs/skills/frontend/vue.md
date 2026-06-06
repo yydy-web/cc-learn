@@ -164,14 +164,16 @@ npx skills add https://github.com/antfu/skills --skill vue-router-best-practices
 
 ## Skills 组合建议
 
-| 场景                        | 推荐 Skills                                                                            |
-| --------------------------- | -------------------------------------------------------------------------------------- |
-| Vue 3 + Vite SPA 项目       | vue-best-practices + vue + vite + vueuse-functions                                     |
-| Nuxt 3 全栈项目             | vue-best-practices + vue + pinia + vue-router-best-practices                           |
-| 组件库开发                  | vue-best-practices + vue + vite                                                        |
-| Vue 项目性能优化            | vue-best-practices + vueuse-functions + vite                                           |
-| Vue + Element Plus 企业项目 | vue-best-practices + vue + pinia + vue-router-best-practices                           |
-| 全面的 Vue 开发体验         | vue-best-practices + vue + pinia + vite + vueuse-functions + vue-router-best-practices |
+| 场景                        | 推荐 Skills                                                                                  |
+| --------------------------- | -------------------------------------------------------------------------------------------- |
+| Vue 3 + Vite SPA 项目       | vue-best-practices + vue + vite + vueuse-functions                                           |
+| Nuxt 3 全栈项目             | vue-best-practices + vue + pinia + vue-router-best-practices                                 |
+| 组件库开发                  | vue-best-practices + vue + vite                                                              |
+| Vue 项目性能优化            | vue-best-practices + vueuse-functions + vite                                                 |
+| Vue + Element Plus 企业项目 | vue-best-practices + vue + pinia + vue-router-best-practices                                 |
+| Vue 项目 UI 设计品质提升    | `design-taste-frontend` + vue-best-practices + vue                                           |
+| 改造现有 Vue 项目           | `redesign-existing-projects` + web-design-guidelines + vue-best-practices                    |
+| 全面的 Vue 开发体验         | `design-taste-frontend` + vue-best-practices + vue + pinia + vite + vueuse-functions         |
 
 :::warning
 安装过多 Skills 可能增加 Claude Code 的上下文负担。建议根据实际需求选择 2-4 个最相关的 Skill，而不是全部安装。
@@ -179,6 +181,7 @@ npx skills add https://github.com/antfu/skills --skill vue-router-best-practices
 
 ## 下一步
 
+- [Taste Skill](/skills/frontend/taste) — 反 AI 平庸设计框架，兼容 Vue 生态
 - [React 生态 Skills](/skills/frontend/react) — React 推荐 Skills
 - [前端通用 Skills](/skills/frontend/frontend) — 跨框架的前端 Skills
 - [Vue 开发最佳实践](/tips/vue-best-practices) — 完整的 Vue 开发指南
