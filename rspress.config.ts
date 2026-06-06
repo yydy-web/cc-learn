@@ -1,7 +1,10 @@
 import * as path from 'node:path';
 import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
+import rspressPluginMermaid from 'rspress-plugin-mermaid';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
+import readingTime from 'rspress-plugin-reading-time';
+import ga from 'rspress-plugin-google-analytics';
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
@@ -14,8 +17,15 @@ export default defineConfig({
   },
   plugins: [
     pluginLlms(),
+    rspressPluginMermaid(),
     pluginSitemap({
       siteUrl: 'https://claude-learn.pages.dev',
+    }),
+    readingTime({
+      defaultLocale: 'zh-CN',
+    }),
+    ga({
+      id: 'G-3MX054ZBE5',
     }),
   ],
   themeConfig: {

@@ -33,7 +33,10 @@
     "check": "oxlint && oxfmt --check"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.12"
+    "@rspress/core": "^2.0.12",
+    "rspress-plugin-google-analytics": "^1.0.0",
+    "rspress-plugin-mermaid": "^1.0.1",
+    "rspress-plugin-reading-time": "^1.0.0"
   },
   "devDependencies": {
     "@rspress/plugin-llms": "^2.0.13",

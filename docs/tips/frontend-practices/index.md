@@ -26,14 +26,12 @@ description: '前端开发中 Git 工作流、Superpowers、GStack、OpenSpec、
 
 前端开发可以划分为以下五个阶段，每个阶段有对应的主力工具：
 
-```
-┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
-│   探索分析   │──▶│   规划规格   │──▶│  TDD 实现   │──▶│  审查测试   │──▶│  发布自动化  │
-│             │   │             │   │             │   │             │   │             │
-│ CodeGraph   │   │ GStack      │   │ Superpowers │   │ GStack      │   │ Ralph       │
-│ Serena      │   │ OpenSpec    │   │ CodeGraph   │   │ Serena      │   │ CI/CD       │
-│ Context7    │   │ Spec-Kit    │   │ Context7    │   │ ECC         │   │ Hooks       │
-└─────────────┘   └─────────────┘   └─────────────┘   └─────────────┘   └─────────────┘
+```mermaid
+flowchart LR
+    A["探索分析\nCodeGraph · Serena · Context7"] --> B["规划规格\nGStack · OpenSpec · Spec-Kit"]
+    B --> C["TDD 实现\nSuperpowers · CodeGraph · Context7"]
+    C --> D["审查测试\nGStack · Serena · ECC"]
+    D --> E["发布自动化\nRalph · CI/CD · Hooks"]
 ```
 
 每个阶段的详细操作步骤，请参阅后续子页面。
