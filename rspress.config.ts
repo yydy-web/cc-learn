@@ -25,7 +25,7 @@ export default defineConfig({
       defaultLocale: 'zh-CN',
     }),
     ga({
-      id: 'G-3MX054ZBE5',
+      id: 'G-ZH0VPEP4C9',
     }),
   ],
   themeConfig: {
