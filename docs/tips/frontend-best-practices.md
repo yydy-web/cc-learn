@@ -932,12 +932,13 @@ npx skills add <skill-url>
 
 以下是推荐的前端开发 Skills：
 
-| Skill                   | 来源           | 用途                                         |
-| ----------------------- | -------------- | -------------------------------------------- |
-| `frontend-design`       | Anthropic 官方 | 创建独特、高品质的前端界面，避免 AI 风格设计 |
-| `web-design-guidelines` | Vercel Labs    | 100+ 条 Web 界面最佳实践规则                 |
-| `ui-ux-pro-max`         | 社区           | 全栈 UI/UX 设计系统，覆盖 10 个技术栈        |
-| `unjs`                  | 社区           | UnJS 生态 60+ 个高质量 JavaScript 库         |
+| Skill                         | 来源           | 用途                                                     |
+| ----------------------------- | -------------- | -------------------------------------------------------- |
+| `design-taste-frontend`       | 社区           | 反 AI 平庸设计框架——三旋钮 + Pre-Flight Check + 改造审计 |
+| `frontend-design`             | Anthropic 官方 | 创建独特、高品质的前端界面，避免 AI 风格设计             |
+| `web-design-guidelines`       | Vercel Labs    | 100+ 条 Web 界面最佳实践规则                             |
+| `ui-ux-pro-max`               | 社区           | 全栈 UI/UX 设计系统，覆盖 10 个技术栈                    |
+| `unjs`                        | 社区           | UnJS 生态 60+ 个高质量 JavaScript 库                     |
 
 完整的 Skills 介绍、安装方式和使用示例，请参考 [前端通用 Skills](/skills/frontend/frontend)。
 
