@@ -104,17 +104,17 @@ description: 使用 OpenSpec 锁定架构契约、Superpowers 驱动执行落地
 
 ## 双层规划的关系
 
-```text
-OpenSpec（顶层）                    Superpowers（执行层）
-  ┌─────────────────┐                ┌─────────────────┐
-  │  /opsx:propose  │  锁定架构契约  │  /writing-plans │  拆解执行步骤
-  │  specs/         │ ─────────────→ │  plans/         │
-  │  design.md      │                │  TDD + 审查     │
-  │  tasks.md       │                │  验证 + 收尾    │
-  └─────────────────┘                └─────────────────┘
-        ↓ 归档                              ↓ 代码
-  openspec/specs/                     src/ + tests/
-  （活文档，描述系统现状）            （可运行的代码）
+```mermaid
+flowchart LR
+    subgraph openspec["OpenSpec（顶层）"]
+        A1["/opsx:propose\nspecs/\ndesign.md\ntasks.md"]
+    end
+    subgraph superpowers["Superpowers（执行层）"]
+        B1["/writing-plans\nplans/\nTDD + 审查\n验证 + 收尾"]
+    end
+    A1 -->|"锁定架构契约"| B1
+    A1 -.->|"归档\nopenspec/specs/\n（活文档，描述系统现状）"| A1
+    B1 -.->|"代码\nsrc/ + tests/\n（可运行的代码）"| B1
 ```
 
 1. **OpenSpec** 负责定大方向，解决项目"做成什么样"
