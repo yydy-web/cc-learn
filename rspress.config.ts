@@ -1,6 +1,7 @@
 import * as path from 'node:path';
 import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
+import rspressPluginMermaid from 'rspress-plugin-mermaid';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
@@ -14,6 +15,7 @@ export default defineConfig({
   },
   plugins: [
     pluginLlms(),
+    rspressPluginMermaid(),
     pluginSitemap({
       siteUrl: 'https://claude-learn.pages.dev',
     }),
