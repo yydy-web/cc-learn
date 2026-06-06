@@ -3,6 +3,11 @@
   "best-practices",
   "ecc",
   "java-best-practices",
+  {
+    "type": "dir",
+    "name": "java-practices",
+    "label": "Java 工具链集成"
+  },
   "frontend-best-practices",
   {
     "type": "dir",
