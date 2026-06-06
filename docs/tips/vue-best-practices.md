@@ -492,3 +492,7 @@ VueUse 提供了 200+ 个组合式函数，覆盖浏览器 API、状态、传感
 
 :::
 ````
+
+:::tip
+想提升 AI 生成 Vue UI 的设计品质？试试 [Taste Skill](/skills/frontend/taste)——通过三旋钮配置和 Pre-Flight Check 强制设计纪律，兼容 Vue 生态（动效部分可替换为 Vue Motion 或 CSS 动画）。
+:::
