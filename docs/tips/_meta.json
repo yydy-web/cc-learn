@@ -4,6 +4,11 @@
   "ecc",
   "java-best-practices",
   "frontend-best-practices",
+  {
+    "type": "dir",
+    "name": "frontend-practices",
+    "label": "前端工具链集成"
+  },
   "react-best-practices",
   "vue-best-practices"
 ]
