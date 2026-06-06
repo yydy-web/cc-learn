@@ -9,18 +9,19 @@ description: '前端开发中 Git 工作流、Superpowers、GStack、OpenSpec、
 
 ## 工具矩阵
 
-下表列出本系列涉及的 8 个核心工具，以及它们在前端开发中的角色定位：
+下表列出本系列涉及的 9 个核心工具，以及它们在前端开发中的角色定位：
 
-| 工具        | 角色     | 前端核心价值                      | 对应开发阶段  |
-| ----------- | -------- | --------------------------------- | ------------- |
-| Git 工作流  | 版本控制 | 分支策略、PR 管理、提交规范       | 全流程        |
-| Superpowers | 开发纪律 | TDD 驱动、头脑风暴、代码审查      | 实现阶段      |
-| GStack      | 虚拟团队 | 内置浏览器 QA、设计审查、安全审计 | 审查/发布阶段 |
-| OpenSpec    | 规格驱动 | 结构化需求文档、增量变更管理      | 规划阶段      |
-| Ralph       | 自主循环 | PRD 驱动自动开发、批量任务执行    | 自动化阶段    |
-| CodeGraph   | 代码图谱 | 组件依赖分析、影响范围评估        | 探索/分析阶段 |
-| Context7    | 文档注入 | 最新框架文档、API 参考            | 编码阶段      |
-| Serena      | 代码语义 | 符号级重构、精确重命名            | 重构阶段      |
+| 工具         | 角色     | 前端核心价值                      | 对应开发阶段  |
+| ------------ | -------- | --------------------------------- | ------------- |
+| Git 工作流   | 版本控制 | 分支策略、PR 管理、提交规范       | 全流程        |
+| Superpowers  | 开发纪律 | TDD 驱动、头脑风暴、代码审查      | 实现阶段      |
+| Taste Skill  | 设计品质 | 反 AI 平庸设计、Pre-Flight Check  | 实现阶段      |
+| GStack       | 虚拟团队 | 内置浏览器 QA、设计审查、安全审计 | 审查/发布阶段 |
+| OpenSpec     | 规格驱动 | 结构化需求文档、增量变更管理      | 规划阶段      |
+| Ralph        | 自主循环 | PRD 驱动自动开发、批量任务执行    | 自动化阶段    |
+| CodeGraph    | 代码图谱 | 组件依赖分析、影响范围评估        | 探索/分析阶段 |
+| Context7     | 文档注入 | 最新框架文档、API 参考            | 编码阶段      |
+| Serena       | 代码语义 | 符号级重构、精确重命名            | 重构阶段      |
 
 ## 五阶段工作流
 
@@ -54,13 +55,14 @@ flowchart LR
 
 以下是各工具的详解页面索引：
 
-| 工具        | 详解页面                                          |
-| ----------- | ------------------------------------------------- |
-| Git 工作流  | 通用实践，无独立页面                              |
-| Superpowers | [Superpowers 插件](/guide/advanced/superpowers)   |
-| GStack      | [Gstack 工具包](/guide/advanced/gstack)           |
-| OpenSpec    | [OpenSpec 规格驱动开发](/guide/advanced/openspec) |
-| Ralph       | [Ralph 自主循环](/guide/advanced/ralph)           |
-| CodeGraph   | [CodeGraph 代码智能](/guide/advanced/codegraph)   |
-| Context7    | [Context7 实时文档](/guide/advanced/context7)     |
-| Serena      | [Serena 代码语义工具](/guide/advanced/serena)     |
+| 工具         | 详解页面                                          |
+| ------------ | ------------------------------------------------- |
+| Git 工作流   | 通用实践，无独立页面                              |
+| Superpowers  | [Superpowers 插件](/guide/advanced/superpowers)   |
+| Taste Skill  | [Taste Skill](/skills/frontend/taste)             |
+| GStack       | [Gstack 工具包](/guide/advanced/gstack)           |
+| OpenSpec     | [OpenSpec 规格驱动开发](/guide/advanced/openspec) |
+| Ralph        | [Ralph 自主循环](/guide/advanced/ralph)           |
+| CodeGraph    | [CodeGraph 代码智能](/guide/advanced/codegraph)   |
+| Context7     | [Context7 实时文档](/guide/advanced/context7)     |
+| Serena       | [Serena 代码语义工具](/guide/advanced/serena)     |
