@@ -106,13 +106,15 @@ npx skills add https://github.com/shadcn-ui/ui --skill shadcn
 
 ## Skills 组合建议
 
-| 场景                       | 推荐 Skills                                                                    |
-| -------------------------- | ------------------------------------------------------------------------------ |
-| React 项目性能优化         | react-best-practices + composition-patterns                                    |
-| React + shadcn/ui 全栈开发 | react-best-practices + shadcn + composition-patterns                           |
-| 从零设计高品质 UI          | frontend-design + ui-ux-pro-max                                                |
-| 审查现有页面质量           | web-design-guidelines + react-best-practices                                   |
-| 全面的前端开发体验         | frontend-design + web-design-guidelines + ui-ux-pro-max + react-best-practices |
+| 场景                       | 推荐 Skills                                                                              |
+| -------------------------- | ---------------------------------------------------------------------------------------- |
+| React 项目性能优化         | react-best-practices + composition-patterns                                              |
+| React + shadcn/ui 全栈开发 | react-best-practices + shadcn + composition-patterns                                     |
+| 从零设计高品质 UI          | `design-taste-frontend` + frontend-design + ui-ux-pro-max                                |
+| 反 AI 平庸设计（推荐）     | `design-taste-frontend` + react-best-practices + shadcn                                  |
+| 改造现有项目 UI            | `redesign-existing-projects` + web-design-guidelines + react-best-practices              |
+| 审查现有页面质量           | web-design-guidelines + react-best-practices                                             |
+| 全面的前端开发体验         | `design-taste-frontend` + frontend-design + web-design-guidelines + react-best-practices |
 
 :::warning
 安装过多 Skills 可能增加 Claude Code 的上下文负担。建议根据实际需求选择 2-3 个最相关的 Skill，而不是全部安装。
@@ -120,6 +122,7 @@ npx skills add https://github.com/shadcn-ui/ui --skill shadcn
 
 ## 下一步
 
+- [Taste Skill](/skills/frontend/taste) — 反 AI 平庸设计框架，React 默认栈支持
 - [Vue 生态 Skills](/skills/frontend/vue) — Vue 3 推荐 Skills
 - [前端通用 Skills](/skills/frontend/frontend) — 跨框架的前端 Skills
 - [React 开发最佳实践](/tips/react-best-practices) — 完整的 React 开发指南
