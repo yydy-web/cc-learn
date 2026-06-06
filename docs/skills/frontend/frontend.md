@@ -113,6 +113,7 @@ UnJS 的包大多被 Nuxt 3 和 Nitro 内部使用。即使你的项目不是 Nu
 
 ## 下一步
 
+- [Taste Skill](/skills/frontend/taste) — 反 AI 平庸设计框架，强制 UI 设计品质
 - [React 生态 Skills](/skills/frontend/react) — React 专属 Skills
 - [Vue 生态 Skills](/skills/frontend/vue) — Vue 专属 Skills
 - [前端开发最佳实践](/tips/frontend-best-practices) — 完整的前端开发指南
