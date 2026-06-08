@@ -28,17 +28,21 @@ Skills 的基础知识请参考[自定义技能](/skills/overview/custom-skills)
 一句话描述这个 Skill 做什么。
 
 ## 前置条件
+
 - 列出使用这个 Skill 之前需要满足的条件
 
 ## 步骤
+
 1. 第一步：具体操作
 2. 第二步：具体操作
 3. ...
 
 ## 约束
+
 - 列出 Claude Code 必须遵守的规则
 
 ## 输出格式（可选）
+
 - 描述期望的输出格式
 ```
 
@@ -86,25 +90,30 @@ Skills 的基础知识请参考[自定义技能](/skills/overview/custom-skills)
 ## 检查清单
 
 ### 事务安全
+
 - [ ] 写操作是否标注了 `@Transactional`
 - [ ] 查询方法是否使用了 `@Transactional(readOnly = true)`
 - [ ] 同类方法调用是否存在事务失效风险（Spring AOP 代理限制）
 - [ ] `rollbackFor` 是否指定了 `Exception.class`
 
 ### 异常处理
+
 - [ ] 是否吞掉了应该抛出的异常
 - [ ] 是否使用了统一的 `BusinessException` + `ErrorCode` 体系
 
 ### 并发安全
+
 - [ ] 是否存在共享可变状态
 - [ ] 乐观锁（`@Version`）是否正确使用
 
 ### 性能
+
 - [ ] 是否存在 N+1 查询
 - [ ] 批量操作是否逐条执行
 - [ ] 高频查询是否需要缓存
 
 ### 代码质量
+
 - [ ] 方法是否过长（超过 50 行）
 - [ ] 是否有硬编码的魔法值
 - [ ] 日志是否使用了 SLF4J
@@ -112,6 +121,7 @@ Skills 的基础知识请参考[自定义技能](/skills/overview/custom-skills)
 ## 输出格式
 
 按严重程度排序：
+
 - 🔴 **高**：数据丢失、安全漏洞、生产崩溃
 - 🟡 **中**：性能问题、维护困难
 - 🟢 **低**：代码风格、最佳实践
@@ -131,21 +141,25 @@ Skills 的基础知识请参考[自定义技能](/skills/overview/custom-skills)
 3. 审查 SQL 内容：
 
 ### DDL 审查
+
 - [ ] 字段类型合理（VARCHAR 长度、DECIMAL 精度）
 - [ ] NOT NULL 约束完整
 - [ ] 外键的 ON DELETE 行为正确
 - [ ] 默认值合理
 
 ### 索引审查
+
 - [ ] 主键和外键有索引
 - [ ] WHERE 条件常用字段有索引
 - [ ] 复合索引字段顺序正确
 
 ### DML 审查
+
 - [ ] UPDATE/DELETE 有 WHERE 条件
 - [ ] 大表迁移分批执行
 
 ### 兼容性
+
 - [ ] 是否向后兼容
 - [ ] 回滚方案
 ```
@@ -192,27 +206,32 @@ Skills 的基础知识请参考[自定义技能](/skills/overview/custom-skills)
 ## 审计维度
 
 ### 数据库层
+
 1. 扫描所有 `@OneToMany`、`@ManyToOne` 关联，检查 fetch 类型
 2. 找出缺少 `@EntityGraph` 或 `JOIN FETCH` 的查询
 3. 检查分页查询是否使用了正确的索引
 4. 检查是否存在不必要的数据库调用（可以用批量操作替代）
 
 ### 缓存层
+
 1. 找出高频调用但没有缓存的查询
 2. 检查缓存过期策略是否合理
 3. 检查缓存穿透/击穿/雪崩的防护
 
 ### 连接池
+
 1. 检查 HikariCP 配置（最大连接数、超时时间）
 2. 检查是否有连接泄漏（未关闭的连接）
 
 ### JVM 层
+
 1. 检查是否有大对象分配（频繁 Full GC）
 2. 检查线程池配置是否合理
 
 ## 输出格式
 
 按性能影响排序，每个问题附带：
+
 - 问题描述
 - 影响范围（影响哪些接口、影响多大 QPS）
 - 修复方案（含代码改动）
@@ -223,14 +242,14 @@ Skills 的基础知识请参考[自定义技能](/skills/overview/custom-skills)
 
 自定义 Skills 和 ECC 内置 Skills 可以同时使用：
 
-| 场景                  | 推荐组合                                          |
-| --------------------- | ------------------------------------------------- |
-| 创建新 REST API       | `/create-api-endpoint`（自定义）+ `springboot-patterns`（ECC） |
-| 实现新功能            | `/superpowers:brainstorming` + `/springboot-tdd`（ECC）       |
-| 代码审查              | `/service-review`（自定义）+ `java-reviewer`（ECC Agent）     |
-| 数据库迁移            | `/flyway-migration`（自定义）+ `database-migrations`（ECC）   |
-| 安全加固              | `/spring-security-setup`（自定义）+ `security-review`（ECC）  |
-| 性能优化              | `/performance-audit`（自定义）+ CodeGraph 探索                |
+| 场景            | 推荐组合                                                       |
+| --------------- | -------------------------------------------------------------- |
+| 创建新 REST API | `/create-api-endpoint`（自定义）+ `springboot-patterns`（ECC） |
+| 实现新功能      | `/superpowers:brainstorming` + `/springboot-tdd`（ECC）        |
+| 代码审查        | `/service-review`（自定义）+ `java-reviewer`（ECC Agent）      |
+| 数据库迁移      | `/flyway-migration`（自定义）+ `database-migrations`（ECC）    |
+| 安全加固        | `/spring-security-setup`（自定义）+ `security-review`（ECC）   |
+| 性能优化        | `/performance-audit`（自定义）+ CodeGraph 探索                 |
 
 :::tip
 自定义 Skills 可以在 SKILL.md 中显式引用 ECC 的 Agent 和 Skill，例如在步骤中写"使用 ECC 的 java-reviewer 审查生成的代码"。这样 Claude Code 会在执行自定义 Skill 时自动调用 ECC 的能力。
