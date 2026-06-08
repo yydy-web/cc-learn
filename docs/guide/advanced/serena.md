@@ -19,6 +19,10 @@ Claude Code 默认使用 `Grep`、`Glob`、`Read` 等文本搜索工具来理解
 Serena 通过 LSP 提供**原子化的语义操作**——一次调用完成精确重命名、安全删除、符号级编辑，比文本搜索更可靠、更高效。
 
 :::info
+**Claude Code 内置 LSP vs Serena MCP LSP：** Claude Code 从 v2.0.74 起内置了 LSP 集成（如 Java 的 jdtls），提供诊断推送和代码导航能力。Serena 则专注于**符号级重构操作**——内置 LSP 不提供重命名、移动、安全删除等功能。两者可以同时启用。Java 项目的 LSP 配置详见 [Java LSP 配置指南](/tips/java-practices/lsp-setup)。
+:::
+
+:::info
 Serena vs 文本搜索对比：
 
 - **文本搜索**：重命名 `UserService.authenticate()` 需要 grep 所有文件 → 逐个检查 → 手动替换 → 可能误改
