@@ -13,15 +13,15 @@ OpenSpec 管规格、Superpowers 管执行，但两者原生无自动联动。Co
 
 ## 7 个 Skills 一览
 
-| Skill | 阶段 | 触发命令 | 职责 |
-|-------|------|---------|------|
-| `comet` | 入口 | `/comet` | 总入口，初始化流水线 |
-| `comet-open` | 1. 开启 | `/comet-open` | 创建 proposal.md, design.md, tasks.md |
-| `comet-design` | 2. 设计 | `/comet-design` | 深度设计，生成 delta spec |
-| `comet-build` | 3. 构建 | `/comet-build` | TDD 驱动实现，子智能体并行开发 |
-| `comet-verify` | 4. 验证 | `/comet-verify` | 代码测试 + 规范合规双重校验 |
-| `comet-archive` | 5. 归档 | `/comet-archive` | delta 合并进主 spec |
-| `comet-continue` | 续接 | `/comet continue` | 从断点恢复流水线 |
+| Skill            | 阶段    | 触发命令          | 职责                                  |
+| ---------------- | ------- | ----------------- | ------------------------------------- |
+| `comet`          | 入口    | `/comet`          | 总入口，初始化流水线                  |
+| `comet-open`     | 1. 开启 | `/comet-open`     | 创建 proposal.md, design.md, tasks.md |
+| `comet-design`   | 2. 设计 | `/comet-design`   | 深度设计，生成 delta spec             |
+| `comet-build`    | 3. 构建 | `/comet-build`    | TDD 驱动实现，子智能体并行开发        |
+| `comet-verify`   | 4. 验证 | `/comet-verify`   | 代码测试 + 规范合规双重校验           |
+| `comet-archive`  | 5. 归档 | `/comet-archive`  | delta 合并进主 spec                   |
+| `comet-continue` | 续接    | `/comet continue` | 从断点恢复流水线                      |
 
 ## 安装
 
@@ -55,18 +55,18 @@ comet init
 
 ## 快捷路径
 
-| 命令 | 场景 |
-|------|------|
-| `/comet-hotfix` | 快速修 Bug，跳过 brainstorming |
-| `/comet-tweak` | 小改动，跳过 brainstorming 和完整计划 |
+| 命令            | 场景                                  |
+| --------------- | ------------------------------------- |
+| `/comet-hotfix` | 快速修 Bug，跳过 brainstorming        |
+| `/comet-tweak`  | 小改动，跳过 brainstorming 和完整计划 |
 
 ## 与其他 Skills 的关系
 
-| 维度 | Comet | OpenSpec | Superpowers |
-|------|-------|---------|-------------|
-| 定位 | 自动化桥接 | 规格管理 | 执行纪律 |
-| 独立使用 | ❌ 依赖前两者 | ✅ | ✅ |
-| 核心价值 | 消除手动衔接 | 需求可追溯 | TDD + 审查 |
+| 维度     | Comet         | OpenSpec   | Superpowers |
+| -------- | ------------- | ---------- | ----------- |
+| 定位     | 自动化桥接    | 规格管理   | 执行纪律    |
+| 独立使用 | ❌ 依赖前两者 | ✅         | ✅          |
+| 核心价值 | 消除手动衔接  | 需求可追溯 | TDD + 审查  |
 
 ## 下一步
 
