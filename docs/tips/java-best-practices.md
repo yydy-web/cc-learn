@@ -416,26 +416,43 @@ claude mcp add spring-boot -- npx -y @anthropic-ai/spring-boot-mcp-server
 Claude Code 的训练数据可能不包含最新的 Spring Boot 版本变更。如果你使用 Spring Boot 3.2+，建议安装 MCP 服务器或 [Context7](/guide/advanced/context7) 注入最新文档。
 :::
 
+#### 使用 Context7 注入最新文档
+
+[Context7](/guide/advanced/context7) 是另一个获取最新文档的途径——它通过 MCP 为 Claude Code 注入任意库的最新文档，不限于 Spring Boot：
+
+```
+> 使用 Context7 查询 Spring Data JPA 3.2 的 findBy 方法命名规范
+```
+
+```
+> 查询 Spring Security 6.2 的 @PreAuthorize 注解最新用法
+```
+
+:::tip
+Context7 和 Spring Boot MCP 可以同时使用。Context7 的优势是覆盖范围广（不限于 Spring），Spring Boot MCP 的优势是针对 Spring 生态的深度。
+:::
+
 ## 工具链集成
 
-除了上述构建工具外，Claude Code 生态还提供了多个辅助工具，可以在 Java 开发的不同阶段发挥作用。以下介绍六个核心工具在 Java/Spring Boot 项目中的集成方式和典型用法。
+除了上述构建工具外，Claude Code 生态还提供了多个辅助工具，可以在 Java 开发的不同阶段发挥作用。以下介绍八个核心工具在 Java/Spring Boot 项目中的集成方式和典型用法。
 
 :::tip
 在使用以下工具之前，建议先配置 [Java LSP](/tips/java-practices/lsp-setup)（jdtls）。LSP 为 Claude Code 提供被动诊断和主动查询能力，是所有工具链的语义基础——没有 LSP，Claude Code 只能用 grep 搜索代码，后续的 CodeGraph 探索和 Serena 重构都会受限于文本搜索的精度。
 :::
 
-| 工具                                          | 定位             | Java 核心价值                           | 安装依赖    |
-| --------------------------------------------- | ---------------- | --------------------------------------- | ----------- |
-| [LSP (jdtls)](/tips/java-practices/lsp-setup) | 代码语义基础     | 被动诊断 + 主动查询，Claude Code 内置   | 无（插件）  |
-| [ECC](/tips/ecc)                              | 全能增强系统     | Java 专属 Agent 和 Spring Boot Skills   | Node.js     |
-| [Gstack](/guide/advanced/gstack)              | 虚拟工程团队     | Staff 级代码审查 + QA + 安全审计        | Bun         |
-| [Superpowers](/guide/advanced/superpowers)    | 结构化开发方法论 | 强制 TDD + 计划驱动开发                 | 无（插件）  |
-| [CodeGraph](/guide/advanced/codegraph)        | 代码知识图谱     | 快速探索 Java 代码结构 + 影响分析       | Node.js     |
-| [Graphify](/guide/advanced/graphify)          | 多模态知识图谱   | Java 代码 + 架构文档 + 设计图的统一图谱 | Python      |
-| [Serena](/guide/advanced/serena)              | 代码语义工具     | 符号级精确重构（JetBrains 增强）        | Python (uv) |
+| 工具                                            | 定位             | Java 核心价值                           | 安装依赖    |
+| ----------------------------------------------- | ---------------- | --------------------------------------- | ----------- |
+| [LSP (jdtls)](/tips/java-practices/lsp-setup)   | 代码语义基础     | 被动诊断 + 主动查询，Claude Code 内置   | 无（插件）  |
+| [ECC](/tips/ecc)                                | 全能增强系统     | Java 专属 Agent 和 Spring Boot Skills   | Node.js     |
+| [Gstack](/guide/advanced/gstack)                | 虚拟工程团队     | Staff 级代码审查 + QA + 安全审计        | Bun         |
+| [Superpowers](/guide/advanced/superpowers)      | 结构化开发方法论 | 强制 TDD + 计划驱动开发                 | 无（插件）  |
+| [CodeGraph](/guide/advanced/codegraph)          | 代码知识图谱     | 快速探索 Java 代码结构 + 影响分析       | Node.js     |
+| [Graphify](/guide/advanced/graphify)            | 多模态知识图谱   | Java 代码 + 架构文档 + 设计图的统一图谱 | Python      |
+| [Serena](/guide/advanced/serena)                | 代码语义工具     | 符号级精确重构（JetBrains 增强）        | Python (uv) |
+| [Context7](/guide/advanced/context7)            | 实时文档注入     | Spring Boot 最新文档 + API 参考         | 无（MCP）   |
 
 :::tip
-这七个工具可以组合使用——LSP 提供语义基础，ECC 提供流程编排，Superpowers 保证开发纪律，CodeGraph 和 Serena 提供代码智能，Graphify 适合架构文档与代码的关联分析，Gstack 负责审查和发布。详见[最佳实践](/tips/best-practices)中的四阶段工作流。完整的工具链协同工作流和实战案例，请参阅 [Java 工具链集成](/tips/java-practices/) 系列。
+这八个工具可以组合使用——LSP 提供语义基础，ECC 提供流程编排和 Java Skills，Superpowers 保证开发纪律，CodeGraph 和 Serena 提供代码智能，Graphify 适合架构文档与代码的关联分析，Context7 注入最新框架文档避免 API 过时，Gstack 负责审查和发布。详见[最佳实践](/tips/best-practices)中的四阶段工作流。完整的工具链协同工作流和实战案例，请参阅 [Java 工具链集成](/tips/java-practices/) 系列。
 :::
 
 ### ECC：Java 专属增强
