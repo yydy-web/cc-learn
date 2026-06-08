@@ -18,6 +18,24 @@ Claude Code 有以下 Hook 事件：
 | `Notification` | Claude Code 发送通知时 |
 | `Stop`         | 对话结束时             |
 
+### Hooks 的实际应用：Claude-Mem
+
+[Claude-Mem](/guide/advanced/claude-mem) 是一个利用 Hooks 实现全自动记忆的典型案例。它注册了 5 个生命周期 Hook：
+
+| Hook 事件 | Claude-Mem 的用途 |
+| --------- | ----------------- |
+| `SessionStart` | 从数据库检索相关上下文，注入新会话 |
+| `UserPromptSubmit` | 记录用户意图 |
+| `PostToolUse` | 将工具调用结果压缩为观察记录并存储 |
+| `Stop` | 记录会话结束状态 |
+| `SessionEnd` | 生成会话级摘要 |
+
+Claude-Mem 通过这些 Hooks 实现了**零干预的跨会话记忆**——用户无需手动"记住"任何东西，系统在后台自动工作。
+
+:::info
+Claude-Mem 是理解 Hooks 实战用法的好案例。完整介绍请参考 [Claude-Mem 持久记忆](/guide/advanced/claude-mem)。
+:::
+
 ## 配置 Hooks
 
 在 `.claude/settings.json` 中配置：
@@ -134,5 +152,6 @@ Hook 脚本可以访问以下环境变量：
 
 ## 下一步
 
+- [Claude-Mem 持久记忆](/guide/advanced/claude-mem) — 使用 Hooks 实现自动记忆的实战案例
 - [MCP 服务器](/guide/advanced/mcp-servers) — 用 MCP 扩展 Claude Code 的工具能力
 - [自定义技能](/skills/overview/custom-skills) — 创建自定义的 Skills 和 Agents

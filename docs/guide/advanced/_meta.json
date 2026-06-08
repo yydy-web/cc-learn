@@ -8,8 +8,11 @@
   "spec-kit",
   "openspec",
   "openspec-superpowers",
+  "openspec-superpowers-pitfalls",
+  "comet",
   "agents-routing",
   "sdd-guide",
+  "workflow-troubleshooting",
   "ralph",
   "codegraph",
   "code-review-graph",
@@ -17,6 +20,7 @@
   "code-graph-tools",
   "context7",
   "serena",
+  "claude-mem",
   "multi-agent",
   "automation"
 ]

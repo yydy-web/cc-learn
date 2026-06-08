@@ -145,7 +145,12 @@ Claude Code 支持多级配置，按优先级加载：
 - 提交信息用英文，格式：type(scope): description
 ```
 
+:::info
+**CLAUDE.md vs Claude-Mem：** CLAUDE.md 记录的是**静态的项目约定**——你希望 Claude 遵守的规则和已知信息。而 [Claude-Mem](/guide/advanced/claude-mem) 则自动记录**动态的工作经验**——调试发现、架构决策、失败的尝试等。两者互补：CLAUDE.md 是骨架，Claude-Mem 是记忆。推荐同时使用。
+:::
+
 ## 下一步
 
 - [Git 工作流](/guide/intermediate/git-workflow) — 用 Claude Code 管理 Git 操作
 - [上下文管理](/guide/intermediate/context-management) — 管理对话上下文和记忆
+- [Claude-Mem 持久记忆](/guide/advanced/claude-mem) — 自动化的跨会话记忆系统

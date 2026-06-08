@@ -219,8 +219,15 @@ cd your-project && openspec init
 不需要一步到位。先单独用 Superpowers 做几个功能，感受 TDD 纪律；再引入 OpenSpec 管理规格；最后配置桥接让两者协同。逐步引入比一步到位更可靠。
 :::
 
+:::warning
+双框架协同开发时最常见的问题是「两层断裂」——Superpowers 未读取 OpenSpec 的规范文档就开始写代码。务必在启动前确认 design.md 和 specs 已加载。遇到问题请参考[双框架踩坑指南](/guide/advanced/openspec-superpowers-pitfalls)。
+:::
+
 ## 相关资源
 
 - [OpenSpec 规格驱动开发](/guide/advanced/openspec) — OpenSpec 完整文档
 - [Superpowers 插件](/guide/advanced/superpowers) — Superpowers 完整文档
 - [最佳实践：四阶段工作流](/tips/best-practices) — 更多工具组合场景
+- [双框架踩坑指南](/guide/advanced/openspec-superpowers-pitfalls) — 7 个典型踩坑及规避方案
+- [工作流故障排除](/guide/advanced/workflow-troubleshooting) — 通用故障诊断与修复
+- [Comet 自动化流水线](/guide/advanced/comet) — 一键自动串联（替代手动桥接）
