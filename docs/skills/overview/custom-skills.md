@@ -104,6 +104,71 @@ description: 按照团队规范审查代码改动
 - 🟢 优秀：值得表扬的做法
 ```
 
+#### 示例：规范合规校验 Skill
+
+当 OpenSpec 和 Superpowers 协同使用时，需要一个专门的 Skill 来校验代码是否符合 OpenSpec 规范：
+
+```markdown title="~/.claude/skills/spec-compliance-check/SKILL.md"
+---
+name: spec-compliance-check
+description: 校验代码实现是否符合 OpenSpec 规范文档
+---
+
+# Spec 合规校验
+
+## 触发条件
+
+在代码审查阶段，自动触发此 Skill 进行规范合规校验。
+
+## 执行步骤
+
+1. 读取 `openspec/` 目录下的主规范和本次增量 spec 文档
+2. 逐条核对 spec 中的「假设-当-则」场景是否全部实现
+3. 检查 design.md 中的技术架构决策是否被遵循
+4. 验证 proposal.md 中的排除范围是否未被触碰
+5. 输出合规报告，违规项标记为 BUG
+
+## 输出格式
+
+| 检查项 | 状态 | 说明 |
+|--------|------|------|
+| 场景覆盖 | ✅/❌ | spec 条目 vs 实现 |
+| 架构合规 | ✅/❌ | design 决策 vs 实际代码 |
+| 排除范围 | ✅/❌ | 非目标是否被实现 |
+```
+
+#### 示例：双框架衔接 Skill
+
+自动将 OpenSpec 规范文档输入 Superpowers 执行流程：
+
+```markdown title="~/.claude/skills/openspec-superpowers-bridge/SKILL.md"
+---
+name: openspec-superpowers-bridge
+description: 自动衔接 OpenSpec 规范与 Superpowers 执行，消除手动配置
+---
+
+# OpenSpec-Superpowers 桥接
+
+## 触发条件
+
+启动 Superpowers 实现任务时自动触发。
+
+## 执行步骤
+
+1. 自动检索 `openspec/changes` 目录中未归档的变更文档
+2. 全量加载 design.md、specs/、tasks.md 作为实现约束
+3. 如果已完成 Explore/Propose，自动跳过 brainstorming 环节
+4. 将 spec 业务场景转换为 TDD 测试用例
+5. 将 tasks.md 任务拆分至 Superpowers 标准粒度（2-5 分钟）
+6. 单任务完成后自动调用 spec-compliance-check
+7. 全任务完成后强制执行 Verify + 全量测试
+8. 测试全通过后才允许 Archive
+```
+
+:::tip
+这两个 Skill 解决了 OpenSpec + Superpowers 协同开发中的 5 个常见踩坑。详见[双框架踩坑指南](/guide/advanced/openspec-superpowers-pitfalls)。
+:::
+
 ## Skill 最佳实践
 
 1. **单一职责**：一个 Skill 做一件事
