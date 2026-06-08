@@ -1109,44 +1109,170 @@ jobs:
             5. 检查是否有安全隐患（SQL 注入、硬编码密钥等）
 ```
 
-### 自定义 Skills
+### 自定义 Java Skills
+
+Custom Skills 是团队知识沉淀的最佳方式。当一个 Java 开发流程被反复执行（如创建 REST API、编写 Flyway 迁移、配置 Spring Security），将其封装为 SKILL.md 可以让 Claude Code 每次都按照团队约定的步骤和标准执行，无需重复说明。
+
+#### SKILL.md 文件结构
+
+每个 Skill 是一个 Markdown 文件，放在项目的 `.claude/skills/<skill-name>/SKILL.md`：
+
+```
+.claude/skills/
+├── create-api-endpoint/
+│   └── SKILL.md          ← 创建 REST API 端点的标准流程
+├── flyway-migration/
+│   └── SKILL.md          ← Flyway 迁移脚本审查流程
+└── service-review/
+    └── SKILL.md          ← Service 层代码审查检查清单
+```
+
+SKILL.md 由 Claude Code 在 `/skill-name` 斜杠命令调用时加载，其内容直接作为 Claude 的指令上下文。
 
 :::tip
 创建自定义 Skills 的基础知识请参考[自定义技能](/skills/overview/custom-skills)。
 :::
 
-为 Java 项目创建专用 Skill，标准化常见操作：
+#### 示例一：create-api-endpoint（创建 REST API 端点）
+
+这是 Java 最常用的 Skill——标准化 Entity → DTO → Repository → Service → Controller 的完整创建流程：
 
 ```markdown title=".claude/skills/create-api-endpoint/SKILL.md"
 # 创建 API 端点
 
-根据需求创建完整的 Spring Boot REST API 端点。
+根据需求创建完整的 Spring Boot REST API 端点。遵循项目的分层架构约定。
 
 ## 步骤
 
-1. 在 model/ 包下创建 Entity 类（使用 JPA 注解）
-2. 在 dto/ 包下创建请求和响应 DTO
-3. 创建 MapStruct Mapper 接口
-4. 在 repository/ 包下创建 Repository 接口
-5. 在 service/ 包下创建 Service 类（包含业务逻辑）
-6. 在 controller/ 包下创建 Controller（使用 @RestController）
-7. 在 src/test/java/ 对应包下创建单元测试
-8. 运行测试确认通过
+1. 在 `model/` 包下创建 Entity 类（使用 JPA 注解、Lombok 注解）
+2. 在 `dto/` 包下创建请求和响应 DTO：
+   - `Create{Entity}Request`：创建请求（含 `@Valid` 校验注解）
+   - `Update{Entity}Request`：更新请求
+   - `{Entity}Response`：响应（不暴露内部字段）
+3. 创建 MapStruct Mapper 接口（`@Mapper(componentModel = "spring")`）
+4. 在 `repository/` 包下创建 Repository 接口（继承 `JpaRepository`）
+5. 在 `service/` 包下创建 Service 类：
+   - 查询方法使用 `@Transactional(readOnly = true)`
+   - 写操作使用 `@Transactional`，显式指定 `rollbackFor = Exception.class`
+6. 在 `controller/` 包下创建 Controller（`@RestController` + `@RequestMapping`）
+7. 在 `src/test/java/` 对应包下创建单元测试（Mockito）和集成测试
+8. 运行 `mvn test` 确认通过
 
 ## 约定
 
-- 遵循项目现有的代码风格
-- 使用 Lombok 减少样板代码
-- 所有 Controller 方法需要参数校验
-- Service 层需要处理业务异常
+- 遵循项目现有的代码风格（参考 {参考模块} 的实现）
+- 使用 Lombok 减少样板代码（`@Getter`, `@Builder`, `@Slf4j`）
+- Controller 只做参数校验和路由，业务逻辑在 Service 层
+- 不在 Controller 中直接暴露 Entity，必须使用 DTO
+- 所有写操作需要显式事务注解
+- 集成测试使用 Testcontainers + PostgreSQL
 ```
 
-使用时只需：
+#### 示例二：service-review（Service 层代码审查）
+
+```markdown title=".claude/skills/service-review/SKILL.md"
+# Service 层代码审查
+
+对指定的 Service 类进行全面的代码审查，聚焦生产环境中的常见问题。
+
+## 检查清单
+
+### 事务安全
+- [ ] 写操作是否标注了 `@Transactional`
+- [ ] 查询方法是否使用了 `@Transactional(readOnly = true)`
+- [ ] 同类方法之间的调用是否存在事务失效风险（Spring AOP 代理限制）
+- [ ] `rollbackFor` 是否指定了 `Exception.class`（默认只回滚 RuntimeException）
+
+### 异常处理
+- [ ] 是否吞掉了应该抛出的异常（catch 块为空或仅打印日志）
+- [ ] 是否使用了统一的 `BusinessException` + `ErrorCode` 体系
+- [ ] 异常信息是否对调试友好（包含足够的上下文）
+
+### 并发安全
+- [ ] 是否存在共享可变状态（成员变量被多个线程访问）
+- [ ] 乐观锁（`@Version`）是否正确使用
+- [ ] 数据库操作是否有竞态条件
+
+### 性能
+- [ ] 是否存在 N+1 查询（检查 `@OneToMany` 的 fetch 类型）
+- [ ] 批量操作是否逐条执行（应使用 `saveAll`、`batch` 操作）
+- [ ] 高频查询是否需要缓存（`@Cacheable`）
+
+### 代码质量
+- [ ] 方法是否过长（超过 50 行建议拆分）
+- [ ] 是否有硬编码的魔法值（应提取为常量或配置）
+- [ ] 日志是否使用了 SLF4J（不用 `System.out`）
+- [ ] 日志是否输出了敏感信息（密码、Token、身份证号）
+
+## 输出格式
+
+按严重程度排序输出问题列表：
+- 🔴 **高**：会导致数据丢失、安全漏洞或生产崩溃
+- 🟡 **中**：会导致性能问题或维护困难
+- 🟢 **低**：代码风格或最佳实践建议
+```
+
+#### 示例三：flyway-migration（Flyway 迁移脚本审查）
+
+```markdown title=".claude/skills/flyway-migration/SKILL.md"
+# Flyway 迁移审查
+
+审查 Flyway 数据库迁移脚本的正确性、安全性和性能影响。
+
+## 审查步骤
+
+1. 确认迁移脚本命名符合规范：`V{版本号}__{描述}.sql`
+2. 确认版本号递增且不与已有迁移冲突
+3. 审查 SQL 内容：
+
+### 数据定义（DDL）
+- [ ] 字段类型是否合理（VARCHAR 长度、DECIMAL 精度）
+- [ ] 是否添加了 NOT NULL 约束（避免意外 null 值）
+- [ ] 外键约束是否正确（ON DELETE 行为）
+- [ ] 默认值是否合理
+
+### 索引
+- [ ] 主键和外键是否有索引
+- [ ] WHERE 条件中常用字段是否有索引
+- [ ] 复合索引的字段顺序是否正确（高选择性字段在前）
+
+### 数据迁移（DML）
+- [ ] UPDATE/DELETE 是否有 WHERE 条件（防止全表操作）
+- [ ] 大表数据迁移是否分批执行
+- [ ] 是否需要在事务内执行
+
+### 兼容性
+- [ ] 是否向后兼容（蓝绿部署场景）
+- [ ] 是否需要停机维护
+- [ ] 回滚方案是什么
+
+## 输出格式
+
+对每个问题标注风险级别和修复建议，附带修正后的 SQL。
+```
+
+#### 使用自定义 Skills
+
+创建 SKILL.md 后，在 Claude Code 中通过斜杠命令调用：
 
 ```
 > /create-api-endpoint
 > 创建商品管理 API，包含 CRUD、分页查询和按分类筛选
 ```
+
+```
+> /service-review
+> 审查 OrderService.java
+```
+
+```
+> /flyway-migration
+> 审查 V3__add_payment_table.sql
+```
+
+:::tip
+自定义 Skills 的核心价值在于**一致性**——无论哪个开发者使用 Claude Code，只要调用同一个 Skill，得到的结果都遵循相同的标准和步骤。建议团队将 SKILL.md 文件纳入版本控制（Git），作为项目编码规范的一部分。
+:::
 
 ## 注意事项
 
