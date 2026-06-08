@@ -67,6 +67,30 @@ description: Claude Code 日常使用中的高效技巧和常见模式
 如果同时安装了 Superpowers 和 Gstack，建议先阅读 [AGENTS 全局路由协议](/guide/advanced/agents-routing)，明确两者的分工和优先级，避免工具冲突。想理解 SDD、OpenSpec、Spec-Kit、Superpowers 的关系？请参考 [SDD 方法论与工具辨析](/guide/advanced/sdd-guide)。
 :::
 
+### 持久记忆策略
+
+默认情况下，Claude Code 每次新会话都会"失忆"。对于长期项目，推荐使用 [Claude-Mem](/guide/advanced/claude-mem) 实现自动化的跨会话记忆。
+
+```
+# 安装 Claude-Mem（一次性）
+> npx claude-mem install
+```
+
+安装后无需额外操作——Claude-Mem 在后台自动工作：
+
+- **会话中**：自动捕获工具调用和关键发现
+- **新会话启动**：自动注入相关的历史上下文
+- **搜索记忆**：通过 MCP 工具用自然语言查询项目经验
+
+```
+> 搜索之前关于性能优化的讨论
+> 上次重构 auth 模块时遇到了什么问题？
+```
+
+:::tip
+Claude-Mem 与 CLAUDE.md **互补使用**：CLAUDE.md 记录静态的项目约定和规则，Claude-Mem 记录动态的工作经验和发现。两者结合，Claude Code 既有"骨架"（约定）又有"记忆"（经验）。
+:::
+
 ### 四阶段工作流：从想法到发布
 
 当你的项目足够复杂，需要一套完整的开发流程时，可以组合使用四个工具，形成从想法到发布的闭环：
