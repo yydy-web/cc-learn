@@ -7,6 +7,30 @@ description: 使用 Claude Code 进行 Java 开发的完整指南，涵盖项目
 
 Claude Code 对 Java 生态（Spring Boot、Maven、Gradle、JUnit 等）有良好的支持。本文介绍如何在 Java 项目中高效使用 Claude Code，从项目配置到自动化工作流的最佳实践。
 
+## Skills：Java 开发的效率倍增器
+
+**Skills**（技能）是 Claude Code 的核心增强机制——每个 Skill 是一个 `SKILL.md` 文件，包含结构化的提示词、工作流步骤和工具组合策略。你可以将 Skills 理解为 Claude Code 的"自动化脚本"：它告诉 Claude Code 在特定场景下应该遵循什么步骤、使用什么工具、按什么顺序执行。
+
+### Skills 对 Java 开发者意味着什么
+
+| 维度 | 没有 Skills | 使用 Skills |
+|------|------------|-------------|
+| 任务理解 | 直接写代码，容易遗漏分层步骤 | SKILL.md 强制定义完整工作流 |
+| 代码质量 | 依赖 Claude 的训练数据风格 | SKILL.md 统一代码风格和命名规范 |
+| 测试覆盖 | 测试是可选的 | SKILL.md 可以强制 TDD（先写测试） |
+| 工具协同 | 各工具独立使用 | SKILL.md 编排工具链（ECC → Superpowers → Gstack） |
+| 知识传递 | 每次对话都要重新说明 | SKILL.md 持久化项目约定 |
+
+### Java 生态中的三类 Skills
+
+1. **ECC 内置 Java Skills**：`springboot-patterns`（Spring Boot 项目结构规范）、`springboot-tdd`（Spring Boot TDD 工作流）、`tdd-workflow`（通用 TDD 流程）、`database-migrations`（数据库迁移最佳实践）、`security-review`（安全审查工作流）
+2. **Superpowers 管道 Skills**：`brainstorming`（需求探索）、`writing-plans`（计划编写）、`test-driven-development`（TDD 执行）、`systematic-debugging`（系统化调试）、`requesting-code-review`（代码审查请求）
+3. **自定义 Java Skills**：团队根据自身技术栈创建的专属 Skills，如 API 端点生成、数据库迁移审查、统一异常处理等
+
+:::tip
+ECC 的 Java Skills 无需额外配置，安装 ECC 后即可使用。Superpowers Skills 需要安装 Superpowers 插件。自定义 Skills 则需要在项目的 `.claude/skills/` 目录下创建 SKILL.md 文件——详见下方 [自定义 Java Skills](#自定义-java-skills) 章节。
+:::
+
 ## 项目结构配置
 
 ### 标准 Maven 项目结构
