@@ -1327,6 +1327,26 @@ Claude Code 的训练数据可能偏向 Java 8/11 的写法。如果你使用 Ja
 | 测试上下文加载      | 集成测试启动慢                            | 使用 `@SpringBootTest(properties = "...")` 减少不必要的自动配置 |
 | MapStruct 版本      | 不同版本的 MapStruct API 有差异           | 在 CLAUDE.md 中注明使用的 MapStruct 版本                        |
 
+### LSP 配置（强烈推荐）
+
+参考文章将 Java LSP（jdtls）列为后端开发的**第一个必装配置**。没有 LSP，Claude Code 只能用 grep 搜索代码，查询一个方法定义可能需要 30-60 秒且结果不精确；配置 LSP 后，同样的查询 50 毫秒返回精确结果。
+
+更重要的是 LSP 的**被动诊断**能力：Claude Code 每次编辑 Java 文件后，jdtls 会即时推送类型错误、缺失导入等诊断信息，Claude 会在同一轮对话中自动修复——无需你手动编译再反馈错误。
+
+```
+# 验证 LSP 是否生效
+# 进入 Java 项目后问 Claude：
+> UserService 在哪里定义？
+# 如果秒返回精确文件路径和行号 = LSP 已生效
+# 如果返回多个 grep 结果并逐个分析 = LSP 未生效
+```
+
+完整的安装配置步骤请参阅 [Java LSP 配置指南](/tips/java-practices/lsp-setup)。
+
+:::warning
+LSP 配置需要 JDK 21+ 来运行 jdtls（这是 jdtls 自身的运行时要求，不影响你项目的 JDK 版本）。如果你的项目使用 JDK 8 或 11，仍然需要安装 JDK 21+ 供 jdtls 使用。macOS 用户推荐通过 Homebrew 安装：`brew install jdtls`。
+:::
+
 ### 效率提示
 
 ```
