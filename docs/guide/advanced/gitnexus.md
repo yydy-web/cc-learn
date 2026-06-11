@@ -76,21 +76,21 @@ gitnexus serve
 
 GitNexus 提供完整的 MCP 工具集：
 
-| 工具 | 用途 |
-| --- | --- |
-| `list_repos` | 列出已索引的仓库 |
-| `query` | 定向查询 |
-| `context` | 构建代码上下文 |
-| `impact` | 影响分析 |
-| `detect_changes` | 分析当前 git diff 影响哪些流程 |
-| `rename` | 重命名预览 |
-| `cypher` | Cypher 查询语言 |
-| `route_map` | API 路由映射 |
-| `tool_map` | MCP tool 映射 |
-| `shape_check` | 检查 API 返回 shape 和 consumer 访问字段是否匹配 |
-| `api_impact` | 修改 API route 前看 consumer 和 response 字段依赖 |
-| `group_list` | 列出多仓库 group |
-| `group_sync` | 同步多仓库 group |
+| 工具             | 用途                                              |
+| ---------------- | ------------------------------------------------- |
+| `list_repos`     | 列出已索引的仓库                                  |
+| `query`          | 定向查询                                          |
+| `context`        | 构建代码上下文                                    |
+| `impact`         | 影响分析                                          |
+| `detect_changes` | 分析当前 git diff 影响哪些流程                    |
+| `rename`         | 重命名预览                                        |
+| `cypher`         | Cypher 查询语言                                   |
+| `route_map`      | API 路由映射                                      |
+| `tool_map`       | MCP tool 映射                                     |
+| `shape_check`    | 检查 API 返回 shape 和 consumer 访问字段是否匹配  |
+| `api_impact`     | 修改 API route 前看 consumer 和 response 字段依赖 |
+| `group_list`     | 列出多仓库 group                                  |
+| `group_sync`     | 同步多仓库 group                                  |
 
 ### 重点关注的工具
 
@@ -151,6 +151,7 @@ gitnexus cypher "MATCH ..."
 ## 适合谁？
 
 **适合：**
+
 - 平台团队
 - 大型工程组织
 - 多仓库系统
@@ -158,25 +159,26 @@ gitnexus cypher "MATCH ..."
 - 想做企业内部代码智能平台的人
 
 **不太适合：**
+
 - 想要轻量常驻工具的人
 - 不想处理 native dependency / Node / LadybugDB / embedding 的人
 - 商业场景但没有许可证授权的人
 
 ## 与其他工具的对比
 
-| 方面 | CodeGraph | Code Review Graph | Graphify | GitNexus |
-| --- | --- | --- | --- | --- |
-| **核心定位** | 代码导航 / Agent 上下文 | PR 审查 / 影响分析 | 项目知识图谱 | 工程化代码智能平台 |
-| **最适合场景** | 日常编码 | PR review | 项目梳理 / GraphRAG | 多仓库 / API impact / 平台化 |
-| **是否适合常驻 MCP** | 高 | 中 | 中 | 高，但较重 |
-| **是否轻量** | 高 | 中 | 中 | 低 |
-| **是否支持文档/PDF/图片/视频** | 基本不支持 | 弱 | 强 | 弱 |
-| **是否适合 PR review** | 中 | 强 | 中 | 强 |
-| **是否适合多仓库** | 弱 | 中 | 中 | 强 |
-| **默认本地性** | 强 | 强 | 代码本地，文档可能走模型 | 强 |
-| **主要风险** | 语言/框架解析边界 | 工具面偏多 | LLM 抽取和隐私边界 | License + 复杂度 |
-| **商业使用风险** | 低，MIT | 低，MIT | 低，MIT | 高，非商业 license |
-| **推荐对象** | 普通开发者 | Reviewer / Tech Lead | 架构师 / 知识库 | 平台团队 |
+| 方面                           | CodeGraph               | Code Review Graph    | Graphify                 | GitNexus                     |
+| ------------------------------ | ----------------------- | -------------------- | ------------------------ | ---------------------------- |
+| **核心定位**                   | 代码导航 / Agent 上下文 | PR 审查 / 影响分析   | 项目知识图谱             | 工程化代码智能平台           |
+| **最适合场景**                 | 日常编码                | PR review            | 项目梳理 / GraphRAG      | 多仓库 / API impact / 平台化 |
+| **是否适合常驻 MCP**           | 高                      | 中                   | 中                       | 高，但较重                   |
+| **是否轻量**                   | 高                      | 中                   | 中                       | 低                           |
+| **是否支持文档/PDF/图片/视频** | 基本不支持              | 弱                   | 强                       | 弱                           |
+| **是否适合 PR review**         | 中                      | 强                   | 中                       | 强                           |
+| **是否适合多仓库**             | 弱                      | 中                   | 中                       | 强                           |
+| **默认本地性**                 | 强                      | 强                   | 代码本地，文档可能走模型 | 强                           |
+| **主要风险**                   | 语言/框架解析边界       | 工具面偏多           | LLM 抽取和隐私边界       | License + 复杂度             |
+| **商业使用风险**               | 低，MIT                 | 低，MIT              | 低，MIT                  | 高，非商业 license           |
+| **推荐对象**                   | 普通开发者              | Reviewer / Tech Lead | 架构师 / 知识库          | 平台团队                     |
 
 ### 选型建议
 
@@ -193,10 +195,10 @@ gitnexus cypher "MATCH ..."
 
 GitNexus 可以与其他工具组合，但建议"一个常驻 + 一个按需"：
 
-| 组合 | 适合场景 | 分工 |
-| --- | --- | --- |
-| GitNexus + Graphify | 大项目、多仓库、有平台团队 | GitNexus 管工程关系，Graphify 管知识沉淀 |
-| CodeGraph + GitNexus | 日常开发 + 企业平台 | CodeGraph 常驻轻量探索，GitNexus 按需做平台分析 |
+| 组合                 | 适合场景                   | 分工                                            |
+| -------------------- | -------------------------- | ----------------------------------------------- |
+| GitNexus + Graphify  | 大项目、多仓库、有平台团队 | GitNexus 管工程关系，Graphify 管知识沉淀        |
+| CodeGraph + GitNexus | 日常开发 + 企业平台        | CodeGraph 常驻轻量探索，GitNexus 按需做平台分析 |
 
 :::warning
 不建议四个工具同时暴露给同一个 Agent 常驻——MCP 工具太多会导致 Agent 选择困难、上下文噪音变大。
