@@ -27,36 +27,36 @@ Evaluate 类命令用于评估现有设计的质量和一致性。Impeccable 提
 
 Audit 从五个维度评估设计质量：
 
-| 维度 | 说明 | 检查项 |
-| :--- | :--- | :--- |
-| **Accessibility** | 可访问性 | WCAG 合规、语义化标签、键盘导航、屏幕阅读器支持 |
-| **Performance** | 性能 | 图片优化、关键 CSS、布局偏移、资源加载策略 |
-| **Theming** | 主题一致性 | 设计令牌使用、颜色系统、间距系统、字体层级 |
-| **Responsive** | 响应式 | 断点适配、弹性布局、触控目标尺寸、内容流式布局 |
-| **Anti-patterns** | 反模式 | 内联样式、魔法数字、重复代码、缺失错误状态 |
+| 维度              | 说明       | 检查项                                          |
+| :---------------- | :--------- | :---------------------------------------------- |
+| **Accessibility** | 可访问性   | WCAG 合规、语义化标签、键盘导航、屏幕阅读器支持 |
+| **Performance**   | 性能       | 图片优化、关键 CSS、布局偏移、资源加载策略      |
+| **Theming**       | 主题一致性 | 设计令牌使用、颜色系统、间距系统、字体层级      |
+| **Responsive**    | 响应式     | 断点适配、弹性布局、触控目标尺寸、内容流式布局  |
+| **Anti-patterns** | 反模式     | 内联样式、魔法数字、重复代码、缺失错误状态      |
 
 ### 评分系统
 
 每个维度独立评分 0-4：
 
-| 分数 | 等级 | 含义 |
-| :--- | :--- | :--- |
-| 4 | Excellent | 无明显问题，遵循最佳实践 |
-| 3 | Good | 少量可优化点，不影响使用 |
-| 2 | Fair | 存在明显问题，需要改进 |
-| 1 | Poor | 多个严重问题，需要重点关注 |
-| 0 | Critical | 存在阻断性问题，必须修复 |
+| 分数 | 等级      | 含义                       |
+| :--- | :-------- | :------------------------- |
+| 4    | Excellent | 无明显问题，遵循最佳实践   |
+| 3    | Good      | 少量可优化点，不影响使用   |
+| 2    | Fair      | 存在明显问题，需要改进     |
+| 1    | Poor      | 多个严重问题，需要重点关注 |
+| 0    | Critical  | 存在阻断性问题，必须修复   |
 
 ### 严重级别
 
 发现的问题按严重程度标记为 P0-P3：
 
-| 级别 | 含义 | 处理优先级 |
-| :--- | :--- | :--- |
-| **P0** | 阻断性问题，影响核心功能或可访问性 | 立即修复 |
-| **P1** | 重要问题，影响用户体验或一致性 | 计划修复 |
-| **P2** | 一般问题，可优化但非阻断 | 后续改进 |
-| **P3** | 建议性改进，锦上添花 | 择机优化 |
+| 级别   | 含义                               | 处理优先级 |
+| :----- | :--------------------------------- | :--------- |
+| **P0** | 阻断性问题，影响核心功能或可访问性 | 立即修复   |
+| **P1** | 重要问题，影响用户体验或一致性     | 计划修复   |
+| **P2** | 一般问题，可优化但非阻断           | 后续改进   |
+| **P3** | 建议性改进，锦上添花               | 择机优化   |
 
 ### 输出格式
 
@@ -65,13 +65,13 @@ Audit 从五个维度评估设计质量：
 
 ### Dimension Scores
 
-| Dimension | Score | Grade |
-| :-------- | :---: | :---: |
-| Accessibility | 3 | Good |
-| Performance | 2 | Fair |
-| Theming | 4 | Excellent |
-| Responsive | 3 | Good |
-| Anti-patterns | 1 | Poor |
+| Dimension     | Score |   Grade   |
+| :------------ | :---: | :-------: |
+| Accessibility |   3   |   Good    |
+| Performance   |   2   |   Fair    |
+| Theming       |   4   | Excellent |
+| Responsive    |   3   |   Good    |
+| Anti-patterns |   1   |   Poor    |
 
 **Overall: 2.6 / 4.0**
 
@@ -123,10 +123,11 @@ Audit 从五个维度评估设计质量：
 ### 注意事项
 
 :::warning
+
 - Audit 是技术层面的质量检查，不涉及审美判断。设计审美问题请使用 `critique`
 - 优先修复 P0 问题，再处理 P1 及以下
 - 同一个 target 可以多次审计，对比改进效果
-:::
+  :::
 
 ---
 
@@ -146,36 +147,36 @@ Audit 从五个维度评估设计质量：
 
 Critique 结合两种评估方式：
 
-| 机制 | 说明 |
-| :--- | :--- |
-| **LLM Design Review** | 基于设计原则的主观审查，评估视觉层次、构图、色彩运用等 |
-| **Automated Detector** | 模式匹配检测，识别已知的 AI slop、反模式、常见错误 |
+| 机制                   | 说明                                                   |
+| :--------------------- | :----------------------------------------------------- |
+| **LLM Design Review**  | 基于设计原则的主观审查，评估视觉层次、构图、色彩运用等 |
+| **Automated Detector** | 模式匹配检测，识别已知的 AI slop、反模式、常见错误     |
 
 ### AI Slop 检测
 
 Critique 内置 AI 生成内容的识别能力，检测以下常见问题：
 
-| 检测项 | 说明 |
-| :--- | :--- |
-| Generic gradients | 无意义的渐变背景 |
-| Card soup | 过度嵌套的卡片结构 |
-| Placeholder text | 占位文本未替换 |
-| Cookie-cutter layout | 千篇一律的模板化布局 |
-| Over-saturated colors | 过度饱和的色彩搭配 |
-| Meaningless icons | 无实际意义的装饰性图标 |
+| 检测项                | 说明                   |
+| :-------------------- | :--------------------- |
+| Generic gradients     | 无意义的渐变背景       |
+| Card soup             | 过度嵌套的卡片结构     |
+| Placeholder text      | 占位文本未替换         |
+| Cookie-cutter layout  | 千篇一律的模板化布局   |
+| Over-saturated colors | 过度饱和的色彩搭配     |
+| Meaningless icons     | 无实际意义的装饰性图标 |
 
 ### 启发式评分
 
 基于设计启发式规则进行评分：
 
-| 启发式 | 检查项 |
-| :--- | :--- |
-| Visual hierarchy | 信息优先级是否清晰传达 |
+| 启发式             | 检查项                 |
+| :----------------- | :--------------------- |
+| Visual hierarchy   | 信息优先级是否清晰传达 |
 | Gestalt principles | 邻近性、相似性、连续性 |
-| Color harmony | 色彩搭配是否协调 |
-| Typography scale | 字体层级是否合理 |
-| White space | 留白是否适当 |
-| Alignment | 元素对齐是否一致 |
+| Color harmony      | 色彩搭配是否协调       |
+| Typography scale   | 字体层级是否合理       |
+| White space        | 留白是否适当           |
+| Alignment          | 元素对齐是否一致       |
 
 ### 输出格式
 
@@ -191,14 +192,14 @@ Key indicators: Gradient hero, card grid below, CTA section at bottom
 
 ### Heuristic Scores
 
-| Heuristic | Score | Notes |
-| :-------- | :---: | :--- |
-| Visual hierarchy | 6/10 | Hero text competes with background |
-| Gestalt principles | 7/10 | Good grouping, weak continuity |
-| Color harmony | 5/10 | Too many competing accent colors |
-| Typography scale | 8/10 | Consistent scale, good contrast |
-| White space | 4/10 | Insufficient breathing room |
-| Alignment | 7/10 | Mostly aligned, some drift |
+| Heuristic          | Score | Notes                              |
+| :----------------- | :---: | :--------------------------------- |
+| Visual hierarchy   | 6/10  | Hero text competes with background |
+| Gestalt principles | 7/10  | Good grouping, weak continuity     |
+| Color harmony      | 5/10  | Too many competing accent colors   |
+| Typography scale   | 8/10  | Consistent scale, good contrast    |
+| White space        | 4/10  | Insufficient breathing room        |
+| Alignment          | 7/10  | Mostly aligned, some drift         |
 
 **Average: 6.2/10**
 
@@ -233,17 +234,18 @@ Key indicators: Gradient hero, card grid below, CTA section at bottom
 ### 注意事项
 
 :::warning
+
 - Critique 是定性分析，不替代代码层面的技术审计（那是 audit 的工作）
 - 不要在未完成的中间状态运行 critique，否则会收到大量"未完成"警告
 - 重视末尾的 Questions — 这些是基于审查发现的澄清问题，回答后可获得更精准的建议
-:::
+  :::
 
 ## Audit vs Critique
 
-| 特性 | audit | critique |
-| :--- | :--- | :--- |
-| 分析类型 | 量化技术检查 | 定性设计审查 |
-| 输出 | 维度分数 + P0-P3 发现 | 启发式分数 + 优先问题 |
+| 特性     | audit                    | critique                    |
+| :------- | :----------------------- | :-------------------------- |
+| 分析类型 | 量化技术检查             | 定性设计审查                |
+| 输出     | 维度分数 + P0-P3 发现    | 启发式分数 + 优先问题       |
 | 适用场景 | 技术质量、可访问性、性能 | 设计审美、视觉层次、AI slop |
-| 建议顺序 | 先 critique，后 audit | — |
-| 关注重点 | 代码和实现 | 视觉和体验 |
+| 建议顺序 | 先 critique，后 audit    | —                           |
+| 关注重点 | 代码和实现               | 视觉和体验                  |
