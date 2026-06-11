@@ -1,26 +1,58 @@
 [
+  {
+    "type": "section-header",
+    "label": "核心扩展配置"
+  },
   "hooks",
   "mcp-servers",
   "cc-switch",
   "ccstatusline",
+  {
+    "type": "section-header",
+    "label": "规格驱动开发 (SDD)"
+  },
+  {
+    "type": "dir",
+    "name": "sdd",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "section-header",
+    "label": "结构化工作流"
+  },
   "superpowers",
   "gstack",
-  "spec-kit",
-  "openspec",
-  "openspec-superpowers",
-  "openspec-superpowers-pitfalls",
   "comet",
-  "agents-routing",
-  "sdd-guide",
-  "workflow-troubleshooting",
-  "ralph",
-  "codegraph",
-  "code-review-graph",
-  "graphify",
-  "code-graph-tools",
+  {
+    "type": "section-header",
+    "label": "代码图谱"
+  },
+  {
+    "type": "dir",
+    "name": "code-graph",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "section-header",
+    "label": "记忆与上下文"
+  },
+  "claude-mem",
   "context7",
   "serena",
-  "claude-mem",
+  {
+    "type": "section-header",
+    "label": "多智能体与自动化"
+  },
   "multi-agent",
-  "automation"
+  "automation",
+  "ralph",
+  "agents-routing",
+  {
+    "type": "section-header",
+    "label": "工作流故障排除"
+  },
+  "task-interruption-recovery",
+  "workflow-troubleshooting"
 ]

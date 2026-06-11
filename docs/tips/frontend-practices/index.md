@@ -55,14 +55,14 @@ flowchart LR
 
 以下是各工具的详解页面索引：
 
-| 工具        | 详解页面                                          |
-| ----------- | ------------------------------------------------- |
-| Git 工作流  | 通用实践，无独立页面                              |
-| Superpowers | [Superpowers 插件](/guide/advanced/superpowers)   |
-| Taste Skill | [Taste Skill](/skills/frontend/taste)             |
-| GStack      | [Gstack 工具包](/guide/advanced/gstack)           |
-| OpenSpec    | [OpenSpec 规格驱动开发](/guide/advanced/openspec) |
-| Ralph       | [Ralph 自主循环](/guide/advanced/ralph)           |
-| CodeGraph   | [CodeGraph 代码智能](/guide/advanced/codegraph)   |
-| Context7    | [Context7 实时文档](/guide/advanced/context7)     |
-| Serena      | [Serena 代码语义工具](/guide/advanced/serena)     |
+| 工具        | 详解页面                                                   |
+| ----------- | ---------------------------------------------------------- |
+| Git 工作流  | 通用实践，无独立页面                                       |
+| Superpowers | [Superpowers 插件](/guide/advanced/superpowers)            |
+| Taste Skill | [Taste Skill](/skills/frontend/taste)                      |
+| GStack      | [Gstack 工具包](/guide/advanced/gstack)                    |
+| OpenSpec    | [OpenSpec 规格驱动开发](/guide/advanced/sdd/openspec)      |
+| Ralph       | [Ralph 自主循环](/guide/advanced/ralph)                    |
+| CodeGraph   | [CodeGraph 代码智能](/guide/advanced/code-graph/codegraph) |
+| Context7    | [Context7 实时文档](/guide/advanced/context7)              |
+| Serena      | [Serena 代码语义工具](/guide/advanced/serena)              |

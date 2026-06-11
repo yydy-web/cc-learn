@@ -70,7 +70,7 @@ description: Claude Code 第三方技能生态系统的命令参考，涵盖 Sup
 | `/speckit.implement`    | 按任务列表执行实现               |
 | `/speckit.analyze`      | 分析规格和实现的差距             |
 
-详细文档参见 [Spec-Kit 技能](/guide/advanced/spec-kit)
+详细文档参见 [Spec-Kit 技能](/guide/advanced/sdd/spec-kit)
 
 ## Ralph — PRD 驱动开发
 
@@ -92,7 +92,7 @@ description: Claude Code 第三方技能生态系统的命令参考，涵盖 Sup
 详细文档参见各自技能页面：
 
 - [Context7](/guide/advanced/context7)
-- [Graphify](/guide/advanced/graphify)
+- [Graphify](/guide/advanced/code-graph/graphify)
 - [Serena](/guide/advanced/serena)
 
 ## 下一步

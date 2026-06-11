@@ -18,11 +18,11 @@ AI 编程中有两个独立的问题：
 
 ## 三层模型
 
-| 层级           | 代表                                                                        | 解决的问题                          |
-| -------------- | --------------------------------------------------------------------------- | ----------------------------------- |
-| **方法论层**   | SDD（规格驱动开发）                                                         | 为什么要先写规格再写代码            |
-| **规格工具层** | [OpenSpec](/guide/advanced/openspec) / [Spec-Kit](/guide/advanced/spec-kit) | 规格怎么生成、存储、审查、演进      |
-| **执行纪律层** | [Superpowers](/guide/advanced/superpowers) Skills                           | AI 怎么按步骤执行、测试、验证、交付 |
+| 层级           | 代表                                                                                | 解决的问题                          |
+| -------------- | ----------------------------------------------------------------------------------- | ----------------------------------- |
+| **方法论层**   | SDD（规格驱动开发）                                                                 | 为什么要先写规格再写代码            |
+| **规格工具层** | [OpenSpec](/guide/advanced/sdd/openspec) / [Spec-Kit](/guide/advanced/sdd/spec-kit) | 规格怎么生成、存储、审查、演进      |
+| **执行纪律层** | [Superpowers](/guide/advanced/superpowers) Skills                                   | AI 怎么按步骤执行、测试、验证、交付 |
 
 ```mermaid
 flowchart TD
@@ -279,15 +279,15 @@ Superpowers 的 `brainstorming` 产出的设计文档是临时的。如果你需
 
 ## 相关资源
 
-- [OpenSpec 规格驱动开发](/guide/advanced/openspec) — 轻量级规格工具
-- [Spec-Kit 规格驱动开发](/guide/advanced/spec-kit) — 完整规格生产线
+- [OpenSpec 规格驱动开发](/guide/advanced/sdd/openspec) — 轻量级规格工具
+- [Spec-Kit 规格驱动开发](/guide/advanced/sdd/spec-kit) — 完整规格生产线
 - [Superpowers 插件](/guide/advanced/superpowers) — 结构化开发方法论
-- [OpenSpec + Superpowers 双层规划](/guide/advanced/openspec-superpowers) — 企业级双层规划工作流
+- [OpenSpec + Superpowers 双层规划](/guide/advanced/sdd/openspec-superpowers) — 企业级双层规划工作流
 - [AGENTS 全局路由协议](/guide/advanced/agents-routing) — 多框架协调方案
 - [最佳实践](/tips/best-practices) — 四阶段工作流和业务场景
 
 ## 下一步
 
 - [AGENTS 全局路由协议](/guide/advanced/agents-routing) — 当多个框架共存时如何协调
-- [OpenSpec + Superpowers 双层规划](/guide/advanced/openspec-superpowers) — 双层规划的完整工作流
+- [OpenSpec + Superpowers 双层规划](/guide/advanced/sdd/openspec-superpowers) — 双层规划的完整工作流
 - [最佳实践：四阶段工作流](/tips/best-practices) — 将所有工具组合为完整流程

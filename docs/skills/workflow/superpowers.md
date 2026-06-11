@@ -77,6 +77,7 @@ Superpowers 的 7 步工作流背后有三条不可违反的铁律：
 ## 下一步
 
 - [Superpowers 插件（完整文档）](/guide/advanced/superpowers) — 安装、配置和七步工作流详解
+- [技能使用指南](/skills/overview/skill-usage-guidelines) — 如何正确使用 Skills
 - [Gstack 工具包](/skills/workflow/gstack) — 互补的工程团队 Skills
 - [自定义技能](/skills/overview/custom-skills) — 创建自己的 Skills
 - [技能市场](/skills/overview/skills-marketplace) — 浏览和安装社区 Skills

@@ -142,11 +142,11 @@ your-project/
 3. **第三步**：觉得手动衔接麻烦，上 Comet——一键全装，五阶段自动跑
 
 :::info
-Comet 的优势在于自动化——它不仅安装工具，还提供守卫脚本和状态管理，确保每个阶段严格执行。如果你更喜欢手动控制，可以只用 OpenSpec + Superpowers 的手动桥接方案（参见 [双层规划](/guide/advanced/openspec-superpowers)）。
+Comet 的优势在于自动化——它不仅安装工具，还提供守卫脚本和状态管理，确保每个阶段严格执行。如果你更喜欢手动控制，可以只用 OpenSpec + Superpowers 的手动桥接方案（参见 [双层规划](/guide/advanced/sdd/openspec-superpowers)）。
 :::
 
 ## 相关资源
 
-- [OpenSpec 规格驱动开发](/guide/advanced/openspec) — OpenSpec 完整文档
+- [OpenSpec 规格驱动开发](/guide/advanced/sdd/openspec) — OpenSpec 完整文档
 - [Superpowers 插件](/guide/advanced/superpowers) — Superpowers 完整文档
-- [OpenSpec + Superpowers 双层规划](/guide/advanced/openspec-superpowers) — 手动桥接方案
+- [OpenSpec + Superpowers 双层规划](/guide/advanced/sdd/openspec-superpowers) — 手动桥接方案

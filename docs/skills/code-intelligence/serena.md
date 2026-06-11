@@ -70,5 +70,5 @@ claude mcp add --scope user serena -- serena
 ## 下一步
 
 - [Serena 代码语义工具（完整文档）](/guide/advanced/serena) — 安装、配置和使用指南
-- [CodeGraph 代码智能](/guide/advanced/codegraph) — 代码探索和知识图谱
+- [CodeGraph 代码智能](/guide/advanced/code-graph/codegraph) — 代码探索和知识图谱
 - [技能系统](/skills/) — 所有 Skills 概览

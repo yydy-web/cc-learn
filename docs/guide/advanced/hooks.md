@@ -22,13 +22,13 @@ Claude Code 有以下 Hook 事件：
 
 [Claude-Mem](/guide/advanced/claude-mem) 是一个利用 Hooks 实现全自动记忆的典型案例。它注册了 5 个生命周期 Hook：
 
-| Hook 事件 | Claude-Mem 的用途 |
-| --------- | ----------------- |
-| `SessionStart` | 从数据库检索相关上下文，注入新会话 |
-| `UserPromptSubmit` | 记录用户意图 |
-| `PostToolUse` | 将工具调用结果压缩为观察记录并存储 |
-| `Stop` | 记录会话结束状态 |
-| `SessionEnd` | 生成会话级摘要 |
+| Hook 事件          | Claude-Mem 的用途                  |
+| ------------------ | ---------------------------------- |
+| `SessionStart`     | 从数据库检索相关上下文，注入新会话 |
+| `UserPromptSubmit` | 记录用户意图                       |
+| `PostToolUse`      | 将工具调用结果压缩为观察记录并存储 |
+| `Stop`             | 记录会话结束状态                   |
+| `SessionEnd`       | 生成会话级摘要                     |
 
 Claude-Mem 通过这些 Hooks 实现了**零干预的跨会话记忆**——用户无需手动"记住"任何东西，系统在后台自动工作。
 

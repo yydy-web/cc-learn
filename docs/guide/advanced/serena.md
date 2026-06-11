@@ -387,8 +387,8 @@ uv tool uninstall serena-agent
 ## 下一步
 
 - [MCP 服务器](/guide/advanced/mcp-servers) — 深入了解 MCP 服务器配置
-- [CodeGraph 代码智能](/guide/advanced/codegraph) — 另一个代码智能工具
-- [Code Review Graph](/guide/advanced/code-review-graph) — 代码审查专用工具
-- [Graphify 知识图谱](/guide/advanced/graphify) — 多模态知识图谱工具
-- [代码图谱工具对比](/guide/advanced/code-graph-tools) — 四工具详细对比
+- [CodeGraph 代码智能](/guide/advanced/code-graph/codegraph) — 另一个代码智能工具
+- [Code Review Graph](/guide/advanced/code-graph/code-review-graph) — 代码审查专用工具
+- [Graphify 知识图谱](/guide/advanced/code-graph/graphify) — 多模态知识图谱工具
+- [代码图谱工具对比](/guide/advanced/code-graph/code-graph-tools) — 四工具详细对比
 - [技巧与最佳实践](/tips/best-practices) — 更多高效使用技巧

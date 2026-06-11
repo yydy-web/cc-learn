@@ -1,1 +1,8 @@
-["index", "slash-commands", "skill-commands", "cli-reference", "env-vars"]
+[
+  "index",
+  "slash-commands",
+  "skill-commands",
+  "cli-reference",
+  "env-vars",
+  { "type": "dir-section-header", "name": "impeccable", "label": "Impeccable" }
+]
