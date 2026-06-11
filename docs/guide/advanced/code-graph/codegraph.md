@@ -284,7 +284,7 @@ npm uninstall -g @colbymchenry/codegraph
 
 ## 与 Code Review Graph、Graphify、GitNexus 的对比
 
-[Code Review Graph](/guide/advanced/code-review-graph)（CRG）、[Graphify](/guide/advanced/graphify) 和 [GitNexus](/guide/advanced/gitnexus) 是另外几个基于代码图谱的工具。四者都通过 MCP 为 Claude Code 提供代码理解能力，但设计重点不同：
+[Code Review Graph](/guide/advanced/code-graph/code-review-graph)（CRG）、[Graphify](/guide/advanced/code-graph/graphify) 和 [GitNexus](/guide/advanced/code-graph/gitnexus) 是另外几个基于代码图谱的工具。四者都通过 MCP 为 Claude Code 提供代码理解能力，但设计重点不同：
 
 | 方面           | CodeGraph                               | Code Review Graph                         | Graphify                            | GitNexus                        |
 | -------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------- | ------------------------------- |
@@ -343,7 +343,7 @@ npm uninstall -g @colbymchenry/codegraph
 - 四者通过 MCP 并行运行，互不冲突
 
 :::tip
-更多四工具详细对比、差异分析和兼容性说明，请参考[代码图谱工具对比](/guide/advanced/code-graph-tools)。
+更多四工具详细对比、差异分析和兼容性说明，请参考[代码图谱工具对比](/guide/advanced/code-graph/code-graph-tools)。
 :::
 
 ## 相关资源
@@ -354,10 +354,10 @@ npm uninstall -g @colbymchenry/codegraph
 
 ## 下一步
 
-- [代码图谱工具对比](/guide/advanced/code-graph-tools) — CodeGraph、CRG、Graphify、GitNexus 四工具详细对比
-- [Code Review Graph](/guide/advanced/code-review-graph) — 代码审查专用工具
-- [Graphify 知识图谱](/guide/advanced/graphify) — 多模态知识图谱工具
-- [GitNexus 代码智能平台](/guide/advanced/gitnexus) — 企业级代码智能平台
+- [代码图谱工具对比](/guide/advanced/code-graph/code-graph-tools) — CodeGraph、CRG、Graphify、GitNexus 四工具详细对比
+- [Code Review Graph](/guide/advanced/code-graph/code-review-graph) — 代码审查专用工具
+- [Graphify 知识图谱](/guide/advanced/code-graph/graphify) — 多模态知识图谱工具
+- [GitNexus 代码智能平台](/guide/advanced/code-graph/gitnexus) — 企业级代码智能平台
 - [MCP 服务器](/guide/advanced/mcp-servers) — 深入了解 MCP 服务器配置
 - [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理 MCP 服务器和 API Provider
 - [技巧与最佳实践](/tips/best-practices) — 更多高效使用技巧

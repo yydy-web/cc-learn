@@ -312,12 +312,12 @@ Code Review Graph 和 Graphify 都是 Python 包，如果系统 Python 版本不
 
 ## 详细文档
 
-| 工具                                                   | 文档                             |
-| ------------------------------------------------------ | -------------------------------- |
-| [CodeGraph](/guide/advanced/codegraph)                 | 安装、MCP 工具集、使用示例       |
-| [Code Review Graph](/guide/advanced/code-review-graph) | 安装、30 个 MCP 工具、审查工作流 |
-| [Graphify](/guide/advanced/graphify)                   | 安装、多模态处理、导出格式       |
-| [GitNexus](/guide/advanced/gitnexus)                   | 安装、12 阶段 pipeline、多仓库   |
+| 工具                                                              | 文档                             |
+| ----------------------------------------------------------------- | -------------------------------- |
+| [CodeGraph](/guide/advanced/code-graph/codegraph)                 | 安装、MCP 工具集、使用示例       |
+| [Code Review Graph](/guide/advanced/code-graph/code-review-graph) | 安装、30 个 MCP 工具、审查工作流 |
+| [Graphify](/guide/advanced/code-graph/graphify)                   | 安装、多模态处理、导出格式       |
+| [GitNexus](/guide/advanced/code-graph/gitnexus)                   | 安装、12 阶段 pipeline、多仓库   |
 
 ## 下一步
 
@@ -325,4 +325,4 @@ Code Review Graph 和 Graphify 都是 Python 包，如果系统 Python 版本不
 - [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理多个 MCP 服务器配置
 - [AGENTS 路由协议](/guide/advanced/agents-routing) — 定义工具间的分工规则
 - [Serena 代码语义](/guide/advanced/serena) — IDE 级精确重构能力
-- [GitNexus](/guide/advanced/gitnexus) — 工程化代码智能平台详细文档
+- [GitNexus](/guide/advanced/code-graph/gitnexus) — 工程化代码智能平台详细文档

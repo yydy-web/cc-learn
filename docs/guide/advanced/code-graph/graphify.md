@@ -242,7 +242,7 @@ CC-Switch 特别适合在多个 AI 工具之间同步 Graphify 的 MCP 配置—
 
 ## 与 CodeGraph、Code Review Graph、GitNexus 的对比
 
-[CodeGraph](/guide/advanced/codegraph)、[Code Review Graph](/guide/advanced/code-review-graph) 和 [GitNexus](/guide/advanced/gitnexus) 是另外几个基于代码图谱的智能工具。四者都通过 MCP 为 Claude Code 提供代码理解能力，但设计定位和适用场景不同：
+[CodeGraph](/guide/advanced/code-graph/codegraph)、[Code Review Graph](/guide/advanced/code-graph/code-review-graph) 和 [GitNexus](/guide/advanced/code-graph/gitnexus) 是另外几个基于代码图谱的智能工具。四者都通过 MCP 为 Claude Code 提供代码理解能力，但设计定位和适用场景不同：
 
 | 方面           | CodeGraph                    | Code Review Graph                | Graphify                            | GitNexus                        |
 | -------------- | ---------------------------- | -------------------------------- | ----------------------------------- | ------------------------------- |
@@ -298,7 +298,7 @@ CC-Switch 特别适合在多个 AI 工具之间同步 Graphify 的 MCP 配置—
 - 四者通过 MCP 并行运行，互不冲突
 
 :::tip
-四者可以互补：CodeGraph 适合日常开发中的快速代码探索，CRG 适合代码审查和架构分析，Graphify 适合跨文档类型的知识整合，GitNexus 适合多仓库和平台化场景。更多对比细节请参考[代码图谱工具对比](/guide/advanced/code-graph-tools)。
+四者可以互补：CodeGraph 适合日常开发中的快速代码探索，CRG 适合代码审查和架构分析，Graphify 适合跨文档类型的知识整合，GitNexus 适合多仓库和平台化场景。更多对比细节请参考[代码图谱工具对比](/guide/advanced/code-graph/code-graph-tools)。
 :::
 
 ## 相关资源
@@ -308,9 +308,9 @@ CC-Switch 特别适合在多个 AI 工具之间同步 Graphify 的 MCP 配置—
 
 ## 下一步
 
-- [代码图谱工具对比](/guide/advanced/code-graph-tools) — CodeGraph、CRG、Graphify、GitNexus 四工具详细对比
-- [CodeGraph 代码智能](/guide/advanced/codegraph) — 代码探索工具
-- [Code Review Graph](/guide/advanced/code-review-graph) — 代码审查工具
-- [GitNexus 代码智能平台](/guide/advanced/gitnexus) — 企业级代码智能平台
+- [代码图谱工具对比](/guide/advanced/code-graph/code-graph-tools) — CodeGraph、CRG、Graphify、GitNexus 四工具详细对比
+- [CodeGraph 代码智能](/guide/advanced/code-graph/codegraph) — 代码探索工具
+- [Code Review Graph](/guide/advanced/code-graph/code-review-graph) — 代码审查工具
+- [GitNexus 代码智能平台](/guide/advanced/code-graph/gitnexus) — 企业级代码智能平台
 - [MCP 服务器](/guide/advanced/mcp-servers) — 深入了解 MCP 服务器配置
 - [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理 MCP 服务器和 API Provider

@@ -260,7 +260,7 @@ git 状态就是证据：
 
 ## 相关资源
 
-- [OpenSpec + Superpowers 双层规划](/guide/advanced/openspec-superpowers) — 桥接配置详解
+- [OpenSpec + Superpowers 双层规划](/guide/advanced/sdd/openspec-superpowers) — 桥接配置详解
 - [任务中断与恢复](/guide/advanced/task-interruption-recovery) — 三层持久化和恢复策略
-- [双框架踩坑指南](/guide/advanced/openspec-superpowers-pitfalls) — 7 个典型踩坑及规避方案
+- [双框架踩坑指南](/guide/advanced/sdd/openspec-superpowers-pitfalls) — 7 个典型踩坑及规避方案
 - [工作流故障排除](/guide/advanced/workflow-troubleshooting) — 通用故障诊断与修复

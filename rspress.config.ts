@@ -8,6 +8,9 @@ import ga from 'rspress-plugin-google-analytics';
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
+  route: {
+    exclude: ['superpowers/**/*', 'raw/**/*'],
+  },
   title: 'Claude Code 教程',
   description: '一份由浅入深的 Claude Code 使用指南',
   icon: '/cc-learn-icon.png',

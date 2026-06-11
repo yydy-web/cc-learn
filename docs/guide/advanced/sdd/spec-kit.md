@@ -239,6 +239,6 @@ Spec-Kit 与 CC Learn 文档中介绍的其他工具互补：
 
 ## 下一步
 
-- [OpenSpec 规格驱动](/guide/advanced/openspec) — 了解轻量级的规格驱动方案
+- [OpenSpec 规格驱动](/guide/advanced/sdd/openspec) — 了解轻量级的规格驱动方案
 - [Superpowers 开发工作流](/guide/advanced/superpowers) — 了解 TDD 纪律和代码审查
 - [最佳实践](/tips/best-practices) — 将 Spec-Kit 融入完整开发工作流

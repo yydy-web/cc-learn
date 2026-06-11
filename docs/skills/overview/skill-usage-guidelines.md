@@ -698,6 +698,6 @@ A: 可以组合使用，但要注意优先级：流程类 skills 优先于实施
 ## 参考资源
 
 - [Superpowers 插件](/guide/advanced/superpowers) — 七步工作流详解
-- [OpenSpec 规格驱动开发](/guide/advanced/openspec) — 规格驱动开发
+- [OpenSpec 规格驱动开发](/guide/advanced/sdd/openspec) — 规格驱动开发
 - [Superpowers 技能生态](/skills/workflow/superpowers) — 14 个 Skills 概览
 - [OpenSpec 技能生态](/skills/workflow/openspec) — 规格驱动开发技能

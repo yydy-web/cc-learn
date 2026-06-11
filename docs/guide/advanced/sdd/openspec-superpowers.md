@@ -220,16 +220,16 @@ cd your-project && openspec init
 :::
 
 :::warning
-双框架协同开发时最常见的问题是「两层断裂」——Superpowers 未读取 OpenSpec 的规范文档就开始写代码。务必在启动前确认 design.md 和 specs 已加载。遇到问题请参考[双框架踩坑指南](/guide/advanced/openspec-superpowers-pitfalls)。
+双框架协同开发时最常见的问题是「两层断裂」——Superpowers 未读取 OpenSpec 的规范文档就开始写代码。务必在启动前确认 design.md 和 specs 已加载。遇到问题请参考[双框架踩坑指南](/guide/advanced/sdd/openspec-superpowers-pitfalls)。
 :::
 
 ## 相关资源
 
-- [OpenSpec 规格驱动开发](/guide/advanced/openspec) — OpenSpec 完整文档
+- [OpenSpec 规格驱动开发](/guide/advanced/sdd/openspec) — OpenSpec 完整文档
 - [Superpowers 插件](/guide/advanced/superpowers) — Superpowers 完整文档
 - [任务中断与恢复](/guide/advanced/task-interruption-recovery) — 三层持久化和恢复策略
-- [执行组合策略](/guide/advanced/execution-combinations) — 5 种执行组合详解
+- [执行组合策略](/guide/advanced/sdd/execution-combinations) — 5 种执行组合详解
 - [最佳实践：四阶段工作流](/tips/best-practices) — 更多工具组合场景
-- [双框架踩坑指南](/guide/advanced/openspec-superpowers-pitfalls) — 7 个典型踩坑及规避方案
+- [双框架踩坑指南](/guide/advanced/sdd/openspec-superpowers-pitfalls) — 7 个典型踩坑及规避方案
 - [工作流故障排除](/guide/advanced/workflow-troubleshooting) — 通用故障诊断与修复
 - [Comet 自动化流水线](/guide/advanced/comet) — 一键自动串联（替代手动桥接）

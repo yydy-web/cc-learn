@@ -210,7 +210,7 @@ GitNexus 可以与其他工具组合，但建议"一个常驻 + 一个按需"：
 
 ## 下一步
 
-- [代码图谱工具对比](/guide/advanced/code-graph-tools) — 四工具详细对比和组合建议
-- [CodeGraph 代码智能](/guide/advanced/codegraph) — 日常代码探索工具
-- [Code Review Graph](/guide/advanced/code-review-graph) — 代码审查工具
-- [Graphify 知识图谱](/guide/advanced/graphify) — 多模态知识图谱工具
+- [代码图谱工具对比](/guide/advanced/code-graph/code-graph-tools) — 四工具详细对比和组合建议
+- [CodeGraph 代码智能](/guide/advanced/code-graph/codegraph) — 日常代码探索工具
+- [Code Review Graph](/guide/advanced/code-graph/code-review-graph) — 代码审查工具
+- [Graphify 知识图谱](/guide/advanced/code-graph/graphify) — 多模态知识图谱工具
