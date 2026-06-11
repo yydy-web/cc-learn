@@ -16,5 +16,11 @@
     "label": "前端工具链集成"
   },
   "react-best-practices",
-  "vue-best-practices"
+  "vue-best-practices",
+  "python-best-practices",
+  {
+    "type": "dir",
+    "name": "python-practices",
+    "label": "Python 测试工具链"
+  }
 ]
