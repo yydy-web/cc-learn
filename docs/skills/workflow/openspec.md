@@ -65,5 +65,6 @@ cd your-project && openspec init
 ## 下一步
 
 - [OpenSpec 规格驱动开发（完整文档）](/guide/advanced/openspec) — 安装、配置和 CLI 命令
+- [技能使用指南](/skills/overview/skill-usage-guidelines) — 如何正确使用 Skills
 - [Ralph 自主循环](/skills/workflow/ralph) — 互补的自主实现方案
 - [Superpowers 技能生态](/skills/workflow/superpowers) — 桥接到结构化方法论

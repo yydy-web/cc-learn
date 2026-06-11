@@ -124,11 +124,11 @@ Claude-Mem 提供 4 个 MCP 工具，遵循高效的**三层工作流**模式：
 
 ### 三层工作流
 
-| 层级 | 工具 | 用途 | Token 成本 |
-| ---- | ---- | ---- | ---------- |
-| 1 | `search` | 获取紧凑索引（含 ID） | ~50-100 tokens/条 |
-| 2 | `timeline` | 查看特定观察周围的时间线上下文 | 中等 |
-| 3 | `get_observations` | 按 ID 获取完整详情 | ~500-1,000 tokens/条 |
+| 层级 | 工具               | 用途                           | Token 成本           |
+| ---- | ------------------ | ------------------------------ | -------------------- |
+| 1    | `search`           | 获取紧凑索引（含 ID）          | ~50-100 tokens/条    |
+| 2    | `timeline`         | 查看特定观察周围的时间线上下文 | 中等                 |
+| 3    | `get_observations` | 按 ID 获取完整详情             | ~500-1,000 tokens/条 |
 
 **核心原则**：先用 `search` 浏览索引，用 `timeline` 确认上下文，最后只对相关 ID 调用 `get_observations` 获取详情——实现约 **10 倍 Token 节省**。
 
@@ -142,25 +142,25 @@ Claude-Mem 会通过 MCP 工具自动完成三层检索：
 
 ```typescript
 // 第 1 步：搜索索引
-search(query="authentication bug", type="bugfix", limit=10)
+search((query = 'authentication bug'), (type = 'bugfix'), (limit = 10));
 
 // 第 2 步：查看上下文
-timeline(observation_id=123)
+timeline((observation_id = 123));
 
 // 第 3 步：获取详情
-get_observations(ids=[123, 456])
+get_observations((ids = [123, 456]));
 ```
 
 ### 搜索过滤
 
 `search` 工具支持多种过滤条件：
 
-| 过滤参数 | 说明 | 示例 |
-| -------- | ---- | ---- |
-| `query` | 自然语言查询 | `"数据库迁移失败"` |
-| `type` | 观察类型 | `bugfix`、`decision`、`architecture` |
-| `date` | 时间范围 | `last-7-days` |
-| `project` | 项目名称 | `my-saas-app` |
+| 过滤参数  | 说明         | 示例                                 |
+| --------- | ------------ | ------------------------------------ |
+| `query`   | 自然语言查询 | `"数据库迁移失败"`                   |
+| `type`    | 观察类型     | `bugfix`、`decision`、`architecture` |
+| `date`    | 时间范围     | `last-7-days`                        |
+| `project` | 项目名称     | `my-saas-app`                        |
 
 ## Web Viewer UI
 
@@ -196,11 +196,11 @@ http://localhost:37777
 
 Claude-Mem 支持多语言模式，控制生成的观察记录语言：
 
-| 模式 | 说明 |
-| ---- | ---- |
-| `code` | 默认英文模式 |
+| 模式       | 说明         |
+| ---------- | ------------ |
+| `code`     | 默认英文模式 |
 | `code--zh` | 简体中文模式 |
-| `code--ja` | 日语模式 |
+| `code--ja` | 日语模式     |
 
 语言模式遵循 `code--[lang]` 格式，其中 `[lang]` 是 ISO 639-1 语言代码。中文模式 `code--zh` 已内置，无需额外安装。
 
@@ -270,14 +270,14 @@ Claude-Mem 提供 Beta 频道的实验性功能，包括：
 
 ## 与其他工具的关系
 
-| 方面 | Claude-Mem | [CLAUDE.md](/guide/intermediate/claude-md) | [Claude Code Memory](/guide/intermediate/context-management#记忆系统) | [Serena 内存](/guide/advanced/serena#内存管理) |
-| ---- | ---------- | ------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------- |
-| **定位** | 自动化持久记忆 | 静态项目约定 | 手动记忆片段 | 代码级符号知识 |
-| **自动化** | ✅ 全自动 | ❌ 手动维护 | ❌ 需用户触发 | 部分自动 |
-| **跨会话** | ✅ | ✅ | ✅ | ✅ |
-| **语义检索** | ✅ 向量 + 全文 | ❌ | ❌ | ❌ |
-| **存储位置** | SQLite + ChromaDB | 项目仓库 | `~/.claude/projects/` | `.serena/` |
-| **适用信息** | 会话观察、调试记录、决策历史 | 项目约定、命令、规范 | 用户偏好、反馈 | 代码符号、调用关系 |
+| 方面         | Claude-Mem                   | [CLAUDE.md](/guide/intermediate/claude-md) | [Claude Code Memory](/guide/intermediate/context-management#记忆系统) | [Serena 内存](/guide/advanced/serena#内存管理) |
+| ------------ | ---------------------------- | ------------------------------------------ | --------------------------------------------------------------------- | ---------------------------------------------- |
+| **定位**     | 自动化持久记忆               | 静态项目约定                               | 手动记忆片段                                                          | 代码级符号知识                                 |
+| **自动化**   | ✅ 全自动                    | ❌ 手动维护                                | ❌ 需用户触发                                                         | 部分自动                                       |
+| **跨会话**   | ✅                           | ✅                                         | ✅                                                                    | ✅                                             |
+| **语义检索** | ✅ 向量 + 全文               | ❌                                         | ❌                                                                    | ❌                                             |
+| **存储位置** | SQLite + ChromaDB            | 项目仓库                                   | `~/.claude/projects/`                                                 | `.serena/`                                     |
+| **适用信息** | 会话观察、调试记录、决策历史 | 项目约定、命令、规范                       | 用户偏好、反馈                                                        | 代码符号、调用关系                             |
 
 :::info
 **互补而非替代：** Claude-Mem 与 CLAUDE.md、内置 Memory、Serena 内存各司其职。CLAUDE.md 记录"规则"，内置 Memory 记录"偏好"，Serena 记录"代码结构"，Claude-Mem 记录"经验"——四者可以同时使用。

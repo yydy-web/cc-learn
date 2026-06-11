@@ -9,6 +9,8 @@
   "openspec",
   "openspec-superpowers",
   "openspec-superpowers-pitfalls",
+  "task-interruption-recovery",
+  "execution-combinations",
   "comet",
   "agents-routing",
   "sdd-guide",

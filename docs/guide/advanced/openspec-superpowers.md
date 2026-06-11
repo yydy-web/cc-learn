@@ -227,6 +227,8 @@ cd your-project && openspec init
 
 - [OpenSpec 规格驱动开发](/guide/advanced/openspec) — OpenSpec 完整文档
 - [Superpowers 插件](/guide/advanced/superpowers) — Superpowers 完整文档
+- [任务中断与恢复](/guide/advanced/task-interruption-recovery) — 三层持久化和恢复策略
+- [执行组合策略](/guide/advanced/execution-combinations) — 5 种执行组合详解
 - [最佳实践：四阶段工作流](/tips/best-practices) — 更多工具组合场景
 - [双框架踩坑指南](/guide/advanced/openspec-superpowers-pitfalls) — 7 个典型踩坑及规避方案
 - [工作流故障排除](/guide/advanced/workflow-troubleshooting) — 通用故障诊断与修复
