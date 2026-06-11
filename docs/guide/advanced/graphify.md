@@ -240,23 +240,23 @@ CC-Switch 特别适合在多个 AI 工具之间同步 Graphify 的 MCP 配置—
 无需 Neo4j、无需服务器——完全在本地运行。
 :::
 
-## 与 CodeGraph、Code Review Graph 的对比
+## 与 CodeGraph、Code Review Graph、GitNexus 的对比
 
-[CodeGraph](/guide/advanced/codegraph) 和 [Code Review Graph](/guide/advanced/code-review-graph) 是另外两个基于代码图谱的智能工具。三者都通过 MCP 为 Claude Code 提供代码理解能力，但设计定位和适用场景不同：
+[CodeGraph](/guide/advanced/codegraph)、[Code Review Graph](/guide/advanced/code-review-graph) 和 [GitNexus](/guide/advanced/gitnexus) 是另外几个基于代码图谱的智能工具。四者都通过 MCP 为 Claude Code 提供代码理解能力，但设计定位和适用场景不同：
 
-| 方面           | CodeGraph                    | Code Review Graph                | Graphify                            |
-| -------------- | ---------------------------- | -------------------------------- | ----------------------------------- |
-| **定位**       | 日常代码探索                 | 代码审查和架构分析               | 多模态知识图谱                      |
-| **语言**       | TypeScript (npm)             | Python (pip)                     | Python (pip)                        |
-| **输入类型**   | 代码文件                     | 代码文件                         | 代码 + 文档 + PDF + 图片            |
-| **MCP 工具数** | 10                           | 30                               | MCP 服务器模式                      |
-| **核心能力**   | `codegraph_explore` 一次调用 | `get_minimal_context` ~100 Token | 跨文档知识图谱 + 自然语言查询       |
-| **特色**       | 零配置、框架路由             | Blast-Radius、社区检测、Wiki     | 多模态、意外连接发现、Obsidian 导出 |
-| **Token 优化** | 35% 费用降低                 | 38x-528x Token 节省              | 71.5x Token 节省                    |
-| **社区检测**   | 无                           | Leiden 算法                      | Leiden 算法（via graspologic）      |
-| **可视化**     | 无                           | D3.js 交互式图谱                 | vis.js 交互式 + SVG + GraphML       |
-| **安装方式**   | 独立二进制 / npm             | pip install                      | pip install                         |
-| **最佳场景**   | 日常开发中的快速代码探索     | PR 审查、影响分析、架构文档      | 研究材料整理、跨文档关联发现        |
+| 方面           | CodeGraph                    | Code Review Graph                | Graphify                            | GitNexus                    |
+| -------------- | ---------------------------- | -------------------------------- | ----------------------------------- | --------------------------- |
+| **定位**       | 日常代码探索                 | 代码审查和架构分析               | 多模态知识图谱                      | 工程化代码智能平台          |
+| **语言**       | TypeScript (npm)             | Python (pip)                     | Python (pip)                        | TypeScript (npx)            |
+| **输入类型**   | 代码文件                     | 代码文件                         | 代码 + 文档 + PDF + 图片            | 代码文件                    |
+| **MCP 工具数** | 10                           | 30                               | MCP 服务器模式                      | 13+                         |
+| **核心能力**   | `codegraph_explore` 一次调用 | `get_minimal_context` ~100 Token | 跨文档知识图谱 + 自然语言查询       | `detect_changes` / `api_impact` |
+| **特色**       | 零配置、框架路由             | Blast-Radius、社区检测、Wiki     | 多模态、意外连接发现、Obsidian 导出 | 多仓库、API shape check、平台化 |
+| **Token 优化** | 35% 费用降低                 | 38x-528x Token 节省              | 71.5x Token 节省                    | —                           |
+| **社区检测**   | 无                           | Leiden 算法                      | Leiden 算法（via graspologic）      | 有                          |
+| **可视化**     | 无                           | D3.js 交互式图谱                 | vis.js 交互式 + SVG + GraphML       | Web UI                      |
+| **安装方式**   | 独立二进制 / npm             | pip install                      | pip install                         | npx                         |
+| **最佳场景**   | 日常开发中的快速代码探索     | PR 审查、影响分析、架构文档      | 研究材料整理、跨文档关联发现        | 多仓库、API impact、平台化  |
 
 ### 选型建议
 
@@ -281,14 +281,24 @@ CC-Switch 特别适合在多个 AI 工具之间同步 Graphify 的 MCP 配置—
 - 你想要 Obsidian 或 Neo4j 格式的输出
 - 你正在做研究或知识管理工作
 
+**选择 GitNexus 如果：**
+
+- 你有多仓库系统需要统一管理
+- 你需要 API impact 和 shape check 能力
+- 你在构建企业内部代码智能平台
+- 你有平台团队维护基础设施
+
+**注意许可证：** 商业项目必须先获取 GitNexus 商业授权。
+
 **组合使用：**
 
 - CodeGraph + Graphify：CodeGraph 用于日常代码探索，Graphify 用于研究材料整理
 - CRG + Graphify：CRG 用于代码审查，Graphify 用于将审查笔记与代码关联
-- 三者通过 MCP 并行运行，互不冲突
+- GitNexus：用于多仓库管理和 API impact 分析
+- 四者通过 MCP 并行运行，互不冲突
 
 :::tip
-三者可以互补：CodeGraph 适合日常开发中的快速代码探索，CRG 适合代码审查和架构分析，Graphify 适合跨文档类型的知识整合。更多对比细节请参考[代码图谱工具对比](/guide/advanced/code-graph-tools)。
+四者可以互补：CodeGraph 适合日常开发中的快速代码探索，CRG 适合代码审查和架构分析，Graphify 适合跨文档类型的知识整合，GitNexus 适合多仓库和平台化场景。更多对比细节请参考[代码图谱工具对比](/guide/advanced/code-graph-tools)。
 :::
 
 ## 相关资源
@@ -298,8 +308,9 @@ CC-Switch 特别适合在多个 AI 工具之间同步 Graphify 的 MCP 配置—
 
 ## 下一步
 
-- [代码图谱工具对比](/guide/advanced/code-graph-tools) — CodeGraph、CRG、Graphify 三工具详细对比
+- [代码图谱工具对比](/guide/advanced/code-graph-tools) — CodeGraph、CRG、Graphify、GitNexus 四工具详细对比
 - [CodeGraph 代码智能](/guide/advanced/codegraph) — 代码探索工具
 - [Code Review Graph](/guide/advanced/code-review-graph) — 代码审查工具
+- [GitNexus 代码智能平台](/guide/advanced/gitnexus) — 企业级代码智能平台
 - [MCP 服务器](/guide/advanced/mcp-servers) — 深入了解 MCP 服务器配置
 - [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理 MCP 服务器和 API Provider
