@@ -1,6 +1,6 @@
 ---
 title: 前端开发最佳实践
-description: 使用 Claude Code 进行前端开发的完整指南，涵盖提示词策略、测试、组件开发、工具链集成（ECC、GStack、Superpowers、CodeGraph、Serena）和自动化工作流
+description: 使用 Claude Code 进行前端开发的完整指南，涵盖提示词策略、测试、组件开发、工具链集成（ECC、GStack、Superpowers、CodeGraph、Serena、Chrome DevTools MCP）和自动化工作流
 ---
 
 # 前端开发最佳实践
@@ -220,19 +220,20 @@ claude mcp add context7 -- npx -y @upstash/context7-mcp@latest
 
 ## 工具链集成
 
-除了上述构建工具外，Claude Code 生态还提供了多个辅助工具，可以在前端开发的不同阶段发挥作用。以下介绍五个核心工具在前端项目中的集成方式和典型用法。
+除了上述构建工具外，Claude Code 生态还提供了多个辅助工具，可以在前端开发的不同阶段发挥作用。以下介绍六个核心工具在前端项目中的集成方式和典型用法。
 
-| 工具                                              | 定位             | 前端核心价值                               | 安装依赖    |
-| ------------------------------------------------- | ---------------- | ------------------------------------------ | ----------- |
-| [ECC](/tips/ecc)                                  | 全能增强系统     | 前端专属 Agent 和 Next.js / React Skills   | Node.js     |
-| [Gstack](/guide/advanced/gstack)                  | 虚拟工程团队     | 内置浏览器 QA + 设计审查 + 安全审计        | Bun         |
-| [Superpowers](/guide/advanced/superpowers)        | 结构化开发方法论 | 强制 TDD + 头脑风暴 + 计划驱动开发         | 无（插件）  |
-| [CodeGraph](/guide/advanced/code-graph/codegraph) | 代码知识图谱     | 快速探索组件依赖关系 + 影响分析            | Node.js     |
-| [Graphify](/guide/advanced/code-graph/graphify)   | 多模态知识图谱   | 前端代码 + 设计稿 + 文档的统一图谱         | Python      |
-| [Serena](/guide/advanced/serena)                  | 代码语义工具     | 符号级精确重构（VS Code / JetBrains 增强） | Python (uv) |
+| 工具                                                       | 定位             | 前端核心价值                               | 安装依赖    |
+| ---------------------------------------------------------- | ---------------- | ------------------------------------------ | ----------- |
+| [ECC](/tips/ecc)                                           | 全能增强系统     | 前端专属 Agent 和 Next.js / React Skills   | Node.js     |
+| [Gstack](/guide/advanced/gstack)                           | 虚拟工程团队     | 内置浏览器 QA + 设计审查 + 安全审计        | Bun         |
+| [Superpowers](/guide/advanced/superpowers)                 | 结构化开发方法论 | 强制 TDD + 头脑风暴 + 计划驱动开发         | 无（插件）  |
+| [CodeGraph](/guide/advanced/code-graph/codegraph)          | 代码知识图谱     | 快速探索组件依赖关系 + 影响分析            | Node.js     |
+| [Graphify](/guide/advanced/code-graph/graphify)            | 多模态知识图谱   | 前端代码 + 设计稿 + 文档的统一图谱         | Python      |
+| [Serena](/guide/advanced/serena)                           | 代码语义工具     | 符号级精确重构（VS Code / JetBrains 增强） | Python (uv) |
+| [Chrome DevTools MCP](/guide/advanced/chrome-devtools-mcp) | 浏览器调试       | 实时调试、性能分析、网络监控               | Node.js     |
 
 :::tip
-这六个工具可以组合使用——ECC 提供流程编排，Superpowers 保证开发纪律，CodeGraph 和 Serena 提供代码智能，Graphify 适合设计稿与代码的关联分析，Gstack 负责审查和发布（内置浏览器可直接测试前端应用）。详见[最佳实践](/tips/best-practices)中的四阶段工作流。
+这七个工具可以组合使用——ECC 提供流程编排，Superpowers 保证开发纪律，CodeGraph 和 Serena 提供代码智能，Graphify 适合设计稿与代码的关联分析，Gstack 负责审查和发布（内置浏览器可直接测试前端应用），Chrome DevTools MCP 提供实时浏览器调试能力。详见[最佳实践](/tips/best-practices)中的四阶段工作流。
 :::
 
 ### ECC：前端专属增强
@@ -538,6 +539,47 @@ tools:
 Serena + CodeGraph 是前端大型项目的黄金组合：用 CodeGraph 快速探索组件依赖关系和路由结构，用 Serena 进行精确的符号级重构（重命名组件、移动 Hook、提取公共逻辑）。两者通过 MCP 并行运行，互不冲突。
 :::
 
+### Chrome DevTools MCP：浏览器实时调试
+
+[Chrome DevTools MCP](/guide/advanced/chrome-devtools-mcp) 是 Chrome 团队提供的 MCP 服务器，通过 Chrome DevTools Protocol 连接浏览器，为 Claude Code 提供实时调试能力。
+
+#### 前端调试场景
+
+| 场景       | Chrome DevTools MCP 能力 | 说明                              |
+| ---------- | ------------------------ | --------------------------------- |
+| 实时调试   | 直接修改 CSS/HTML        | 在浏览器中实时查看样式修改效果    |
+| 性能分析   | 测量 Core Web Vitals     | LCP、FID、CLS 等关键性能指标      |
+| 网络调试   | 捕获和分析网络请求       | 查看 API 调用、请求响应、错误状态 |
+| 自动化测试 | 验证页面交互             | 表单提交、按钮点击、页面导航      |
+
+#### 使用示例
+
+```
+> 使用 Chrome DevTools MCP 检查页面上的登录按钮样式
+```
+
+```
+> 测量首页的加载时间，找出最慢的资源
+```
+
+```
+> 监听页面的网络请求，找出失败的 API 调用
+```
+
+#### 安装 Chrome DevTools MCP
+
+```bash
+# 全局安装
+npm install -g chrome-devtools-mcp
+
+# 添加到 Claude Code
+claude mcp add chrome-devtools -- npx chrome-devtools-mcp
+```
+
+:::tip
+Chrome DevTools MCP 特别适合前端开发调试阶段——它可以直接连接到正在运行的开发服务器，实时查看和修改页面样式，无需重启浏览器或等待构建。配合 Gstack 的 `/qa` 命令使用效果最佳：先用 Chrome DevTools MCP 调试样式问题，再用 Gstack 进行完整的 QA 测试。
+:::
+
 ### Spec-Kit：前端规格驱动开发
 
 [Spec-Kit](/guide/advanced/sdd/spec-kit) 是 GitHub 官方的规格驱动开发工具，对前端项目特别有价值——它让你在写 UI 代码之前，先用结构化规格定义页面行为、交互流程和验收标准，避免"边写边改"的低效模式。
@@ -692,7 +734,8 @@ Superpowers + GStack 的 Git 集成工作流：
 3. CodeGraph: codegraph_explore 理解现有路由和组件结构
 4. Superpowers: TDD 驱动实现 → 每个组件先写测试
 5. ECC: typescript-reviewer 审查代码 → security-reviewer 安全审查
-6. Gstack: /qa 在浏览器中测试 → /ship 推送并创建 PR
+6. Chrome DevTools MCP: 实时调试页面样式和交互
+7. Gstack: /qa 在浏览器中测试 → /ship 推送并创建 PR
 ```
 
 #### 场景二：组件库重构（语义驱动）
