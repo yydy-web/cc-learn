@@ -1,11 +1,11 @@
 ---
 title: Chrome DevTools MCP
-description: 使用 Anthropic 官方 MCP 服务器连接 Chrome DevTools Protocol，进行前端开发调试
+description: 使用 ChromeDevTools 团队（Google）提供的 MCP 服务器连接 Chrome DevTools Protocol，进行前端开发调试
 ---
 
 # Chrome DevTools MCP
 
-Chrome DevTools MCP 是 Anthropic 官方提供的 MCP 服务器，通过 Chrome DevTools Protocol 连接浏览器，为 Claude Code 提供实时调试、性能分析和网络监控能力。
+Chrome DevTools MCP 是 ChromeDevTools 团队（Google）提供的 MCP 服务器，通过 Chrome DevTools Protocol 连接浏览器，为 Claude Code 提供实时调试、性能分析和网络监控能力。
 
 ## 概述
 
@@ -23,7 +23,7 @@ Chrome DevTools MCP 解决了前端开发中的几个核心问题：
 ### 全局安装
 
 ```bash
-npm install -g @anthropic-ai/chrome-devtools-mcp
+npm install -g chrome-devtools-mcp
 ```
 
 ### Claude Code 配置
@@ -31,7 +31,7 @@ npm install -g @anthropic-ai/chrome-devtools-mcp
 使用 `claude mcp add` 命令添加到 Claude Code：
 
 ```bash
-claude mcp add chrome-devtools -- npx @anthropic-ai/chrome-devtools-mcp
+claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest
 ```
 
 ### 项目级配置
@@ -43,7 +43,7 @@ claude mcp add chrome-devtools -- npx @anthropic-ai/chrome-devtools-mcp
   "mcpServers": {
     "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "@anthropic-ai/chrome-devtools-mcp"]
+      "args": ["-y", "chrome-devtools-mcp@latest"]
     }
   }
 }
@@ -56,9 +56,7 @@ claude mcp add chrome-devtools -- npx @anthropic-ai/chrome-devtools-mcp
 ```json
 {
   "permissions": {
-    "allow": [
-      "mcp__chrome-devtools__*"
-    ]
+    "allow": ["mcp__chrome-devtools__*"]
   }
 }
 ```
@@ -71,14 +69,16 @@ claude mcp add chrome-devtools -- npx @anthropic-ai/chrome-devtools-mcp
 
 ```bash
 # macOS
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-profile
 
 # Windows
-chrome.exe --remote-debugging-port=9222
+chrome.exe --remote-debugging-port=9222 --user-data-dir=%TEMP%\chrome-profile
 
 # Linux
-google-chrome --remote-debugging-port=9222
+google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-profile
 ```
+
+> **提示**：如果你使用 Chrome 144 或更高版本，可以使用 `--autoConnect` 标志自动连接到 Chrome DevTools Protocol，无需手动指定端口。例如：`google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-profile --autoConnect`
 
 然后在 Claude Code 中使用 MCP 工具连接浏览器。
 
@@ -166,30 +166,30 @@ google-chrome --remote-debugging-port=9222
 
 ### vs Puppeteer MCP
 
-| 特性 | Chrome DevTools MCP | Puppeteer MCP |
-|------|---------------------|---------------|
-| 连接方式 | 连接已打开的浏览器 | 启动新的浏览器实例 |
-| 资源占用 | 轻量 | 较重 |
-| 适用场景 | 实时调试 | 自动化测试 |
-| 官方支持 | Anthropic 官方 | 社区维护 |
+| 特性     | Chrome DevTools MCP | Puppeteer MCP      |
+| -------- | ------------------- | ------------------ |
+| 连接方式 | 连接已打开的浏览器  | 启动新的浏览器实例 |
+| 资源占用 | 轻量                | 较重               |
+| 适用场景 | 实时调试            | 自动化测试         |
+| 官方支持 | ChromeDevTools 团队 | 社区维护           |
 
 ### vs Playwright
 
-| 特性 | Chrome DevTools MCP | Playwright |
-|------|---------------------|------------|
-| 主要用途 | 调试和监控 | 自动化测试 |
-| 浏览器支持 | Chrome/Chromium | 多浏览器 |
-| 集成方式 | MCP 协议 | 独立库 |
-| 学习曲线 | 低 | 中等 |
+| 特性       | Chrome DevTools MCP | Playwright |
+| ---------- | ------------------- | ---------- |
+| 主要用途   | 调试和监控          | 自动化测试 |
+| 浏览器支持 | Chrome/Chromium     | 多浏览器   |
+| 集成方式   | MCP 协议            | 独立库     |
+| 学习曲线   | 低                  | 中等       |
 
 ### vs Gstack
 
-| 特性 | Chrome DevTools MCP | Gstack |
-|------|---------------------|--------|
-| 功能范围 | 专注浏览器调试 | 全面工程团队 |
-| 浏览器集成 | Chrome DevTools Protocol | 内置 Playwright |
-| 附加功能 | 无 | QA、设计审查、安全审计 |
-| 复杂度 | 简单 | 复杂 |
+| 特性       | Chrome DevTools MCP      | Gstack                 |
+| ---------- | ------------------------ | ---------------------- |
+| 功能范围   | 专注浏览器调试           | 全面工程团队           |
+| 浏览器集成 | Chrome DevTools Protocol | 内置 Playwright        |
+| 附加功能   | 无                       | QA、设计审查、安全审计 |
+| 复杂度     | 简单                     | 复杂                   |
 
 ## 最佳实践
 
