@@ -9,3 +9,4 @@ description: 提升 Claude Code 使用效率的实用技巧
 
 - [最佳实践](/tips/best-practices) — 日常使用中的高效技巧和常见模式（含持久记忆策略）
 - [ECC — Claude Code 增强系统](/tips/ecc) — 63 个 Agent、249 个 Skill、Hooks 自动化和安全扫描
+- [Ponytail — 懒惰高级工程师模式](/tips/ponytail) — 只写必要代码，用效率阶梯砍掉过度设计
