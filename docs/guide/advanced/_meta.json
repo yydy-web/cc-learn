@@ -42,6 +42,7 @@
   "claude-mem",
   "context7",
   "serena",
+  "headroom",
   {
     "type": "section-header",
     "label": "多智能体与自动化"
