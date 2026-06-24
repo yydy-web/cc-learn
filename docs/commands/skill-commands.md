@@ -9,22 +9,66 @@ description: Claude Code 第三方技能生态系统的命令参考，涵盖 Sup
 
 ## Superpowers — 现代软件工程最佳实践
 
-| 命令                                          | 说明                               |
-| :-------------------------------------------- | :--------------------------------- |
-| `/superpowers:brainstorming`                  | 结构化需求探索和设计讨论           |
-| `/superpowers:writing-plans`                  | 编写详细的实现计划文档             |
-| `/superpowers:test-driven-development`        | 测试驱动开发，先写测试再实现       |
-| `/superpowers:executing-plans`                | 按计划逐任务执行实现               |
-| `/superpowers:subagent-driven-development`    | 每个任务分配独立子代理执行（推荐） |
-| `/superpowers:dispatching-parallel-agents`    | 并行调度多个代理处理独立任务       |
-| `/superpowers:verification-before-completion` | 完成前验证所有工作正确性           |
-| `/superpowers:systematic-debugging`           | 系统化调试流程                     |
-| `/superpowers:requesting-code-review`         | 请求代码审查                       |
-| `/superpowers:receiving-code-review`          | 处理代码审查反馈                   |
-| `/superpowers:finishing-a-development-branch` | 完成开发分支的收尾工作             |
-| `/superpowers:using-git-worktrees`            | 使用 git worktree 隔离工作         |
-| `/superpowers:writing-skills`                 | 编写新的技能文件                   |
-| `/superpowers:using-superpowers`              | Superpowers 使用指南               |
+Superpowers 的 14 个 Skills 按照开发 Pipeline 的阶段组织，形成严格的接力关系：
+
+### 入口与设计
+
+| 命令                              | 说明                                             |
+| :-------------------------------- | :----------------------------------------------- |
+| `/superpowers:using-superpowers`  | 引导 Skill，自动加载，Superpowers 使用指南       |
+| `/superpowers:brainstorming`      | 结构化需求探索和设计讨论（硬门控：设计未确认前禁止编码） |
+
+### 规划
+
+| 命令                              | 说明                                             |
+| :-------------------------------- | :----------------------------------------------- |
+| `/superpowers:writing-plans`      | 编写详细的实现计划文档，拆分为 2-5 分钟的小任务 |
+
+### 工作区管理
+
+| 命令                              | 说明                                             |
+| :-------------------------------- | :----------------------------------------------- |
+| `/superpowers:using-git-worktrees`| 使用 git worktree 隔离工作，创建独立开发分支     |
+
+### 执行
+
+| 命令                                          | 说明                                             |
+| :-------------------------------------------- | :----------------------------------------------- |
+| `/superpowers:executing-plans`                | 按计划逐任务执行实现                             |
+| `/superpowers:subagent-driven-development`    | 每个任务分配独立子代理执行（推荐，两阶段审查）   |
+| `/superpowers:dispatching-parallel-agents`    | 并行调度多个代理处理独立任务                     |
+
+### 实现与测试
+
+| 命令                              | 说明                                             |
+| :-------------------------------- | :----------------------------------------------- |
+| `/superpowers:test-driven-development` | 测试驱动开发，强制 RED-GREEN-REFACTOR 循环     |
+
+### 调试
+
+| 命令                              | 说明                                             |
+| :-------------------------------- | :----------------------------------------------- |
+| `/superpowers:systematic-debugging`| 四阶段系统化调试流程（复现→根因→修复→防护）     |
+
+### 审查
+
+| 命令                              | 说明                                             |
+| :-------------------------------- | :----------------------------------------------- |
+| `/superpowers:requesting-code-review` | 请求代码审查，对照计划检查代码                 |
+| `/superpowers:receiving-code-review`  | 处理代码审查反馈，鼓励挑战不合理建议           |
+
+### 验证与收尾
+
+| 命令                                          | 说明                                             |
+| :-------------------------------------------- | :----------------------------------------------- |
+| `/superpowers:verification-before-completion` | 完成前验证所有工作正确性（需提供新鲜证据）       |
+| `/superpowers:finishing-a-development-branch` | 完成开发分支的收尾工作（合并/PR/保留/丢弃）      |
+
+### 元技能
+
+| 命令                              | 说明                                             |
+| :-------------------------------- | :----------------------------------------------- |
+| `/superpowers:writing-skills`     | 基于 TDD 方法论创建新的技能文件                   |
 
 详细文档参见 [Superpowers 技能](/guide/advanced/superpowers)
 
