@@ -99,6 +99,38 @@ ANTHROPIC_BASE_URL=http://127.0.0.1:8787 claude
 
 手动模式的好处：你可以随时停代理、换端口、加参数。
 
+### 配合 CC Switch 使用
+
+CC Switch 和 Headroom 都想控制 `ANTHROPIC_BASE_URL`——CC Switch 通过写入配置文件，Headroom 通过设置环境变量或代理。直接让 CC Switch 改成指向 Headroom 是没用的，因为 CC Switch 下次切换 Provider 又会覆盖掉。
+
+**正确做法**：让 Headroom 的 `headroom wrap` 接管启动，它的环境变量优先级比 CC Switch 的配置文件高。CC Switch 继续管 MCP、Skills、Prompt 这些不需要改 API 地址的功能。
+
+```bash
+# 直接用 wrap 启动，env var 会覆盖 CC Switch 的配置文件
+headroom wrap claude
+```
+
+这样 Claude Code 走 Headroom 代理，CC Switch 的 Provider 设置被忽略（但 MCP、Skills 管理不受影响）。
+
+**如果你确实需要通过 CC Switch 切换后端**，不要用 CC Switch 改 `ANTHROPIC_BASE_URL`，而是改 Headroom 的转发目标：
+
+```bash
+# 用 Anthropic
+headroom wrap claude
+
+# 换 DeepSeek —— 改 Headroom 的转发目标，不改 CC Switch
+ANTHROPIC_TARGET_API_URL=https://api.deepseek.com/anthropic headroom wrap claude
+
+# 换其他兼容后端
+ANTHROPIC_TARGET_API_URL=https://your-endpoint headroom wrap claude
+```
+
+换后端时改 `ANTHROPIC_TARGET_API_URL`，不改 `ANTHROPIC_BASE_URL`。CC Switch 的 Provider 切换功能暂时不用——等 Headroom 关了再恢复。
+
+:::tip
+**一句话总结**：CC Switch 管 MCP 和 Skills，Headroom 接管 API 转发。Provider 切换通过 Headroom 的 `ANTHROPIC_TARGET_API_URL` 来换。
+:::
+
 ## 实际效果
 
 用具体例子感受一下压缩做了什么：
@@ -187,7 +219,7 @@ curl http://127.0.0.1:8787/stats
 
 ### 和 CC Switch 会冲突吗？
 
-如果 CC Switch 已经改了 `ANTHROPIC_BASE_URL`，Headroom 会被绕过。需要让 CC Switch 指向 Headroom 的代理地址 `http://127.0.0.1:8787`，再由 Headroom 转发到真正的 LLM。
+两者都想改 `ANTHROPIC_BASE_URL`，直接一起用会冲突。解决方法见上面 [配合 CC Switch 使用](#配合-cc-switch-使用)——让 CC Switch 指向 Headroom 代理，Headroom 再转发到真正的后端。
 
 ### 对电脑性能有影响吗？
 

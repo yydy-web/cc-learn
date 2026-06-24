@@ -43,6 +43,7 @@
   "context7",
   "serena",
   "headroom",
+  "claude-code-obsidian",
   {
     "type": "section-header",
     "label": "多智能体与自动化"
