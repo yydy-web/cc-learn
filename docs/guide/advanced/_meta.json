@@ -5,6 +5,7 @@
   },
   "hooks",
   "mcp-servers",
+  "artifacts",
   "chrome-devtools-mcp",
   "cc-switch",
   "ccstatusline",

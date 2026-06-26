@@ -480,3 +480,94 @@ Superpowers 有判断机制——单文件改动、改配置、简单 bug 修会
 ### /brainstorm 和 Feature Dev 的 Phase 1 有什么区别？
 
 `/brainstorm` 更偏"这个需求到底要做什么"——业务级。Feature Dev Phase 1 更偏"这个功能在代码层面怎么落"——技术级。两者可以串联：`/brainstorm` 确认方向 → Feature Dev 实现。
+
+---
+
+## v6.0 更新日志
+
+> 最新版本：**v6.0.3**（2026-06-18）。v6.0 系列是一次大版本更新——重写了 SDD 审查系统、新增 3 个平台支持、技能词汇去厂商化、安全模型加固。
+
+### 如何更新
+
+```bash
+/plugin update superpowers@claude-plugins-official
+```
+
+更新后重启 Claude Code 即可生效。可以通过 `/brainstorm` 验证——如果能启动脑暴对话就说明更新成功。
+
+### v6.0.3（2026-06-18）— SDD 临时文件迁移
+
+- **SDD 草稿文件从 `.git/` 移到 `.superpowers/sdd/`**。Claude Code 将 `.git/` 视为受保护路径，子 agent 往 `.git/sdd/` 写报告时会被中途拦截。现在任务简报、实现报告、审查 diff 和进度账本统一放在工作树的 `.superpowers/sdd/` 目录（自动 gitignore）。跨 worktree 由共享的 `sdd-workspace` 辅助脚本解析路径。注意：`git clean -fdx` 会删除进度账本，但可以从 `git log` 恢复。
+
+### v6.0.2（2026-06-17）— 安装修复
+
+- **`evals` 子模块不再随插件发布**。此前它导致部分用户安装失败，评测工具链现已拆分到独立仓库。
+- 修复了与子模块相关的安装中断问题。
+
+### v6.0.0（2026-06-16）— 大版本
+
+**核心变化：SDD 审查系统重写**——更便宜、更严格、更难被绕过。评测数据显示：Claude Code 和 Codex 在质量相当的前提下**速度提升约 2 倍，token 消耗减少近 50%**。
+
+#### SDD（子代理驱动开发）重写
+
+| 旧流程 | 新流程 |
+|--------|--------|
+| 每个任务 2 个审查者 | 每个任务 **1 个审查者**，单次返回规格合规 + 代码质量两份判定 |
+| 审查者模型由控制器自由选择 | 每次派发**必须声明模型**，防止静默降级到最贵 tier |
+| 控制器可以"告诉审查者忽略某些问题" | **禁止**压制发现和预判严重度 |
+| 实现报告无结构化证据 | 报告附带**红/绿 TDD 证据**（文件+行号） |
+| 上下文丢失后无法续接 | **进度账本**（progress ledger）支持中断后恢复 |
+| 逐个任务复查 | 末尾追加一次 **全分支终审**（使用最强模型） |
+
+#### 新平台支持（3 个）
+
+Superpowers 现在覆盖 **6 个 AI 编程平台**——Claude Code、Codex、Gemini CLI、Copilot CLI，加上新增的：
+
+- **Kimi Code** — 插件清单 + 安装文档 + 清单测试
+- **Pi** — session-start 扩展，原生注册技能，无需兼容层
+- **Antigravity（`agy`）** — 直接安装插件，启动消息自动引导
+
+#### 技能词汇去厂商化
+
+- 技能中的工具引用从"Claude Code 专用词汇"改为**平台无关表述**
+- 每个平台配套独立工具映射参考文件（`skills/using-superpowers/references/`）
+- `finishing-a-development-branch` 不再硬编码 `gh pr create`，改为厂商中立
+- "Claude Search Optimization" 技能改名为 "Skill Discovery Optimization"
+
+#### Brainstorm 可视化伴侣安全加固
+
+- **每会话密钥**保护所有 HTTP 请求和 WebSocket 连接
+- 文件服务器拒绝符号链接、点文件、路径穿越；密钥文件仅所有者可读
+- 伴侣仅在确实有用时建议，拒绝后不再打扰
+- 服务重启和断线自动恢复——端口和密钥不变，页面自动重连并显示状态指示
+- 空闲超时从 30 分钟延长到 **4 小时**
+- Windows 启动可靠性加固
+
+#### 方案设计（Writing Plans）增强
+
+- 新增 **Global Constraints 块**：绑定所有任务的全局约束
+- 新增 **Interfaces 块**：每个任务标注消耗和产出的接口
+- 新增 **Right-sizing 指导**：控制任务粒度
+
+#### 测试体系重构
+
+- 旧 `tests/` 保留为插件代码测试
+- 新增 `evals/` 子模块（基于 drill 框架）——运行真实的 Claude Code / Codex / Gemini 会话并用 LLM 评判
+
+#### 其他改进
+
+- 全局 worktree 目录从 `~/.config/superpowers/worktrees/` 迁移到项目内
+- OpenCode 操作型工具映射 + 引导缓存测试
+- Cursor 清单精简（移除 `agents` 和 `commands` 条目）
+- 技能编写指南新增"表单 → 失败"匹配表和微测试措辞指导
+
+### 如果你从 v5.x 升级
+
+1. **SDD 流程完全变了**——如果你在用 subagent-driven development，旧的两审查者 + 控制器仲裁流程不再适用，新的单审查者 + 全分支终审模式更快更省
+2. **worktree 路径迁移**——全局 path 下的旧 worktree 已清理，新的在项目本地
+3. **技能引用已去厂商化**——如果你自定义了技能，检查平台相关术语是否还兼容
+4. **`/brainstorm` 伴侣安全性提升**——每次启动会生成会话密钥，首次使用需确认
+
+### 贡献者
+
+v6.0 系列由 11 位贡献者协作完成，主要贡献者：nick、mhat、mattvanhorn。

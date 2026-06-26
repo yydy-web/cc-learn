@@ -1,5 +1,6 @@
 ---
 pageType: home
+description: Claude Code 使用教程——从入门到精通的完整指南，覆盖安装配置、基础操作、高级技巧、Agent 协作、工具链集成和 AI 编程最佳实践
 
 hero:
   name: Claude Code 教程
