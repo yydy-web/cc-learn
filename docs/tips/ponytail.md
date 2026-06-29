@@ -902,6 +902,26 @@ macOS/Linux：`~/.config/ponytail/config.json`
 
 **优先级**：环境变量 `PONYTAIL_DEFAULT_MODE` > 配置文件 `defaultMode` > 内置默认值 `full`。
 
+### 更新
+
+两种方式保持 Ponytail 版本最新：
+
+**自动更新（推荐）**：
+
+```bash
+# 打开插件面板 → 找到 ponytail → 启用 Auto-update
+/plugin
+```
+
+在 Marketplace 里找到 ponytail，打开 Auto-update。之后每次启动 Claude Code 时自动拉最新版本（有新版本时提示 `/reload-plugins`）。
+
+**手动更新**：
+
+```bash
+/plugin marketplace update ponytail
+/reload-plugins
+```
+
 ### 卸载
 
 ```bash
