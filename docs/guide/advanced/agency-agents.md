@@ -107,3 +107,122 @@ brew install --cask msitarzewski/agency-agents/agency-agents
 1. **命令行优于桌面 App** — 选择性安装、脚本自动化，更灵活
 2. **按需安装** — 232 个全装是无意义的噪声，只装你要用的 3-5 个团队
 3. **Agent 文件是可读的 Markdown** — 装完去目录里翻翻，理解每个 Agent 的工作方式
+
+## 基本用法
+
+### 三种激活方式
+
+#### 1. 点名激活（推荐）
+
+最直接的方式——在会话中说"激活 XX 模式"：
+
+```text
+> activate Frontend Developer mode. 帮我用 React + TypeScript 重构这个表单组件。
+```
+
+CC 会加载 Frontend Developer 的完整角色定义，包括：
+- 技术栈偏好（React、TypeScript、CSS Modules）
+- 代码风格要求（可访问性优先、移动端响应式）
+- 交付格式（组件 + 单元测试 + Storybook story）
+
+#### 2. 临时调用
+
+不需要切换当前角色，只是临时请一个专家给意见：
+
+```text
+> 我写完了 API 设计，让 Security Architect 审一下有哪些安全隐患。
+```
+
+当前正在做的事不受影响，Security Architect 以"顾问"身份介入输出审查意见后退出。
+
+#### 3. 项目级常驻
+
+在项目 CLAUDE.md 中声明默认 Agent 团队：
+
+```markdown
+# CLAUDE.md
+
+## 默认 Agent 团队
+- Frontend Developer（React/TypeScript）
+- Reality Checker（测试和质量把关）
+```
+
+之后每次开启会话，CC 自动加载这些角色。适合长期项目，省去每次都手动激活。
+
+### Agent 协作模式
+
+多个 Agent 可以组合使用，三种常见模式：
+
+#### 串联（接力）
+
+一个 Agent 的输出作为下一个的输入：
+
+```text
+> 第一步：activate Backend Architect 设计 API
+> 第二步：activate Frontend Developer，基于上面的 API 实现 UI
+> 第三步：activate Reality Checker，审查完整实现
+```
+
+适合：前后端分离开发、设计→开发→审查的线性流程。
+
+#### 并联（并行）
+
+多个 Agent 同时工作在不同维度：
+
+```text
+> 启动 3 个 Agent 分别审查这段代码：
+> 1. Security Architect — 安全审计
+> 2. Performance Benchmarker — 性能分析
+> 3. Reality Checker — 功能完整性
+```
+
+适合：代码审查、多维度分析。
+
+#### 网状（相互审查）
+
+两个 Agent 互相审查彼此的输出：
+
+```text
+> Frontend Developer 和 UI Designer 互相审查：
+> Designer 审查 Developer 的组件是否符合设计规范
+> Developer 审查 Designer 的交互方案是否可实现
+```
+
+适合：需要跨领域共识的场景。
+
+### 配合 Workflow 脚本
+
+Agency Agents 的角色定义和 Claude Code 的 Workflow 脚本不是替代关系——是组合关系：
+
+```javascript
+// 在 Workflow 脚本中引用 Agent 角色
+export const meta = {
+  name: 'feature-dev-with-roles',
+  description: '带角色分工的功能开发流程',
+}
+
+const backend = await agent(
+  '作为 Backend Architect，设计用户反馈功能的 API 和数据模型',
+  { label: 'backend-design' }
+)
+
+const frontend = await agent(
+  '作为 Frontend Developer，基于以下 API 设计实现 React 组件',
+  { label: 'frontend-implement' }
+)
+
+const review = await agent(
+  '作为 Reality Checker，审查以上前后端实现，列出至少 3 个改进点',
+  { label: 'quality-review' }
+)
+```
+
+:::info
+Workflow 脚本的完整用法见[多智能体工作流](./multi-agent.md)和 [Superpowers 使用教程](./superpowers.md)。
+:::
+
+### 关键要点
+
+1. **点名激活是最常用的方式** — 不需要提前配置，随时切换
+2. **项目级常驻适合长期项目** — 省去重复激活，角色一致性更好
+3. **Agent 协作模式不要过度设计** — 大部分场景串联就够了，并联只在审查阶段用
