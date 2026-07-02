@@ -501,3 +501,66 @@ test('admin can delete user', async ({ page }) => {
 2. **Queen Agent 的价值在合并**——两个 Worker 各自完成容易，但谁保证前后端接口一致？Queen 做这个
 3. **Worker 输出流入共享 memory**——比存文件效率高，HNSW 向量检索可以按语义找（"那个关于权限的接口定义"）
 4. **Swarm + Workers 组合是最强形态**——Swarm 做并行开发，Workers 做自动审查，全程自动化
+
+---
+
+## 常用命令速查
+
+### 基础命令
+
+| 想做什么 | 命令 |
+|---------|------|
+| 初始化 ruflo | `npx ruflo@latest init wizard` |
+| 启动 MCP Server | `claude mcp add ruflo -- npx ruflo@latest mcp start` |
+| 列出所有 Workers | `ruflo workers list` |
+| 开启 Worker | `ruflo workers enable <name>` |
+| 查看 Worker 状态 | `ruflo workers status` |
+| 列出所有 Agent | `ruflo agents list` |
+| 列出可用插件 | `ruflo plugins list` |
+| 安装插件 | `ruflo plugins install <name>` |
+
+### Swarm 命令
+
+| 想做什么 | 命令 |
+|---------|------|
+| 启动分级 Swarm | `ruflo swarm init --topology hierarchical --workers 3` |
+| 启动网状 Swarm | `ruflo swarm init --topology mesh --workers 4` |
+| 查看 Swarm 状态 | `ruflo swarm status` |
+| 停止 Swarm | `ruflo swarm stop` |
+
+### 插件速查
+
+| 分类 | 关键插件 | 干什么 |
+|------|---------|--------|
+| **编排** | ruflo-swarm, ruflo-autopilot, ruflo-workflows | Agent 集群和自动化 |
+| **记忆** | ruflo-agentdb, ruflo-rag-memory | 向量记忆和 RAG |
+| **质量** | ruflo-testgen, ruflo-security-audit, ruflo-aidefence | 测试生成、安全审计、注入防护 |
+| **学习** | ruflo-intelligence, ruflo-goals | SONA 学习模式和目标规划 |
+| **运维** | ruflo-observability, ruflo-cost-tracker | 可观测性和成本追踪 |
+
+---
+
+## 总结
+
+Ruflo 是 Claude Code 的"超频模式"。它不改变 CC 的工作方式——它给 CC 加了四样裸机没有的东西：
+
+| 裸 CC 缺的 | Ruflo 给的 | 一句话 |
+|-----------|-----------|--------|
+| 协同 | Swarms | 多个 Agent 同时干活，不是轮流干活 |
+| 记忆 | AgentDB | 跨会话记住项目知识，不用每次重新描述 |
+| 自动化 | 12 Workers | 审计、测试、文档不用手动触发 |
+| 容错 | 多 LLM 路由 | Anthropic 挂了自动切 GPT |
+
+三个原则：
+
+1. **Workers 优先** — 最直接的价值。开 audit、testgaps、docs 三个就能覆盖 80% 的需求
+2. **Swarm 按需用** — 只有任务天然可并行时才开。3 个文件的代码审查值得并行，一个文件的修改不需要
+3. **Memory 是底层** — 不需要手动操作。AgentDB 自动索引项目知识，跨 Agent 自动共享
+
+:::info 延伸阅读
+- Ruflo 仓库：[github.com/ruvnet/ruflo](https://github.com/ruvnet/ruflo)
+- Ruflo Web UI：[flo.ruv.io](https://flo.ruv.io)（多模型聊天 + MCP 工具调用）
+- Goal Planner：[goal.ruv.io](https://goal.ruv.io)（目标规划前端）
+- Agent 角色库配合使用：[Agency Agents 使用教程](./agency-agents.md)
+- 多 Agent 编排模式：[多智能体工作流](./multi-agent.md)
+:::
