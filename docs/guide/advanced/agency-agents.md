@@ -1011,3 +1011,236 @@ CC 输出（Experiment Tracker 角色）：
 1. **跨职能协作的陷阱是 PM 和设计被跳过** — 开发直接写代码是本能。但 Senior PM 理清需求的 15 分钟，能省开发 2 小时返工
 2. **Experiment Tracker 的价值不在方案本身** — 在于逼你想清楚"上线后怎么验证成功"。没有 Guardrail Metric 的计划是废纸
 3. **四个 Agent 的产出是活的文档** — PRD、交互方案、组件、实验计划可以存到项目 docs/ 目录，新成员入职读一遍就通
+
+### 案例 3：全栈创业 -- idea 到 MVP 的一人军团
+
+**场景**：你有个创业想法——"SaaS 竞品监控"平台，自动追踪竞品的网站变更、定价调整、新功能上线。但你没团队。用 Agency Agents 模拟一个完整的创业团队，从市场验证到 MVP 实现，一个人全搞定。
+
+**为什么选这五个 Agent：**
+
+| Agent | 角色 | 阶段 |
+|-------|------|------|
+| Growth Hacker | 验证 idea 有没有市场 | 市场调研 |
+| Rapid Prototyper | 出 MVP 功能清单和原型 | 产品定义 |
+| Backend Architect | 后端架构（爬虫 + 数据 + API） | 技术实现 |
+| Frontend Developer | 前端界面（仪表盘 + 报告页） | 技术实现 |
+| Reality Checker | 最终审查 | 质量把关 |
+
+#### Step 1：Growth Hacker 验证市场
+
+```text
+用户: activate Growth Hacker mode.
+
+我要做一个"SaaS 竞品监控"平台。核心功能：
+- 自动追踪竞品官网变更（爬虫检测页面变化）
+- 监控竞品定价页的价格调整
+- 追踪竞品社交媒体动态和新功能发布
+
+请从增长和市场的角度分析：
+1. 这个赛道的市场机会和风险
+2. 目标用户画像（谁会为这个买单）
+3. 竞品分析（已有类似产品吗）
+4. MVP 的差异化切入点
+5. 获客策略建议
+```
+
+CC 输出（Growth Hacker 角色，摘要）：
+
+```text
+## SaaS 竞品监控 — 市场分析
+
+### 赛道判断：有机会，但需要差异化
+
+**市场机会：**
+- 全球 SaaS 市场 2026 年预计超 $300B，增长放缓意味着竞争加剧
+- 头部企业（Salesforce、HubSpot）有专职竞品分析团队，中小 SaaS 全靠手动
+- Google Alerts 和 Mention 只覆盖关键字，不做结构化竞品追踪
+
+**目标用户：**
+- 主要：SaaS 产品经理（需要向上汇报竞品动向）
+- 次要：SaaS 市场负责人（需要调整定价和定位策略）
+- 付费意愿：如果替代 2-3 小时/周的手动竞品调研，$29-49/月是合理的
+
+**竞品分析：**
+| 竞品 | 做什么 | 弱点 |
+|------|--------|------|
+| Crayon | 企业级竞品情报（起步 $10K/年） | 太贵，不对中小 SaaS |
+| Kompyte | 竞品追踪和销售情报 | 侧重销售团队，PM 觉得太重 |
+| Visualping | 网页变更监控 | 只管检测，不做竞品分析和报告 |
+| 手动 Google Alerts | 免费 | 噪音太多，无结构化分析 |
+
+**差异化切入点：**
+不做"竞品情报平台"——做**"PM 的竞品雷达"**。定位：自动追踪 → 结构化分析 → 周报推送，$29/月，10 分钟配置。
+
+**获客策略：**
+1. Product Hunt 首发（目标人群集中）
+2. "监控你的前 3 个竞品，免费" — SEO 内容营销 + 个人品牌
+3. SaaS 社区（Indie Hackers, Hacker News）发布免费竞品分析报告引流
+```
+
+#### Step 2：Rapid Prototyper 出 MVP 功能清单
+
+```text
+用户: activate Rapid Prototyper mode.
+
+基于上面的市场分析，出"SaaS 竞品监控"的 MVP 功能清单和用户流程。
+
+约束：
+- 只有一个开发者（我），MVP 必须在 2 周内完成
+- 后端用 Node.js + PostgreSQL，前端用 React + Tailwind
+```
+
+CC 输出（Rapid Prototyper 角色）：
+
+```text
+## 竞品监控 MVP — 功能清单
+
+### 原则：两周能交付，但能用
+
+砍掉所有"nice to have"，只留"用户愿意付费的核心"。
+
+### MVP 功能（V1）
+
+**1. 竞品管理（2 天）**
+- 添加竞品（名称 + 官网 URL + 分类标签）
+- 竞品列表 + 搜索
+- 每个竞品一个详情页
+
+**2. 页面监控（4 天）**
+- 自动抓取竞品定价页、功能页、Blog 首页（可配置 URL）
+- 页面变更检测（文本 diff + 截图 diff）
+- 变更记录时间线
+
+**3. 周报生成（2 天）**
+- 每周自动生成"竞品动态周报"
+- 内容：本周变更摘要 + 变更详情 + 趋势标注
+- 支持邮件推送和在线查看
+
+**4. 用户系统（1 天，用 Clerk/Auth0 不自己写）**
+- 注册/登录
+- 套餐管理（免费版：追踪 3 个竞品）
+
+**5. 支付集成（1 天，用 Stripe Checkout）**
+- 月付 $29
+
+### 不做清单（V2 再说）
+
+| 功能 | 为什么不做 |
+|------|-----------|
+| 社交媒体监控 | 开发量大（需要各平台 API），MVP 先聚焦网站 |
+| AI 分析摘要 | 不确定用户是否真的需要 AI 写摘要，先用规则生成 |
+| 团队协作 | 一个人买就够了，团队版是 V4 的事 |
+| 自定义仪表盘 | 先给固定模板，有了 20 个付费用户再谈自定义 |
+
+### 用户流程
+
+```
+注册（Clerk → 3 秒）
+  ↓
+引导：添加第一个竞品
+  ↓
+配置监控页面（预填常见页面：pricing, features, blog）
+  ↓
+等待首次变更（通常 24-48 小时）
+  ↓
+收到第一封周报邮件 → 回来查看变更详情
+  ↓
+付费（免费额度用完 → Stripe 支付）
+```
+
+### 数据模型草图
+
+```
+Competition
+  id, user_id, name, website, tags, created_at
+
+MonitoredPage
+  id, competition_id, url, page_type, last_content_hash, last_screenshot_url
+
+PageChange
+  id, page_id, detected_at, diff_summary, screenshot_url, is_reviewed
+
+WeeklyReport
+  id, user_id, week_start, summary, sent_at
+```
+```
+
+#### Step 3：Backend Architect + Frontend Developer 并行实现
+
+```text
+用户: 现在同时启动 Backend Architect 和 Frontend Developer，分别实现后端和前端。
+
+先让 Backend Architect 设计：
+- 爬虫调度机制（定时抓取 + 变更检测）
+- API 端点和数据库表结构
+
+再让 Frontend Developer 设计：
+- 竞品管理页（添加、列表、详情）
+- 变更时间线页
+- 周报查看页
+```
+
+（两个 Agent 的详细输出此处省略——模式跟案例 1 相同，只是领域不同。）
+
+#### Step 4：Reality Checker 终审
+
+```text
+用户: activate Reality Checker mode.
+
+审查整个"SaaS 竞品监控" MVP 方案：
+- 市场分析是否经得起推敲
+- MVP 范围是否合理（有没有两周做不完的）
+- 前后端实现是否有遗漏
+- 支付和用户系统是否完整
+```
+
+CC 输出（Reality Checker 角色，摘要）：
+
+```text
+## MVP 审查报告
+
+### 市场分析 — 2 个问题
+
+1. **$29/月定价的依据不够实** — 说"中小 SaaS 愿意付 $29-49/月"，但没有用户访谈数据。建议：先找 5 个目标用户做 15 分钟通话验证。
+2. **"PM 的竞品雷达"定位偏窄** — 如果市场负责人也需要，产品名和页面文案要留弹性。
+
+### MVP 范围 — 1 个风险
+
+**"自动抓取"被严重低估了**。不是调个 axios.get 就完事：
+- 很多网站有 Cloudflare/反爬保护
+- 定价页可能是 JavaScript 渲染的
+- 需要 Playwright/Puppeteer 渲染 + 截图
+- 4 天不够，建议 6 天（砍用户系统的时间来补——用 Clerk 确实 1 天够了）
+
+### 实现遗漏
+
+**爬虫需要队列管理**。不是定时跑一次就行：
+- 竞品越多抓取时间越长 → 需要任务队列（Bull/BullMQ）
+- 抓取失败重试策略（3 次，指数退避）
+- 爬虫 IP 被禁的降级方案（代理池或降频）
+
+### 支付系统遗漏
+
+- Stripe Checkout 只处理付款，不处理订阅管理（续费/取消/发票）
+- 需要 webhook 处理 Stripe 事件（subscription.updated, subscription.deleted）
+- 免费额度用完的拦截点在哪儿？前端和后端都要检查
+```
+
+#### 修正后启动
+
+```text
+用户: 基于上面的审查意见：
+1. 把"自动抓取"的时间估计改为 6 天
+2. 加任务队列（BullMQ）
+3. 补 Stripe webhook 处理
+4. 先做用户访谈再写代码
+
+其他按原计划执行。
+```
+
+### 关键要点
+
+1. **Growth Hacker 在开发前先验证，省的是整个 MVP 的返工** — 需求错了，代码写得再好也是白写
+2. **Rapid Prototyper 的"不做清单"比功能清单更重要** — MVP 的敌人不是能力不足，是想做太多
+3. **Reality Checker 在创业场景尤其关键** — 一个人做所有事，盲区是系统性的。必须有另一个"人"逼你面对被忽视的问题
+4. **这 5 个 Agent 组成的是一个迷你创业公司** — CEO（Growth Hacker）、CPO（Prototyper）、CTO（Backend Architect）、工程师（Frontend Developer）、QA（Reality Checker），一个人操作
