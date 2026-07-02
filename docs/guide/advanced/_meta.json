@@ -7,6 +7,7 @@
   "mcp-servers",
   "artifacts",
   "chrome-devtools-mcp",
+  "figma-mcp",
   "cc-switch",
   "ccstatusline",
   {
@@ -53,6 +54,7 @@
   "multi-agent",
   "automation",
   "ralph",
+  "agency-agents",
   "agents-routing",
   {
     "type": "section-header",
