@@ -1,0 +1,152 @@
+---
+title: Ruflo — Agent 元执行层
+description: Ruflo 为 Claude Code 叠加集群协作、向量记忆、后台工人和自动学习能力——从单 Agent 到 Agent 集群，一个插件搞定
+---
+
+# Ruflo — Agent 元执行层
+
+> Claude Code 是引擎。Ruflo 是涡轮增压——加上集群协作、向量记忆、12 个后台工人、100+ 预制 Agent，让你的 Agent 真正"能干活"。
+
+## 这是什么
+
+[Ruflo](https://github.com/ruvnet/ruflo) 是一个 Agent **元执行层**（meta-harness）。它不替代 Claude Code——它裹在 Claude Code 外面，给它加基础设施：
+
+```
+Claude Code 裸机                    Claude Code + Ruflo
+─────────────────                  ─────────────────────
+一次一个 Agent                      Swarm 集群并行协作
+会话结束记忆丢失                      HNSW 向量记忆，跨会话持久化
+只能手动触发                        12 个后台工人自动触发（审计、优化、补测试……）
+只用 Anthropic 模型                 5 家 LLM 提供商 + 智能路由 + 故障转移
+手动协调任务                        MCP Server + 路由器自动分发
+```
+
+核心公式：**Agent = Model + Harness**。模型产生文本，Harness 提供工具、记忆、协调——让 Agent 真正能做事。
+
+### 跟其他工具的关系
+
+| 工具 | 做什么 | Ruflo 怎么配合 |
+|------|--------|--------------|
+| **Agency Agents** | 预制 Agent 角色库 | Ruflo 的 100+ Agent 可以直接用 Agency Agents 的角色定义 |
+| **Superpowers** | 开发流程编排 | Ruflo 的 Swarm 模式可以并行跑 Superpowers 的 brain→plan→execute 流程 |
+| **Multi-agent Workflow** | Claude Code 原生多 Agent | Ruflo 替代原生编排：自带路由器、共识机制、故障转移 |
+
+## 安装和配置
+
+### 前置条件
+
+- Claude Code 已安装并认证
+- Node.js ≥ 18
+
+### 方式一：完整安装（推荐）
+
+一条命令装全部——CLI、MCP Server、所有插件：
+
+```bash
+# macOS / Linux / WSL
+curl -fsSL https://cdn.jsdelivr.net/gh/ruvnet/ruflo@main/scripts/install.sh | bash
+```
+
+跨平台（含 Windows）：
+
+```bash
+npx ruflo@latest init wizard
+```
+
+安装向导会引导你完成：选 LLM 提供商 → 配置 API Key → 选要装的插件 → 注册 MCP Server。
+
+### 方式二：Claude Code 插件（轻量）
+
+只装 slash commands + Agent 定义，不注册 MCP（功能受限，无 memory/swarm）：
+
+```text
+/plugin marketplace add ruvnet/ruflo
+/plugin install ruflo-core@ruflo
+/plugin install ruflo-swarm@ruflo
+/plugin install ruflo-rag-memory@ruflo
+```
+
+:::warning
+轻量安装**没有** MCP Server——`memory_store`、`swarm_init` 等核心功能不可用。推荐完整安装。
+:::
+
+### MCP Server 注册
+
+完整安装后，注册 MCP Server 让 CC 能调用 ruflo 的工具：
+
+```bash
+claude mcp add ruflo -- npx ruflo@latest mcp start
+```
+
+注册成功后，CC 会话中可用 ~210 个 MCP 工具（跨 5 个服务器组）。
+
+### 安装验证
+
+```text
+> 列出 ruflo 可用的后台工人
+```
+
+如果 CC 能列出 12 个 worker（audit、optimize、testgaps 等），安装成功。
+
+## 核心概念
+
+Ruflo 有四个核心概念。不需要全懂——按需了解。
+
+### Agents
+
+Ruflo 自带 100+ 预制 Agent（coder、tester、reviewer、architect、security 等）。跟 Agency Agents 的角色定义互补——Ruflo 管执行基础设施，角色库管领域知识。
+
+```text
+> 用 ruflo 的 security-audit Agent 扫描 src/ 目录
+```
+
+### Swarms（集群）
+
+多个 Agent 组成集群——分级、网状、自适应三种拓扑：
+
+| 拓扑 | 工作方式 | 适用场景 |
+|------|---------|---------|
+| **分级** | Queen Agent 分配任务给 Worker | 大型项目分解 |
+| **网状** | Agent 对等通信，无中心节点 | 多维度代码审查 |
+| **自适应** | 根据任务复杂度自动选拓扑 | 不确定用哪个时 |
+
+```text
+> 启动 swarm，用 3 个 Agent 从安全、性能、功能三个维度审查 src/
+```
+
+Swarms 带共识机制（Raft / Byzantine / Gossip），一个 Agent 挂了不影响整体。
+
+### Memory（向量记忆）
+
+HNSW 索引的向量数据库（AgentDB），跨会话持久化。裸 CC 会话结束记忆就没了——Ruflo 的 memory 能：
+
+- 记住项目架构决策
+- 记住之前的 bug 修复模式
+- 跨 Agent 共享上下文
+
+实测数据：N=20k 时检索比暴力搜索快 ~1.9 倍。
+
+### Background Workers（后台工人）
+
+12 个自动触发的后台进程，不用你手动调用：
+
+| Worker | 做什么 | 触发条件 |
+|--------|--------|---------|
+| **audit** | 安全审计 | 代码变更 |
+| **optimize** | 性能优化建议 | 复杂度 > 阈值 |
+| **testgaps** | 检测未覆盖分支 | 覆盖率变化 |
+| **docs** | 自动补文档 | 新增 public API |
+| **deps** | 依赖更新检查 | 定时 |
+| **lint** | 代码风格检查 | 代码变更 |
+| **format** | 自动格式化 | 保存文件 |
+| **migrate** | 数据库迁移检查 | Schema 变更 |
+| **observe** | 可观测性报告 | 定时 |
+| **cost** | Token 成本追踪 | 会话结束 |
+| **backup** | 关键文件备份 | 定时 |
+| **health** | 系统健康检查 | 定时 |
+
+### 关键要点
+
+1. **完整安装优于轻量安装** — 少了 MCP Server，swarm 和 memory 的核心功能都用不了
+2. **不需要全懂四个概念** — 先用 Agents + Workers。Swarm 有需要再开，Memory 是自动的
+3. **Workers 是 Ruflo 最被低估的功能** — 12 个自动触发的后台进程，等于 12 个不占会话上下文的微型 Agent
