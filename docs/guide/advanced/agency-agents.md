@@ -1244,3 +1244,139 @@ CC 输出（Reality Checker 角色，摘要）：
 2. **Rapid Prototyper 的"不做清单"比功能清单更重要** — MVP 的敌人不是能力不足，是想做太多
 3. **Reality Checker 在创业场景尤其关键** — 一个人做所有事，盲区是系统性的。必须有另一个"人"逼你面对被忽视的问题
 4. **这 5 个 Agent 组成的是一个迷你创业公司** — CEO（Growth Hacker）、CPO（Prototyper）、CTO（Backend Architect）、工程师（Frontend Developer）、QA（Reality Checker），一个人操作
+
+## 进阶技巧
+
+### 自定义 Agent
+
+所有的 Agent 都是 Markdown 文件。Fork 仓库，新建 `.md` 文件就能创建自己的 Agent：
+
+```markdown
+# engineering/engineering-golang-developer.md
+
+## 身份
+你是一个 Go 后端开发专家，擅长高并发系统和微服务架构。
+
+## 核心原则
+- 错误永远显式处理，不用 panic
+- 优先用标准库，不轻易引入第三方依赖
+- 每个 handler 必须有 context 超时
+
+## 工作流程
+1. 理解需求 → 画数据流图
+2. 定义 interface
+3. 实现 + 测试（table-driven tests）
+4. Benchmark（如果涉及热路径）
+
+## 交付标准
+- 每个 package 有 README
+- 每个 exported function 有 doc comment
+- 测试覆盖率 ≥ 80%
+- 有性能测试结果
+```
+
+然后运行安装脚本即可使用。
+
+### Agent 组合模式速查
+
+| 模式 | 适用场景 | 示例 |
+|------|---------|------|
+| **串联（接力）** | 线性流程，上一阶段输出是下一阶段输入 | API 设计 → UI 实现 → 测试审查 |
+| **并联（并行）** | 多维度独立分析 | 三 Agent 同时审查：安全 + 性能 + 功能 |
+| **网状（审查）** | 需要跨领域共识 | 前端和设计互相审查 |
+| **星型轮询** | 以核心文档为轴，多 Agent 轮流审 | PRD 写好 → PM 审 → 技术审 → 安全审 → 回到 PM |
+| **双轨** | 两条独立路径同时推进 | 前后端同时开发，API 文档做契约 |
+
+### 常见坑
+
+**1. Agent 切换太频繁**
+
+❌ 每句话换一个 Agent：
+```text
+activate PM → 分析需求
+activate Designer → 设计布局
+activate Developer → 写一行代码
+activate PM → 回去确认需求
+```
+
+✅ 一个阶段用一个 Agent，阶段完成后再切：
+```text
+activate PM，完成整个需求分析（包括追问和修正）
+→ activate Developer，基于完整的需求文档实现
+```
+
+**2. 同时激活太多 Agent**
+
+❌ 一次性激活 5 个 Agent："你同时是 PM、设计师、前端、后端和 QA"
+→ 角色混乱，输出介于几个角色之间，哪个都不专业
+
+✅ 顺序激活，或最多 2 个互补角色并行（如前后端并行开发需要两个 Agent）
+
+**3. 角色提示词太长**
+
+Agency Agents 的 Agent 定义文件每个都有 100-200 行。如果在一个会话中频繁切换，上下文会快速占满。
+
+✅ 在长会话中，只在使用某个 Agent 时才激活。用完可以"解除激活"（虽然 CC 不会真的卸载，但后续对话不再受角色约束）
+
+**4. 不读 Agent 文件就用**
+
+每个 Agent 的 Markdown 文件里有很多有用的信息——工作流程、checklist、常见陷阱。激活 Agent 后花 1 分钟让它列出自己的核心原则，比直接用效果更好：
+
+```text
+> activate Frontend Developer mode.
+> 先告诉我你的核心工作原则和交付标准。
+```
+
+---
+
+## 常用 Agent 速查表
+
+### 按场景选 Agent
+
+| 我要做什么 | 推荐 Agent | 属于哪个团队 |
+|-----------|-----------|------------|
+| 写 React/Vue 组件 | Frontend Developer | engineering |
+| 设计 REST API | Backend Architect | engineering |
+| 优化数据库查询 | Database Optimizer | engineering |
+| CI/CD 部署 | DevOps Engineer | engineering |
+| 安全审计 | Security Architect / Pentest Specialist | security |
+| 性能优化 | Performance Benchmarker | testing |
+| 功能测试 | Reality Checker / Evidence Collector | testing |
+| API 测试 | API Tester | testing |
+| 写 PRD | Senior Product Manager | product |
+| UI/UX 设计 | UI Designer / UX Researcher | design |
+| SEO/SEM | SEO Specialist / PPC Strategist | marketing |
+| 数据分析 | Analytics Reporter | marketing |
+| 项目排期 | Sprint Prioritizer / Jira Steward | project-management |
+| 财务模型 | Financial Analyst / FP&A Specialist | finance |
+| 游戏开发 | Unity Developer / Unreal Developer / Godot Developer | game-development |
+| GIS/地图 | GIS Analyst / Web GIS Developer | gis |
+| MCP Server 开发 | MCP Builder | specialized |
+
+### 推荐默认团队组合
+
+| 项目类型 | 最少配置（2-3 个 Agent） | 完整配置（5+ 个 Agent） |
+|---------|------------------------|----------------------|
+| 前端项目 | Frontend Developer + UI Designer + Reality Checker | + Performance Benchmarker + Accessibility Tester |
+| 后端项目 | Backend Architect + Reality Checker | + Security Architect + Database Optimizer + DevOps Engineer |
+| 全栈项目 | Frontend Developer + Backend Architect + Reality Checker | + UI Designer + Security Architect + DevOps Engineer |
+| 创业 MVP | Growth Hacker + Rapid Prototyper + Frontend Developer + Backend Architect + Reality Checker | + UI Designer + Experiment Tracker + Financial Analyst |
+| 内容/SEO | Content Creator + SEO Specialist + Analytics Reporter | + Social Media Manager + Email Marketing Specialist |
+
+---
+
+## 总结
+
+Agency Agents 的核心价值不是"有 232 个 Agent"——而是**把专业知识固化了**。不再依赖每次手动写"你是一个 XX 专家"的提示词，不再担心每次输出的角色漂移。
+
+三个原则：
+
+1. **按需装载** — 项目只用 3-5 个 Agent，不要因为 232 个都可用就全装
+2. **阶段切换** — 一个阶段一个 Agent，阶段完成再切下一个。写代码时就别让 PM Agent 插嘴
+3. **审查必不可少** — 不管哪个场景，永远留一个 Reality Checker 在最后。一个人的盲区需要另一个"人"来找
+
+:::info 延伸阅读
+- Agency Agents 仓库：[github.com/msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)
+- 多 Agent 编排模式：[多智能体工作流](./multi-agent.md)
+- Workflow 脚本编写：[Superpowers 使用教程](./superpowers.md)
+:::
