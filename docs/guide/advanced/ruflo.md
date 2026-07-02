@@ -257,3 +257,247 @@ describe('applyDiscount', () => {
 2. **Worker 不占上下文**——跟 Claude Code 会话并行运行，不用切换出去跑检查再切回来
 3. **testgaps 最有价值**——重构后最怕没发现漏测试，这个 Worker 自动帮你盯
 4. **报告路径固定** `.ruflo/reports/`——建议加到 `.gitignore`，但 CI 里可以选装
+
+### 案例 2：Swarm 协同开发 — 一个功能，三个 Agent 并行
+
+**场景**：要开发"用户权限管理"功能。需求已经明确了——你需要三个 Agent 同时开工：一个写后端、一个写前端、一个做安全审查。传统 CC 要串行，Ruflo 用 Swarm 并行。
+
+**跟案例 1 的区别**：案例 1 用 Workers 做自动化检查和报告，是"后台触发"模式。案例 2 用 Swarm 做并行开发和审查，是"主动协作"模式。
+
+#### Step 1：启动 Swarm
+
+```text
+用户: 启动 ruflo swarm，用分级拓扑，1 个 Queen + 2 个 Worker Agent。
+
+任务：实现"用户权限管理"功能。
+
+需求摘要：
+- RBAC 模型（管理员 / 编辑者 / 查看者 三个角色）
+- 权限检查中间件（Express）
+- 前端权限组件（按钮显隐、路由守卫）
+- 权限配置管理页面
+
+Queen Agent：分解任务、协调进度、合并输出
+Worker-A（backend-agent）：Express 中间件 + API + 数据库迁移
+Worker-B（frontend-agent）：权限组件 + 管理页面 + 路由守卫
+
+每个 Agent 完成后自动触发 audit worker 审查。
+```
+
+CC 输出：
+
+```text
+Swarm 已启动。拓扑：分级（Queen + 2 Worker）。
+
+Queen 正在分解任务：
+1. Worker-A（backend）: 数据库 Schema → 中间件 → API 端点 → 集成测试
+2. Worker-B（frontend）: 权限 HOC → 路由守卫 → 管理页面 → 组件测试
+
+依赖：前端依赖后端 API 格式。Worker-A 先输出 API 契约 → Worker-B 基于契约开发。
+
+工作时，3 个 Agent 的输出流入共享 memory，互相可见。
+```
+
+#### Step 2：Worker-A 完成后端
+
+```text
+[Worker-A] 开始实现后端...
+```
+
+输出摘要：
+
+```typescript
+// src/middleware/rbac.ts
+type Role = 'admin' | 'editor' | 'viewer'
+
+interface Permission {
+  resource: string    // 'users', 'projects', 'settings'
+  action: 'create' | 'read' | 'update' | 'delete'
+}
+
+const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
+  admin: [
+    { resource: '*', action: 'create' },
+    { resource: '*', action: 'read' },
+    { resource: '*', action: 'update' },
+    { resource: '*', action: 'delete' },
+  ],
+  editor: [
+    { resource: 'projects', action: 'create' },
+    { resource: 'projects', action: 'read' },
+    { resource: 'projects', action: 'update' },
+    { resource: 'users', action: 'read' },
+  ],
+  viewer: [
+    { resource: 'projects', action: 'read' },
+    { resource: 'users', action: 'read' },
+  ],
+}
+
+export function requirePermission(resource: string, action: Permission['action']) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const userRole: Role = req.user?.role
+    if (!userRole) return res.status(401).json({ error: '未认证' })
+
+    const permissions = ROLE_PERMISSIONS[userRole]
+    const hasPermission = permissions.some(
+      p => (p.resource === '*' || p.resource === resource) && p.action === action
+    )
+
+    if (!hasPermission) return res.status(403).json({ error: '无权限' })
+    next()
+  }
+}
+```
+
+```typescript
+// src/routes/users.ts
+router.get('/users', requirePermission('users', 'read'), async (req, res) => {
+  const users = await User.findAll()
+  res.json(users)
+})
+
+router.delete('/users/:id', requirePermission('users', 'delete'), async (req, res) => {
+  await User.destroy({ where: { id: req.params.id } })
+  res.status(204).send()
+})
+```
+
+```text
+[Worker-A] 后端完成。
+- 数据迁移：roles 表 + user_roles 关联表
+- 中间件：requirePermission（通用，支持通配符）
+- API 端点：users CRUD（含权限保护）
+- 测试：12 个用例，覆盖率 89%
+- 输出 API 契约到共享 memory
+
+[ruflo worker: audit]
+✅ 无安全漏洞。权限中间件未发现绕过路径。
+```
+
+#### Step 3：Worker-B 并行开发前端
+
+Worker-B 读取共享 memory 中的 API 契约，开始实现：
+
+```tsx
+// components/WithPermission.tsx
+import { useAuth } from '@/hooks/useAuth'
+
+interface WithPermissionProps {
+  resource: string
+  action: 'create' | 'read' | 'update' | 'delete'
+  children: React.ReactNode
+  fallback?: React.ReactNode
+}
+
+export function WithPermission({
+  resource, action, children, fallback = null
+}: WithPermissionProps) {
+  const { hasPermission } = useAuth()
+  const allowed = hasPermission(resource, action)
+  return allowed ? <>{children}</> : <>{fallback}</>
+}
+
+// 使用示例
+<WithPermission resource="users" action="delete">
+  <Button variant="danger">删除用户</Button>
+</WithPermission>
+```
+
+```tsx
+// components/RouteGuard.tsx
+import { Navigate } from 'react-router-dom'
+import { useAuth } from '@/hooks/useAuth'
+
+export function RouteGuard({
+  resource, action, children
+}: { resource: string; action: string; children: React.ReactNode }) {
+  const { hasPermission, isAuthenticated } = useAuth()
+
+  if (!isAuthenticated) return <Navigate to="/login" />
+  if (!hasPermission(resource, action)) return <Navigate to="/403" />
+  return <>{children}</>
+}
+```
+
+```text
+[Worker-B] 前端完成。
+- WithPermission 组件（声明式权限控制）
+- RouteGuard（路由级权限）
+- 权限管理页面（角色 → 权限矩阵的 CRUD）
+- 测试：8 个用例
+```
+
+#### Step 4：Queen 合并 + 审查
+
+```text
+[Queen] Worker-A 和 Worker-B 均已完成。正在合并...
+
+合并结果：
+- 前端权限组件调用后端 API 端点 ✅（契约匹配）
+- 前端 admin 角色的全权限映射正确 ✅
+- 后端 middleware 的 resource 通配符 `*` 前端已对应 ✅
+
+[Queen] 触发 audit + testgaps workers 审查...
+
+[ruflo worker: audit]
+⚠️ Medium: 前端 WithPermission 的 fallback 渲染 null 不够友好
+→ 建议：未授权时显示"你没有此操作的权限"提示
+
+[ruflo worker: testgaps]
+⚠️ 缺少：前端权限配置页面的 E2E 测试
+→ 建议：验证普通用户看不到"删除用户"按钮，管理员能看到
+```
+
+#### Step 5：根据审查补漏
+
+```text
+用户: 修 audit 和 testgaps 的两个问题。
+1. WithPermission 的 fallback 默认值渲染 <PermissionDenied /> 组件
+2. 补前端 E2E 测试
+```
+
+CC 修正后：
+
+```tsx
+// 修正 WithPermission 的 fallback
+export function WithPermission({
+  resource, action, children, fallback = <PermissionDenied resource={resource} action={action} />
+}: WithPermissionProps) {
+  // ...
+}
+
+// 新增 PermissionDenied 组件
+function PermissionDenied({ resource, action }: { resource: string; action: string }) {
+  return (
+    <div className="permission-denied" role="alert">
+      <Icon name="lock" />
+      <p>你没有{action === 'read' ? '查看' : '操作'}{resource}的权限</p>
+      <Button variant="link" onClick={() => window.history.back()}>返回</Button>
+    </div>
+  )
+}
+```
+
+```typescript
+// tests/e2e/permissions.spec.ts
+test('viewer cannot see delete button', async ({ page }) => {
+  await loginAs('viewer')
+  await page.goto('/users')
+  await expect(page.getByRole('button', { name: '删除用户' })).not.toBeVisible()
+})
+
+test('admin can delete user', async ({ page }) => {
+  await loginAs('admin')
+  await page.goto('/users')
+  await page.getByRole('button', { name: '删除用户' }).first().click()
+  await expect(page.getByText('用户已删除')).toBeVisible()
+})
+```
+
+### 关键要点
+
+1. **Swarm 不是银弹——独立任务才并行**。前后端共享 API 契约时天然并行，有强依赖的任务还是串行
+2. **Queen Agent 的价值在合并**——两个 Worker 各自完成容易，但谁保证前后端接口一致？Queen 做这个
+3. **Worker 输出流入共享 memory**——比存文件效率高，HNSW 向量检索可以按语义找（"那个关于权限的接口定义"）
+4. **Swarm + Workers 组合是最强形态**——Swarm 做并行开发，Workers 做自动审查，全程自动化
