@@ -3,6 +3,20 @@ title: Ruflo — Agent 元执行层
 description: Ruflo 为 Claude Code 叠加集群协作、向量记忆、后台工人和自动学习能力——从单 Agent 到 Agent 集群，一个插件搞定
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Ruflo 工作流，能独立通过集群协作、向量记忆和后台工人构建自动化开发管线
+
+**🚀 AI 能力提升：** 多智能体、自动化工作流
+:::
+
 # Ruflo — Agent 元执行层
 
 > Claude Code 是引擎。Ruflo 是涡轮增压——加上集群协作、向量记忆、12 个后台工人、100+ 预制 Agent，让你的 Agent 真正"能干活"。
@@ -11,7 +25,7 @@ description: Ruflo 为 Claude Code 叠加集群协作、向量记忆、后台工
 
 [Ruflo](https://github.com/ruvnet/ruflo) 是一个 Agent **元执行层**（meta-harness）。它不替代 Claude Code——它裹在 Claude Code 外面，给它加基础设施：
 
-```
+```text
 Claude Code 裸机                    Claude Code + Ruflo
 ─────────────────                  ─────────────────────
 一次一个 Agent                      Swarm 集群并行协作
