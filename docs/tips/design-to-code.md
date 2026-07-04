@@ -3,6 +3,20 @@ title: Axure + Playwright + 前端 + Superpowers 实战
 description: 用 Axure 原型做设计源、Playwright 做桥梁验证、前端实现后回测、Superpowers 串联全流程——从设计稿到上线的完整闭环
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★☆☆☆ | ★★★★☆ |
+| 📦 产品 | ★★★★☆ | ★★★☆☆ |
+
+**🎯 学习产出：** 掌握 Axure 原型到 Playwright 验证再到前端实现的完整流程，能独立建立设计稿→代码的可验证闭环
+
+**🚀 AI 能力提升：** 设计→代码
+:::
+
 # Axure + Playwright + 前端 + Superpowers 实战
 
 > 设计师出 Axure 原型，Playwright 把它变成可验证的活文档，Superpowers 带着前端团队把它做成真的——一个都不掉链子。
