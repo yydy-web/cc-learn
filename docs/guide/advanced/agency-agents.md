@@ -3,6 +3,20 @@ title: Agency Agents — 232 个预制 AI Agent 角色库
 description: 将 Agency Agents 安装到 Claude Code，一句话切换到专业角色——前端开发、后端架构、安全审查等 232 个领域专家随叫随到
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★★☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★★ |
+| 📦 产品 | ★★★☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Agency Agents 使用，能独立让 232 个预制专业角色辅助多维度开发和审查
+
+**🚀 AI 能力提升：** 多智能体、项目协作
+:::
+
 # Agency Agents — 预制 AI Agent 角色库
 
 > 232 个专业 Agent 角色，16 个行业领域，一个命令装到 Claude Code 里。不是让你写提示词——是让你指挥团队。
@@ -322,7 +336,7 @@ CC 输出（Backend Architect 角色）：
 
 ### 状态流转
 
-```
+```text
 pending → in_progress → replied → closed
   ↓                       ↓
 closed                  closed
@@ -1134,7 +1148,7 @@ CC 输出（Rapid Prototyper 角色）：
 
 ### 用户流程
 
-```
+```text
 注册（Clerk → 3 秒）
   ↓
 引导：添加第一个竞品
@@ -1150,7 +1164,7 @@ CC 输出（Rapid Prototyper 角色）：
 
 ### 数据模型草图
 
-```
+```text
 Competition
   id, user_id, name, website, tags, created_at
 
@@ -1162,7 +1176,6 @@ PageChange
 
 WeeklyReport
   id, user_id, week_start, summary, sent_at
-```
 ```
 
 #### Step 3：Backend Architect + Frontend Developer 并行实现
