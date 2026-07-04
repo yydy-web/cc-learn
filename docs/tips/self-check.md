@@ -3,6 +3,20 @@ title: AI 生成代码自检 — 把准确率从 70% 推到 90%
 description: AI 生成的代码普遍只有 70-80% 正确率，靠五步自检法 + 7 个工具 + 5 套提示词模板把准确率稳定推到 90% 以上
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★☆☆☆ |
+| 🧪 测试 | ★★★★☆ | ★★☆☆☆ |
+| 📦 产品 | ★★★☆☆ | ★★★☆☆ |
+
+**🎯 学习产出：** 掌握 AI 自检机制，能独立用五步法 + 经验库系统把 AI 生成代码的准确率从 70% 稳定推到 90% 以上
+
+**🚀 AI 能力提升：** 代码审查、调试诊断
+:::
+
 # AI 生成代码自检
 
 > AI 生成的代码普遍能到 70-80% 正确率——剩下的 10-20% 靠自己补齐。
@@ -875,3 +889,7 @@ echo "✅ 经验库初始化完成：.claude/lessons/"
 - [Ponytail](/tips/ponytail) — 懒惰高级工程师模式，减少 80-94% 过度设计
 - [Superpowers](/tips/superpowers) — 5 大核心工作流（含 verification-before-completion）
 - [代码审查](/skills/workflow/superpowers) — 5 维度分级审查
+
+:::tip 功能串联
+自检是上线前的最后一道防线。五步法应嵌入到 [多 Agent 协同工作流程](/tips/multi-agent-tips) 的阶段 6，配合 [Superpowers](/tips/superpowers) 的 `verification-before-completion` 和 Stop hook 形成自动化验证链。经验库系统与 [错误自愈 Skill](/tips/mistake-log-skill) 互补——经验库记录"该检查什么"，错误自愈记录"不该做什么"。
+:::
