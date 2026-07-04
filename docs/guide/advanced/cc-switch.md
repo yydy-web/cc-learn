@@ -1,7 +1,20 @@
 ---
 title: CC-Switch 配置管理
-description: 使用 CC-Switch 管理多个 API Provider、MCP 服务器和 Skills，简化 Claude Code 配置
+description: 掌握 CC-Switch 配置管理工具，可视化管理多个 API Provider 切换、MCP 服务器配置和 Skills 安装，告别手动编辑 JSON 配置文件
 ---
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★☆☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★☆☆☆ |
+| 📦 产品 | ★★★☆☆ | ★★☆☆☆ |
+
+**🎯 学习产出：** 掌握 CC Switch 的配置和使用，能灵活切换 AI 模型和行为模式
+
+**🚀 AI 能力提升：** 上下文管理、技能扩展
+:::
 
 # CC-Switch 配置管理
 
