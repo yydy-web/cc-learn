@@ -3,6 +3,20 @@ title: Comet 自动化流水线
 description: Comet 将 OpenSpec 与 Superpowers 串联为五阶段自动化流水线，一键安装三大工具并提供断点续接能力
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Comet 的五阶段自动化流水线（Open → Design → Build → Verify → Archive），能独立使用 Comet 一键安装 OpenSpec + Superpowers 并配置自动桥接，支持断点续接
+
+**🚀 AI 能力提升：** 自动化工作流
+:::
+
 # Comet 自动化流水线
 
 OpenSpec 管 **WHAT**（做什么），Superpowers 管 **HOW**（怎么做），但两者不会自动衔接——在 `/opsx:apply` 执行时，Superpowers 的 TDD 等 Skills 不会自动触发，需要手动配置。Comet 解决的就是这个问题。
