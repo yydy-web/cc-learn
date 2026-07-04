@@ -1,7 +1,21 @@
 ---
 title: Feature Dev — 7 阶段引导式功能开发
-description: Feature Dev 是 Anthropic 官方插件，用 7 阶段工作流 + 3 种并行 Agent 确保每个功能从需求到交付都经过结构化流程
+description: Feature Dev 是 Anthropic 官方插件（89K+ 安装），用 7 阶段工作流 + 3 种并行 Agent 确保每个功能从需求到交付都经过结构化流程
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★☆☆ |
+| 📦 产品 | ★★★★☆ | ★★★☆☆ |
+
+**🎯 学习产出：** 掌握用 Claude Code 开发功能的流程，能独立用 7 阶段工作流确保每个功能从需求到交付不跑偏
+
+**🚀 AI 能力提升：** 代码生成、自动化工作流
+:::
 
 # Feature Dev — 7 阶段引导式功能开发
 
@@ -376,3 +390,14 @@ Superpowers /code-review → 最终审查
 ### 和直接用 Claude Code 有什么区别？
 
 直接用的风险是方向跑偏——AI 写完你才发现不对。Feature Dev 在动手前把方向确认了两遍（探索现有代码 + 方案对比）。
+
+## 相关页面
+
+- [Superpowers](/tips/superpowers) — 工程纪律流程（头脑风暴 + TDD + 审查）
+- [Ponytail](/tips/ponytail) — 效率过滤，压住过度设计
+- [最佳实践](/tips/best-practices) — 四阶段工作流完整指南
+- [多 Agent 协同工作技巧](/tips/multi-agent-tips) — parallel/pipeline 模式
+
+:::tip 功能串联
+Feature Dev 是**功能开发流程**工具，关注从需求到交付的结构化实现。它和 [Superpowers](/tips/superpowers)（工程纪律）互补：Feature Dev 管"怎么做对"，Superpowers 管"怎么做不偷懒"。推荐组合：Superpowers `/brainstorm` 定方向 → Feature Dev 7 阶段结构化实现 → Superpowers `/code-review` 最终审查。
+:::
