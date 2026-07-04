@@ -3,6 +3,20 @@ title: Bug 调试技巧 — 技能组合拳
 description: Claude Code 系统化调试实战——从复现到根因修复的 4 阶段流程，配合 systematic-debugging、root-cause-tracing、LSP 诊断等技能组合使用
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★★★ | ★★★☆☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★☆ |
+
+**🎯 学习产出：** 掌握 Claude Code 调试方法和技巧，能独立用 4 阶段流程 + 5 种技能组合拳定位并修复各类 bug
+
+**🚀 AI 能力提升：** 调试诊断
+:::
+
 # Bug 调试技巧 — 技能组合拳
 
 > 不是"试试改这里看看行不行"——是复现 → 隔离 → 假设 → 验证 → 修复，每一步有证据。
@@ -272,3 +286,7 @@ root-cause-tracing:
 - [Loop 工程](/tips/loop-engineering) — `/loop` 跑 N 次直到复现间歇性 bug
 - [代码图谱](/guide/advanced/code-graph/code-graph-tools) — codegraph 调用链追踪
 - [AI 生成代码自检](/tips/self-check) — 五步自检法
+
+:::tip 功能串联
+调试的起点是 [Superpowers](/tips/superpowers) 的 `systematic-debugging` 技能（自动激活），终点是 `verification-before-completion` 的强制验证。日常调试推荐组合：`systematic-debugging`（根因追溯） + `root-cause-tracing`（深层 bug） + `/code-review`（修复后审查）。遇到间歇性 bug 用 [/loop 工程](/tips/loop-engineering) 跑 N 次直到复现。
+:::
