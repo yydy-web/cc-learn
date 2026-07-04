@@ -3,6 +3,20 @@ title: 代码图谱工具对比
 description: CodeGraph、Code Review Graph、Graphify、GitNexus 四工具的全面对比——定位、能力、差异与兼容性分析
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★☆☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★☆☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★☆ |
+
+**🎯 学习产出：** 了解 CodeGraph、Code Review Graph、Graphify、GitNexus 四工具的定位、能力、差异与兼容性，能独立根据场景选择最优工具或组合，避免工具选型中的常见陷阱
+
+**🚀 AI 能力提升：** 上下文管理、跨文件重构
+:::
+
 # 代码图谱工具对比
 
 Claude Code 生态中有四个主要的代码图谱工具：**CodeGraph**、**Code Review Graph**（CRG）、**Graphify** 和 **GitNexus**。它们都使用 tree-sitter 解析代码、通过 MCP 协议为 Claude Code 提供智能，但设计哲学和适用场景各不相同。本文从定位、能力、差异和兼容性四个维度进行详细对比。
