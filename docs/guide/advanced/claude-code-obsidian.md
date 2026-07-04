@@ -3,6 +3,20 @@ title: Claude Code + Obsidian 集成
 description: 通过 MCP 让 Claude Code 读写 Obsidian 笔记，搜索知识库、整理笔记、批量操作一气呵成
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★☆☆☆ | ★★★★☆ |
+| 📦 产品 | ★★★☆☆ | ★★★☆☆ |
+
+**🎯 学习产出：** 掌握 Obsidian 集成，能独立让 Claude Code 读写笔记库实现知识管理与自动化
+
+**🚀 AI 能力提升：** 上下文管理、技能扩展
+:::
+
 # Claude Code + Obsidian 集成
 
 > 你的笔记库就是 Claude 的上下文。
@@ -198,3 +212,10 @@ MCP 插件的写操作 Claude 会问你确认。特别重要的笔记建议用 G
 ### 和 Claude Code 的其他插件冲突吗？
 
 不冲突。MCP 插件是 Obsidian 侧的东西，不影响 Claude Code 的正常编程功能。你在 vault 目录启动 Claude Code 时，它既能操作代码也能操作笔记。
+
+## 下一步
+
+- [MCP 服务器](/guide/advanced/mcp-servers) — 了解 MCP 服务器配置原理
+- [Claude-Mem 持久记忆](/guide/advanced/claude-mem) — 跨会话的自动化记忆系统
+- [自定义技能](/skills/overview/custom-skills) — 创建和管理自定义 Skills
+- [技巧与最佳实践](/tips/best-practices) — 更多高效使用技巧
