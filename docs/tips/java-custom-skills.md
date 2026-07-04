@@ -3,6 +3,20 @@ title: Java 自定义 Skills 参考
 description: Java/Spring Boot 项目的自定义 Skills（SKILL.md）编写指南，包含 API 端点生成、Service 审查、数据库迁移审查等多个完整示例
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★★☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★★ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Java 自定义 Skills 编写方法，能独立创建团队专属的 SKILL.md 实现开发规范自动化
+
+**🚀 AI 能力提升：** 技能扩展
+:::
+
 # Java 自定义 Skills 参考
 
 自定义 Skills 是将团队的 Java 开发知识沉淀为可复用 SKILL.md 文件的最佳方式。本文提供多个完整的 Java/Spring Boot Skills 示例，可直接复制使用或根据团队约定修改。
