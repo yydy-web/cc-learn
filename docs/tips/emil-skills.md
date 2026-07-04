@@ -3,6 +3,20 @@ title: Emil Design Skills
 description: Emil Kowalski 的设计工程 Skills——让 Claude Code 写出"感觉对"的 UI，不再用 ease-in 和 scale(0)
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★☆☆☆ | ★★★★☆ |
+| 📦 产品 | ★★★★☆ | ★★★☆☆ |
+
+**🎯 学习产出：** 掌握 Emil 设计工程技能套件，能独立写出符合动效最佳实践的 UI 代码并通过 review-animations 审查
+
+**🚀 AI 能力提升：** 设计→代码
+:::
+
 # Emil Design Skills
 
 > 你的动画用 `ease-in`，按钮从 `scale(0)` 弹出来，Toast 用 keyframe 写了 40 行。Emil 看了一眼，全删了。
