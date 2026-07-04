@@ -3,6 +3,20 @@ title: Headroom — 给你的 Claude Code 省 token
 description: Headroom 在本地自动压缩发给 LLM 的内容，省 60-95% token，一行命令接入，不影响回答质量
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★☆☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★☆☆ |
+| 📦 产品 | ★★★☆☆ | ★★★☆☆ |
+
+**🎯 学习产出：** 掌握上下文余量管理，能独立通过 Headroom 压缩 token 消耗 60-95%
+
+**🚀 AI 能力提升：** 上下文管理
+:::
+
 # Headroom — 给你的 Claude Code 省 token
 
 > 装完即忘。打开 stats 的时候才发现省了一半。
@@ -230,3 +244,10 @@ curl http://127.0.0.1:8787/stats
 两个方法：
 1. `curl http://127.0.0.1:8787/stats` 看实时统计
 2. 月底对比 Anthropic 账单（开了 Headroom 的月份 vs 没开的月份）
+
+## 下一步
+
+- [CC-Switch 配置管理](/guide/advanced/cc-switch) — 管理多工具环境变量和 MCP 配置
+- [上下文管理](/guide/intermediate/context-management) — Token 管理与上下文优化策略
+- [Claude-Mem 持久记忆](/guide/advanced/claude-mem) — 跨会话的自动化记忆系统
+- [技巧与最佳实践](/tips/best-practices) — 更多高效使用技巧
