@@ -3,6 +3,20 @@ title: Code Review Graph
 description: 使用 Code Review Graph 构建审查导向的代码图谱，实现 38x-528x 的 Token 节省
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★★☆ | ★★★☆☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★☆ |
+
+**🎯 学习产出：** 掌握 Code Review Graph 的安装、图谱构建和 30 个 MCP 工具的使用方法，能独立使用 Blast-Radius 分析和变更风险评分进行高质量代码审查
+
+**🚀 AI 能力提升：** 代码审查
+:::
+
 # Code Review Graph
 
 Code Review Graph（CRG）是一个本地优先的代码审查图谱工具，专为 AI 代码审查优化。它使用 tree-sitter 解析代码库，构建包含函数、类、导入、调用关系和测试的结构化图谱，通过 MCP 协议为 Claude Code 提供精准的审查上下文，实现 **38x-528x 的 Token 节省**（中位数约 82x）。
