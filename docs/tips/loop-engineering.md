@@ -3,6 +3,20 @@ title: Loop 工程 — 自主循环工作流
 description: Claude Code 的 /loop、/goal、/schedule 命令让 Agent 自主循环执行任务，从定时触发到条件达成，含 20+ 实战命令示例和 7 大设计原则
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★★☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★★ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握循环工程模式，能独立设计安全护栏完备的自主循环任务，从定时监控到条件驱动的全自动工作流
+
+**🚀 AI 能力提升：** 自动化工作流、多智能体
+:::
+
 # Loop 工程 — 自主循环工作流
 
 > "我不再手动提示 Claude 了。我写循环，让循环去提示 Claude。" —— Boris Cherny, Claude Code 创始人
@@ -374,3 +388,7 @@ Agent 在循环间会失忆——文件不会。
 - [hooks](/guide/advanced/hooks) — Stop hook 实现自动验证
 - [loop-engineering (GitHub)](https://github.com/maxmilian/loop-engineering) — 7 大设计原则来源
 - [awesome-agent-loops (GitHub)](https://github.com/serenakeyitan/awesome-agent-loops) — 社区实战命令合集
+
+:::tip 功能串联
+Loop 工程与 [多 Agent 协同](/tips/multi-agent-tips) 的 Workflow 脚本互补：Workflow 脚本适合"步骤明确的批量任务"（一次跑完），Loop 工程适合"需要反复迭代直到达标"（循环到达标）。调试中遇到间歇性 bug，用 `/loop` 跑 N 次测试直到复现，配合 [调试技巧](/tips/debugging) 的 `reproducible-test-case` 技能效果更好。
+:::
