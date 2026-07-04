@@ -3,6 +3,20 @@ title: Java 集成工作流详解
 description: 从代码探索到发布的五阶段 Java/Spring Boot 开发工作流，深度集成 ECC、Gstack、Superpowers、CodeGraph、Graphify、Serena、Spec-Kit 和 Context7
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★★☆ | ★★★☆☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★☆ |
+
+**🎯 学习产出：** 掌握 Java 集成工作流，能独立完成从代码探索到发布的五阶段全流程开发
+
+**🚀 AI 能力提升：** 自动化工作流、调试诊断
+:::
+
 # Java 集成工作流详解
 
 本文档将 Java/Spring Boot 开发拆解为**探索分析、规划规格、TDD 实现、审查测试、发布自动化**五个阶段，完整展示如何将 ECC、Gstack、Superpowers、CodeGraph、Graphify、Serena、Spec-Kit 和 Context7 这 8 个核心工具串联成一条端到端的开发工作流。每个阶段都有明确的输入产出和对应的主力工具，前后阶段通过结构化产物（依赖图、规格文档、测试报告）无缝衔接。
