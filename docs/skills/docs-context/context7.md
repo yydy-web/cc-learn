@@ -1,7 +1,21 @@
 ---
 title: Context7 文档驱动 Skills
-description: Context7 的 Skills 管理 CLI 和实时文档注入——搜索、安装、推荐和生成 Skills
+description: Context7 的 Skills 管理 CLI 和实时文档注入——搜索、安装、推荐和 AI 生成 Skills 的完整指南
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★☆☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★☆ |
+
+**🎯 学习产出：** 掌握 Context7 实时文档注入和 Skills 管理，能独立配置 MCP 并搜索安装社区 Skills
+
+**🚀 AI 能力提升：** 上下文管理、技能扩展
+:::
 
 # Context7 文档驱动 Skills
 
