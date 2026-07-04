@@ -3,6 +3,20 @@ title: Vue 开发最佳实践
 description: 使用 Claude Code 进行 Vue 3 + TypeScript 开发的完整指南，涵盖提示词策略、组件测试、Pinia 状态管理、VueUse 组合式函数和代码审查
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★★☆ | ★★★☆☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Vue 3 开发最佳实践，能独立用 Claude Code 进行 Composition API 组件开发、Pinia 状态管理和 VueUse 集成
+
+**🚀 AI 能力提升：** 代码生成、跨文件重构
+:::
+
 # Vue 开发最佳实践
 
 Vue 3 的 Composition API 和 `<script setup>` 语法简洁且类型友好，Claude Code 对 Vue 生态有良好的支持。本文专注于 Vue 3 + TypeScript 项目的最佳实践，包括组件开发、测试、状态管理、路由、组合式函数、代码审查和推荐的社区 Skills。
