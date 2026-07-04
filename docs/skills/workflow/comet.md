@@ -1,7 +1,21 @@
 ---
 title: Comet 技能生态
-description: Comet 五阶段自动化流水线的 Skills 体系，一键串联 OpenSpec 与 Superpowers
+description: Comet 五阶段自动化流水线的 Skills 体系详解——一键串联 OpenSpec 与 Superpowers，用守卫脚本确保严格流程
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Comet 工作流，能独立串联 OpenSpec 和 Superpowers 构建自动化开发流水线
+
+**🚀 AI 能力提升：** 自动化工作流
+:::
 
 # Comet 技能生态
 
