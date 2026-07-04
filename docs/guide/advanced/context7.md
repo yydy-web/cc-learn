@@ -3,6 +3,20 @@ title: Context7 实时文档
 description: 使用 Context7 为 Claude Code 注入最新的库文档，避免 API 幻觉和过时代码
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★☆☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★☆ |
+
+**🎯 学习产出：** 掌握 Context7 实时文档查询，能独立为 Claude Code 注入最新库文档避免 API 幻觉
+
+**🚀 AI 能力提升：** 上下文管理、技能扩展
+:::
+
 # Context7 实时文档
 
 Context7 是 Upstash 推出的实时文档平台，为 LLM 和 AI 编程助手提供最新的、版本特定的库文档和代码示例。它解决了 LLM 依赖过时训练数据导致的 API 幻觉、过时代码示例和错误配置问题。
@@ -120,7 +134,7 @@ MCP 模式下，Context7 为 Claude Code 提供 2 个工具：
 
 ### 工作流程
 
-```
+```text
 1. 用户: "用 Next.js 15 的 Server Actions 实现表单"
 2. Claude Code 调用 resolve-library-id → 找到 /vercel/next.js
 3. Claude Code 调用 query-docs → 获取 Next.js 15 Server Actions 文档
