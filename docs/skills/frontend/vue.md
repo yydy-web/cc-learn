@@ -3,6 +3,20 @@ title: Vue 生态 Skills
 description: Vue 3 开发推荐 Skills——Composition API、Pinia 状态管理、Vite 构建和 VueUse 组合式函数
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Vue 开发技能，能独立搭建完整的 Vue 3 开发 Skills 栈
+
+**🚀 AI 能力提升：** 代码生成、设计→代码
+:::
+
 # Vue 生态 Skills
 
 Vue 3 的 Composition API 和 `<script setup>` 语法简洁且类型友好，Claude Code 对 Vue 生态有良好的支持。以下 Skills 覆盖 Vue 3 开发的完整工具链。
