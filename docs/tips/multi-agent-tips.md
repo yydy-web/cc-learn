@@ -3,6 +3,20 @@ title: 多 Agent 协同工作技巧
 description: 从需求到交付的多 Agent 协同实战，覆盖 Workflow 脚本模式、SDD 并行实现、审查验证全流程，含 Java 和 Vue 完整示例
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★★☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★★ |
+| 📦 产品 | ★★★☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握多智能体协作技巧，能独立用 parallel/pipeline/judge panel 等模式编排复杂任务
+
+**🚀 AI 能力提升：** 多智能体、项目协作
+:::
+
 # 多 Agent 协同工作技巧
 
 > 不是"能并行就并行"——是知道什么时候并行、什么时候串行、什么时候根本不需要多 Agent。
@@ -895,3 +909,7 @@ Adversarial Verify           [✅ done]  2026-06-26 11:45
 - [AGENTS 全局路由协议](/guide/advanced/agents-routing) — 多框架冲突时的路由
 - [Superpowers](/tips/superpowers) — Superpowers 完整指南（v6.0 更新日志）
 - [CC-Switch](/guide/advanced/cc-switch) — Claude Code 多实例切换
+
+:::tip 功能串联
+多 Agent 协同的起点是 [Superpowers](/tips/superpowers) 的 `/brainstorm`（需求分析）和 `/write-plan`（方案设计），中间靠 [SDD](/guide/advanced/sdd/sdd-guide) 的 task-brief 驱动并行实现，终点是 [AI 生成代码自检](/tips/self-check) 的阶段 6 验收。注意阶段 6 的多 Agent "缝隙"验证——Agent 各自的单元测试全绿不代表集成没问题。
+:::
