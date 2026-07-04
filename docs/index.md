@@ -17,6 +17,10 @@ hero:
     src: /cc-learn-icon.png
     alt: Claude Code
 features:
+  - title: 🎯 学习路线
+    details: 按你的角色选择路径——产品、前端、后端、测试、零基础，每条路线只学你需要的
+    icon: 🧭
+    link: /guide/learning-path/
   - title: 基础篇
     details: 从零开始学习 Claude Code，掌握安装、配置、基本对话和文件操作
     icon: 🚀
@@ -26,9 +30,9 @@ features:
     icon: 🔧
     link: /guide/intermediate/codebase-navigation
   - title: 高级篇
-    details: 探索 Hooks、MCP 服务器、多智能体工作流和自动化 CI/CD
+    details: 探索 Hooks、MCP 服务器、Hermes 多智能体协作和自动化 CI/CD
     icon: ⚡
-    link: /guide/advanced/hooks
+    link: /guide/advanced/hermes
   - title: 技能
     details: 创建自定义 Skills、浏览技能市场、使用 Superpowers、Gstack 等专业开发工作流
     icon: 🧩

@@ -1,5 +1,12 @@
 [
   {
+    "type": "dir",
+    "name": "learning-path",
+    "label": "学习路线",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
     "type": "dir-section-header",
     "name": "beginner",
     "label": "基础篇"

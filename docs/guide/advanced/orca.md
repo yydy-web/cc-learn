@@ -5,7 +5,7 @@ description: 深入掌握 Orca 核心功能：Worktree 隔离、多 Agent 并行
 
 # Orca 完整教程
 
-如果你已经通过 [Orca 快速上手](/guide/intermediate/orca-quickstart) 完成了基础配置，这篇文章将带你深入 Orca 的四个核心功能。
+如果你已经通过 [Orca 快速上手](/guide/advanced/orca-quickstart) 完成了基础配置，这篇文章将带你深入 Orca 的四个核心功能。
 
 ## 为什么用 Orca
 

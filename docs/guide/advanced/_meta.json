@@ -51,7 +51,9 @@
     "label": "多智能体与自动化"
   },
   "orca",
+  "orca-quickstart",
   "multi-agent",
+  "hermes",
   "automation",
   "ralph",
   "agency-agents",
