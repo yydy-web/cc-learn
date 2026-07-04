@@ -1,7 +1,21 @@
 ---
 title: Ponytail — 懒惰高级工程师模式
-description: Ponytail 让 Claude Code 以"懒惰高级工程师"思维工作，只写必要代码，用效率阶梯砍掉 80-94% 的过度设计
+description: Ponytail 让 Claude Code 以"懒惰高级工程师"思维工作，通过 7 级效率阶梯砍掉 80-94% 的过度设计，减少代码量、提升开发速度、降低维护成本
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★☆☆☆☆ |
+| 🧪 测试 | ★★★★☆ | ★☆☆☆☆ |
+| 📦 产品 | ★★★☆☆ | ★★☆☆☆ |
+
+**🎯 学习产出：** 掌握 Ponytail 懒人高效模式，能独立用效率阶梯砍掉项目中 80% 以上的过度设计代码
+
+**🚀 AI 能力提升：** 代码生成、上下文管理
+:::
 
 # Ponytail — 懒惰高级工程师模式
 
@@ -1937,3 +1951,17 @@ out.toString()              // "page=2&sort=name&tags=js&tags=css"
 | URL 参数 | 1 依赖 | 0 依赖 | — |
 
 **核心规律**：大多数任务的标准库/原生平台方案就足够了。AI 默认输出的是"过度设计的安全版本"——把所有可能需要的都写上了。Ponytail 把这层剥掉，留下刚好能跑的部分。
+
+---
+
+## 相关页面
+
+- [Caveman — 极致 Token 省流模式](/tips/caveman) — Ponytail + Caveman 组合拳
+- [最佳实践](/tips/best-practices) — 日常开发技巧和四阶段工作流
+- [AI 生成代码自检](/tips/self-check) — 用 `/ponytail-review` 检查过度设计
+- [Feature Dev — 7 阶段引导式功能开发](/tips/feature-dev) — 官方功能开发流程
+- [Superpowers](/tips/superpowers) — 工程化开发流程
+
+:::tip 功能串联
+Ponytail 关注**代码效率**——只写必要的代码。它覆盖工作效率维度，与 [Superpowers](/tips/superpowers)（工程纪律维度）和 [ECC](/tips/ecc)（企业级全家桶）互补叠加。日常组合推荐：Ponytail `full`（效率过滤） + Superpowers TDD（纪律约束） + `/ponytail-review`（交付前检查）。
+:::
