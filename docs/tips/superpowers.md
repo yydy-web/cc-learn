@@ -1,7 +1,21 @@
 ---
 title: Superpowers — 工程化开发流程
-description: Superpowers 用 5 大核心工作流（头脑风暴→方案设计→TDD→调试→审查）把资深工程师的工作方式固化为 Claude Code 技能库
+description: Superpowers 用 5 大核心工作流（头脑风暴→方案设计→TDD→调试→审查）把资深工程师的工作方式固化为 Claude Code 技能库，187K GitHub Stars
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★☆ |
+| 📦 产品 | ★★★☆☆ | ★★★★☆ |
+
+**🎯 学习产出：** 掌握 Superpowers 技能体系，能独立用 5 大核心工作流构建从需求分析到代码审查的完整开发闭环
+
+**🚀 AI 能力提升：** 技能扩展、自动化工作流
+:::
 
 # Superpowers — 工程化开发流程
 
@@ -571,3 +585,15 @@ Superpowers 现在覆盖 **6 个 AI 编程平台**——Claude Code、Codex、Ge
 ### 贡献者
 
 v6.0 系列由 11 位贡献者协作完成，主要贡献者：nick、mhat、mattvanhorn。
+
+## 相关页面
+
+- [多 Agent 协同工作技巧](/tips/multi-agent-tips) — Superpowers SDD 工作流与 Workflow 脚本结合
+- [Feature Dev](/tips/feature-dev) — 官方功能开发插件（与 Superpowers 互补）
+- [Bug 调试技巧](/tips/debugging) — systematic-debugging 4 阶段详解
+- [Ponytail](/tips/ponytail) — 效率过滤层，叠加到 Superpowers 工作流
+- [ECC](/tips/ecc) — 企业级全家桶（更大规模的选择）
+
+:::tip 功能串联
+Superpowers 是工程纪律工具——管"流程对不对"。它覆盖开发纪律维度，与 [Ponytail](/tips/ponytail)（效率维度）和 [Feature Dev](/tips/feature-dev)（功能开发维度）互补叠加。推荐组合：Superpowers `/brainstorm` + TDD → Feature Dev 7 阶段实现 → Superpowers `/code-review` + Ponytail `/ponytail-review` 双重审查。
+:::
