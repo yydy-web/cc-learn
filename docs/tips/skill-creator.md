@@ -3,6 +3,20 @@ title: Skill Creator — 构建自定义技能
 description: Skill Creator 是 Anthropic 官方元技能，用对话方式引导你创建自己的 Claude Code Skill，从描述到打包全自动
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★★☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★★ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Skill Creator 自定义技能开发全流程，能独立通过自然语言创建并打包可复用的 Claude Code Skill
+
+**🚀 AI 能力提升：** 技能扩展
+:::
+
 # Skill Creator — 构建自定义技能
 
 > 你不需要学 YAML 语法——描述你要什么，它帮你写 SKILL.md。
