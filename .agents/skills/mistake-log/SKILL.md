@@ -34,15 +34,19 @@ context: 当时在做什么任务
 # 错误标题（一句话）
 
 ## 错误
+
 我做了什么/输出了什么。
 
 ## 纠正
+
 用户告诉我应该怎么做。
 
 ## 规则
+
 下次遇到类似场景时，应该遵守的规则。
 
 ## 适用场景
+
 什么时候需要检查这条规则。
 ```
 
@@ -55,6 +59,7 @@ context: 当时在做什么任务
 3. 在回复的开头列出本次要注意的规则
 
 示例：
+
 ```
 本次任务涉及 API 开发。从备忘录中检出 3 条相关规则：
 1. API 响应格式：{ code, data, message }
@@ -76,13 +81,13 @@ context: 当时在做什么任务
 用户：这个接口返回的不是 { code, data, message } 格式，改成统一的
 
 AI：已修正。同时追加备忘录：
-    `.claude/mistakes/api-response-format.md`
-    下次 API 开发会自动检查此规则。
+`.claude/mistakes/api-response-format.md`
+下次 API 开发会自动检查此规则。
 
 ---下次对话---
 
 用户：加一个删除用户的接口
 
 AI：<扫描备忘录 → 检出 api-response-format.md>
-    将使用统一格式 { code, data, message }。
-    代码如下...
+将使用统一格式 { code, data, message }。
+代码如下...

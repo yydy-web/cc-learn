@@ -6,11 +6,11 @@ description: 测试工程师专属 Claude Code 学习路径——自动化测试
 :::info {title="📊 页面导航"}
 **适用角色与上手难度**
 
-| 角色 | 推荐度 | 上手难度 |
-|------|--------|----------|
-| 🛠️ 开发 | ★★★☆☆ | ★★☆☆☆ |
-| 🧪 测试 | ★★★★★ | ★★☆☆☆ |
-| 📦 产品 | ★★★☆☆ | ★★★☆☆ |
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★☆☆  | ★★☆☆☆    |
+| 🧪 测试 | ★★★★★  | ★★☆☆☆    |
+| 📦 产品 | ★★★☆☆  | ★★★☆☆    |
 
 **🎯 学习产出：** 掌握测试场景下的 Claude Code 使用技巧，能高效生成测试用例和自动化测试脚本
 
@@ -64,14 +64,14 @@ npm install -g agent-browser
 
 ## 阶段一：安装与基础（~30 分钟）
 
-| 顺序 | 内容 | 要点 |
-|------|------|------|
-| 1 | [什么是 Claude Code](/guide/beginner/what-is-claude-code) | 理解它能帮你写测试，不能帮你"想测试什么" |
-| 2 | [安装配置](/guide/beginner/installation) | `npm install -g @anthropic-ai/claude-code` |
-| 3 | [快速开始](/guide/quick-start) | 在测试项目里跑通 |
-| 4 | [第一次对话](/guide/beginner/first-conversation) | 学会把源码和现有测试一起拖进去 |
-| 5 | [文件操作](/guide/beginner/file-operations) | 批量读源代码，生成对应测试文件 |
-| 6 | [权限管理](/guide/beginner/permissions) | 测试可以自动跑——权限放宽松但要设边界 |
+| 顺序 | 内容                                                      | 要点                                       |
+| ---- | --------------------------------------------------------- | ------------------------------------------ |
+| 1    | [什么是 Claude Code](/guide/beginner/what-is-claude-code) | 理解它能帮你写测试，不能帮你"想测试什么"   |
+| 2    | [安装配置](/guide/beginner/installation)                  | `npm install -g @anthropic-ai/claude-code` |
+| 3    | [快速开始](/guide/quick-start)                            | 在测试项目里跑通                           |
+| 4    | [第一次对话](/guide/beginner/first-conversation)          | 学会把源码和现有测试一起拖进去             |
+| 5    | [文件操作](/guide/beginner/file-operations)               | 批量读源代码，生成对应测试文件             |
+| 6    | [权限管理](/guide/beginner/permissions)                   | 测试可以自动跑——权限放宽松但要设边界       |
 
 **验收**：给一个工具函数，让 Claude Code 写成 3 个测试用例（正常/边界/异常）。
 
@@ -79,11 +79,11 @@ npm install -g agent-browser
 
 ## 阶段二：日常提效（~60 分钟）
 
-| 顺序 | 内容 | 要点 |
-|------|------|------|
-| 1 | [CLAUDE.md](/guide/intermediate/claude-md) | 写清楚测试框架、断言库、fixture 管理方式 |
-| 2 | [提高 AI 准确率](/guide/intermediate/improve-ai-accuracy) | **测试场景专用**：给被测代码 + 覆盖场景，AI 生成测试 |
-| 3 | [上下文管理](/guide/intermediate/context-management) | 跑完一轮测试把失败信息喂回去，AI 自动修 |
+| 顺序 | 内容                                                      | 要点                                                 |
+| ---- | --------------------------------------------------------- | ---------------------------------------------------- |
+| 1    | [CLAUDE.md](/guide/intermediate/claude-md)                | 写清楚测试框架、断言库、fixture 管理方式             |
+| 2    | [提高 AI 准确率](/guide/intermediate/improve-ai-accuracy) | **测试场景专用**：给被测代码 + 覆盖场景，AI 生成测试 |
+| 3    | [上下文管理](/guide/intermediate/context-management)      | 跑完一轮测试把失败信息喂回去，AI 自动修              |
 
 ### 测试专用 CLAUDE.md
 
@@ -91,23 +91,27 @@ npm install -g agent-browser
 # CLAUDE.md — 测试项目
 
 ## 测试框架
+
 - pytest + pytest-asyncio
 - Playwright (UI 端到端)
 - httpx (API 集成测试)
 - factory_boy (测试数据工厂)
 
 ## 测试规范
-- 测试文件命名：test_<模块名>.py
-- 测试函数命名：test_<方法>_<场景>_<预期>
+
+- 测试文件命名：test\_<模块名>.py
+- 测试函数命名：test*<方法>*<场景>\_<预期>
 - 每个测试三行注释：Given / When / Then
 - 用 fixture 管理测试数据，不硬编码
 - 测试之间互相独立，不依赖执行顺序
 
 ## 覆盖要求
+
 - 每个 API 端点至少：正常返回、参数校验、未授权 三个场景
 - 每个页面至少：正常渲染、关键交互、错误状态
 
 ## 不要做的事
+
 - 不要在生产环境跑测试
 - 不要 skip 测试而不写原因注释
 - 测试失败不要改断言——先分析是不是代码有问题
@@ -121,29 +125,29 @@ npm install -g agent-browser
 
 ### AI 生成代码质量
 
-| 顺序 | 内容 | 要点 |
-|------|------|------|
-| 1 | [AI 代码自检](/tips/self-check) | 五步自检法——把 AI 生成的测试准确率从 70% 推到 90% |
-| 2 | [Bug 调试技巧](/tips/debugging) | 系统化调试——复现 → 定位 → 修复 → 验证 |
-| 3 | [多 Agent 协同](/tips/multi-agent-tips) | 一个 Agent 写测试，一个 Agent 审查，一个 Agent 跑 |
+| 顺序 | 内容                                    | 要点                                              |
+| ---- | --------------------------------------- | ------------------------------------------------- |
+| 1    | [AI 代码自检](/tips/self-check)         | 五步自检法——把 AI 生成的测试准确率从 70% 推到 90% |
+| 2    | [Bug 调试技巧](/tips/debugging)         | 系统化调试——复现 → 定位 → 修复 → 验证             |
+| 3    | [多 Agent 协同](/tips/multi-agent-tips) | 一个 Agent 写测试，一个 Agent 审查，一个 Agent 跑 |
 
 ### 端到端测试工具链
 
-| 顺序 | 内容 | 要点 |
-|------|------|------|
-| 1 | [Chrome DevTools MCP](/guide/advanced/chrome-devtools-mcp) | 浏览器自动化——截图对比、性能追踪、网络请求断言 |
-| 2 | [用 Claude Code 做测试](/tips/claude-code-testing) | 从 PRD/API 文档/设计稿生成测试用例——黑白盒双轨 |
-| 3 | [Agent Browser](/tips/agent-browser) | AI 原生浏览器自动化——refs 元素定位、语义查找 |
+| 顺序 | 内容                                                       | 要点                                           |
+| ---- | ---------------------------------------------------------- | ---------------------------------------------- |
+| 1    | [Chrome DevTools MCP](/guide/advanced/chrome-devtools-mcp) | 浏览器自动化——截图对比、性能追踪、网络请求断言 |
+| 2    | [用 Claude Code 做测试](/tips/claude-code-testing)         | 从 PRD/API 文档/设计稿生成测试用例——黑白盒双轨 |
+| 3    | [Agent Browser](/tips/agent-browser)                       | AI 原生浏览器自动化——refs 元素定位、语义查找   |
 
 ### Python 测试深度实践
 
-| 顺序 | 内容 | 要点 |
-|------|------|------|
-| 1 | [Python 测试工具链](/tips/python-practices/) | pytest、Playwright、httpx、basedpyright 全景 |
-| 2 | [LSP 配置](/tips/python-practices/lsp-setup) | basedpyright 语义级诊断——改完立即看到影响 |
-| 3 | [Page Object Model](/tips/python-practices/playwright-pom) | BasePage + 组件嵌套 + 多环境——可维护的 UI 测试 |
-| 4 | [API 测试架构](/tips/python-practices/api-testing-patterns) | 分层策略、响应验证层级、幂等性、资源清理 |
-| 5 | [测试实战案例](/tips/python-practices/scenarios) | 电商 UI + REST API CRUD + 混合测试 |
+| 顺序 | 内容                                                        | 要点                                           |
+| ---- | ----------------------------------------------------------- | ---------------------------------------------- |
+| 1    | [Python 测试工具链](/tips/python-practices/)                | pytest、Playwright、httpx、basedpyright 全景   |
+| 2    | [LSP 配置](/tips/python-practices/lsp-setup)                | basedpyright 语义级诊断——改完立即看到影响      |
+| 3    | [Page Object Model](/tips/python-practices/playwright-pom)  | BasePage + 组件嵌套 + 多环境——可维护的 UI 测试 |
+| 4    | [API 测试架构](/tips/python-practices/api-testing-patterns) | 分层策略、响应验证层级、幂等性、资源清理       |
+| 5    | [测试实战案例](/tips/python-practices/scenarios)            | 电商 UI + REST API CRUD + 混合测试             |
 
 **验收**：能用 POM 模式写一套可维护的 UI 测试，用 httpx 写一套完整的 API 测试。
 
@@ -151,11 +155,11 @@ npm install -g agent-browser
 
 ## 阶段四：自动化流水线（~30 分钟）
 
-| 顺序 | 内容 | 要点 |
-|------|------|------|
-| 1 | [自动化 CI/CD](/guide/advanced/automation) | 测试接入 CI——每次提交自动跑全量测试 |
-| 2 | [Hooks](/guide/advanced/hooks) | 提交前自动跑相关测试——改哪个模块跑哪个 |
-| 3 | [任务中断恢复](/guide/advanced/task-interruption-recovery) | 长时间测试跑一半断了怎么恢复 |
+| 顺序 | 内容                                                       | 要点                                   |
+| ---- | ---------------------------------------------------------- | -------------------------------------- |
+| 1    | [自动化 CI/CD](/guide/advanced/automation)                 | 测试接入 CI——每次提交自动跑全量测试    |
+| 2    | [Hooks](/guide/advanced/hooks)                             | 提交前自动跑相关测试——改哪个模块跑哪个 |
+| 3    | [任务中断恢复](/guide/advanced/task-interruption-recovery) | 长时间测试跑一半断了怎么恢复           |
 
 **验收**：pre-commit hook 自动跑改动文件的测试，失败不提交。
 
@@ -165,18 +169,19 @@ npm install -g agent-browser
 
 ### 选学
 
-| 主题 | 要点 | 什么时候学 |
-|------|------|-----------|
-| [自定义 Skills](/skills/overview/custom-skills) | 封装"冒烟测试"、"回归测试"等流程 | 测试流程固定化后 |
-| [Claude-Mem](/guide/advanced/claude-mem) | 记住常见 Bug 模式和修复方案 | Bug 模式反复出现时 |
-| [Loop 工程](/tips/loop-engineering) | 定时跑回归测试，失败自动通知 | 有持续集成需求时 |
-| [代码图谱](/guide/advanced/code-graph/codegraph) | 改了代码后自动找出该跑哪些测试 | 大型项目需要精准测试选择时 |
+| 主题                                             | 要点                             | 什么时候学                 |
+| ------------------------------------------------ | -------------------------------- | -------------------------- |
+| [自定义 Skills](/skills/overview/custom-skills)  | 封装"冒烟测试"、"回归测试"等流程 | 测试流程固定化后           |
+| [Claude-Mem](/guide/advanced/claude-mem)         | 记住常见 Bug 模式和修复方案      | Bug 模式反复出现时         |
+| [Loop 工程](/tips/loop-engineering)              | 定时跑回归测试，失败自动通知     | 有持续集成需求时           |
+| [代码图谱](/guide/advanced/code-graph/codegraph) | 改了代码后自动找出该跑哪些测试   | 大型项目需要精准测试选择时 |
 
 ---
 
 ## 实战：测试工程师的一天
 
 **上午 — 新功能测试**：
+
 ```text
 根据这份 PRD [拖入文件]，列出所有需要测试的场景。
 然后读取 src/api/orders.ts 的 createOrder 函数，
@@ -184,6 +189,7 @@ npm install -g agent-browser
 ```
 
 **下午 — Bug 复现和修复验证**：
+
 ```text
 用户反馈：订单列表页翻到第 3 页后数据重复。
 这是相关代码：[拖入组件和 API 文件]。
@@ -191,6 +197,7 @@ npm install -g agent-browser
 ```
 
 **回归测试维护**：
+
 ```text
 这个 PR 改了用户认证模块 [指向 diff]。
 找出所有受影响的测试，跑一遍，把失败的分析出来，
