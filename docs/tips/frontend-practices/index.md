@@ -3,6 +3,20 @@ title: 前端工具链集成全景
 description: '前端开发中 Git 工作流、Superpowers、GStack、OpenSpec、Ralph、CodeGraph、Context7、Serena 的完整集成指南'
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★☆☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★☆☆ |
+| 📦 产品 | ★★★☆☆ | ★★★☆☆ |
+
+**🎯 学习产出：** 了解前端工具链集成方案，能独立搭建多工具协同的前端开发工作流
+
+**🚀 AI 能力提升：** 跨文件重构、代码生成
+:::
+
 # 前端工具链集成全景
 
 本系列聚焦**前端开发场景下的工具集成实践**，而非单个工具的独立介绍。如果你还不熟悉某个工具的基础用法，请先参阅 [进阶指南](/guide/advanced/superpowers) 中对应的详细文档。这里的重点是：如何将多个工具串联成一条完整的前端开发工作流，让它们在不同阶段各司其职、协同增效。
@@ -66,3 +80,7 @@ flowchart LR
 | CodeGraph   | [CodeGraph 代码智能](/guide/advanced/code-graph/codegraph) |
 | Context7    | [Context7 实时文档](/guide/advanced/context7)              |
 | Serena      | [Serena 代码语义工具](/guide/advanced/serena)              |
+
+:::tip 下一步
+了解了工具全景后，推荐按顺序阅读 [集成工作流详解](./integrated-workflow) 了解五阶段操作细节，或直接跳到 [场景实战指南](./scenarios) 通过 7 个完整案例快速上手。
+:::
