@@ -1,7 +1,21 @@
 ---
 title: Caveman — 极致 Token 省流模式
-description: Caveman 让 Claude Code 用原始人说话方式输出，砍掉 65% token 消耗，保持 100% 技术准确度
+description: Caveman 让 Claude Code 用原始人说话方式输出，砍掉 65% token 消耗，保持 100% 技术准确度，支持 30+ AI 编码平台和 6 种强度等级
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★☆☆☆☆ |
+| 🧪 测试 | ★★★★☆ | ★☆☆☆☆ |
+| 📦 产品 | ★★★★☆ | ★☆☆☆☆ |
+
+**🎯 学习产出：** 掌握 Caveman 极简输出模式，能独立在日常开发中省下 65% 的 token 消耗
+
+**🚀 AI 能力提升：** 上下文管理
+:::
 
 # Caveman — 极致 Token 省流模式
 
@@ -301,3 +315,13 @@ Caveman: Clipboard API. 1 line. Done.
 ### 会影响代码质量吗？
 
 不影响。Caveman 只改对话文字，不改代码。你拿到的代码和普通模式一样——只是 AI 不会在旁边写一篇小作文解释它写了什么。
+
+## 相关页面
+
+- [Ponytail — 懒惰高级工程师模式](/tips/ponytail) — Caveman + Ponytail 组合拳实现极致效率
+- [最佳实践](/tips/best-practices) — 日常使用中的高效技巧和常见模式
+- [Claude Code 调试技巧](/tips/debugging) — 用 Caveman 快速定位 bug 根因
+
+:::tip 功能串联
+Caveman 关注**输出效率**——少说废话多出结果。配合 [Ponytail](/tips/ponytail)（代码够不够简）使用效果翻倍：Ponytail 砍代码，Caveman 砍字数。日常开发建议 Caveman `lite` + Ponytail `full` 组合作为默认配置。
+:::
