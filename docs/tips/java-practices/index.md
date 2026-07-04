@@ -3,6 +3,20 @@ title: Java 工具链集成全景
 description: 'Java/Spring Boot 开发中 ECC、Gstack、Superpowers、CodeGraph、Graphify、Serena、Spec-Kit、Context7、LSP 的完整集成指南'
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★☆☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★☆☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★☆ |
+
+**🎯 学习产出：** 了解 Java 工具链方案，能独立搭建多工具协同的 Java/Spring Boot 开发工作流
+
+**🚀 AI 能力提升：** 代码生成、调试诊断
+:::
+
 # Java 工具链集成全景
 
 本系列聚焦 **Java/Spring Boot 开发场景下的工具集成实践**，而非单个工具的独立介绍。如果你还不熟悉某个工具的基础用法，请先参阅 [进阶指南](/guide/advanced/superpowers) 中对应的详细文档。这里的重点是：如何将多个工具串联成一条完整的 Java 开发工作流，让它们在不同阶段各司其职、协同增效。
