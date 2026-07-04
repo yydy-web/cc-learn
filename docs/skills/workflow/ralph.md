@@ -1,7 +1,21 @@
 ---
 title: Ralph 自主循环
-description: Ralph 的自主迭代模式——PRD 驱动、新鲜上下文、跨会话记忆
+description: Ralph 的自主迭代模式详解——PRD 驱动、新鲜上下文、跨会话记忆，让 Claude Code 自动完成大型功能开发
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★☆☆ | ★★★★☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Ralph 任务编排，能独立配置和执行跨会话的自主开发循环
+
+**🚀 AI 能力提升：** 多智能体、自动化工作流
+:::
 
 # Ralph 自主循环
 
@@ -13,7 +27,7 @@ description: Ralph 的自主迭代模式——PRD 驱动、新鲜上下文、跨
 
 ## 核心理念
 
-```
+```text
 新鲜上下文 + 持久化记忆 = 可靠的自主开发
 ```
 
@@ -34,7 +48,7 @@ description: Ralph 的自主迭代模式——PRD 驱动、新鲜上下文、跨
 
 ## 工作流
 
-```
+```text
 /prd → /ralph → ralph.sh 循环 → 所有故事完成
 ```
 
@@ -44,7 +58,7 @@ description: Ralph 的自主迭代模式——PRD 驱动、新鲜上下文、跨
 
 ## 安装
 
-```
+```text
 > /plugin marketplace add snarktank/ralph
 > /plugin install ralph-skills@ralph-marketplace
 ```
