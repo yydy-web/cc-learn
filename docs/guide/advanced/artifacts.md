@@ -2,6 +2,19 @@
 title: Artifacts — 终端可视化工作台
 description: Claude Code Artifacts 把会话中的代码审查、事故分析、架构图、仪表盘变成实时交互网页，私人链接分享，自动刷新
 ---
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★☆☆☆ | ★★★☆☆ |
+| 📦 产品 | ★★★☆☆ | ★★★☆☆ |
+
+**🎯 学习产出：** 掌握 Artifacts 功能，能预览和迭代生成的代码/文档
+
+**🚀 AI 能力提升：** 代码生成、设计→代码
+:::
 
 # Artifacts — 终端可视化工作台
 
@@ -17,7 +30,7 @@ description: Claude Code Artifacts 把会话中的代码审查、事故分析、
 
 **和 Claude.ai 网页版 Artifacts 的区别**：
 
-| | 网页版 Artifacts | Claude Code Artifacts |
+| 特性 | 网页版 Artifacts | Claude Code Artifacts |
 |---|---|---|
 | 触发方式 | 网页对话中生成 | 终端会话中生成 |
 | 数据来源 | 对话内容 | 代码库 + 工具调用 + 会话上下文 |
