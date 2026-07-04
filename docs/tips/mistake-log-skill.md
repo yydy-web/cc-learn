@@ -3,6 +3,20 @@ title: 错误自愈 Skill — 让 AI 不犯同样的错
 description: 创建一个自动收集错误、避免重复踩坑的 Skill——每次人工纠正后生成备忘录，下次对话自动读取，持续提升 AI 输出质量
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★☆☆☆ |
+| 🧪 测试 | ★★★★☆ | ★★☆☆☆ |
+| 📦 产品 | ★★★☆☆ | ★★★☆☆ |
+
+**🎯 学习产出：** 掌握错误日志记录技巧，能独立搭建 AI 错误自愈闭环系统，让 Claude Code 持续进化
+
+**🚀 AI 能力提升：** 调试诊断、技能扩展
+:::
+
 # 错误自愈 Skill
 
 AI 会犯错误，但同一个错误犯两次就是浪费。这个 Skill 实现了一个**错误学习闭环**：纠正 → 记录 → 复习 → 避免。
@@ -327,3 +341,7 @@ ls .claude/mistakes/ | wc -l   # 看看积累了多少条
 - [Claude-Mem](/guide/advanced/claude-mem) — 自动持久记忆系统
 - [CLAUDE.md 与项目约定](/guide/intermediate/claude-md) — 把高频错误升级为永久规则
 - [提高 AI 准确率](/guide/intermediate/improve-ai-accuracy) — 从源头减少错误
+
+:::tip 功能串联
+错误自愈 Skill 的关注点是**错误预防**——让 AI 从历史错误中学习。和 [Claude-Mem](/guide/advanced/claude-mem)（泛化记忆）互补：错误自愈记录"不该做什么"，Claude-Mem 记录"应该知道什么"。高频错误（触发 3 次以上）应升级到 [CLAUDE.md](/guide/intermediate/claude-md) 成为项目永久约定。
+:::
