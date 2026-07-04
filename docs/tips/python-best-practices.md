@@ -3,6 +3,20 @@ title: Python 自动化测试最佳实践
 description: 使用 Claude Code 编写 Python Web UI 和 API 自动化测试的完整指南，涵盖 Playwright、pytest、httpx、Page Object 模式、数据驱动测试和调试技巧
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色 | 推荐度 | 上手难度 |
+|------|--------|----------|
+| 🛠️ 开发 | ★★★★★ | ★★★☆☆ |
+| 🧪 测试 | ★★★★★ | ★★★☆☆ |
+| 📦 产品 | ★★☆☆☆ | ★★★★★ |
+
+**🎯 学习产出：** 掌握 Python 自动化测试最佳实践，能独立用 Claude Code 编写 Playwright UI 和 httpx API 的高质量测试代码
+
+**🚀 AI 能力提升：** 代码生成、测试生成
+:::
+
 # Python 自动化测试最佳实践
 
 Claude Code 对 Python 生态（pytest、Playwright、httpx 等）有良好的支持。本文介绍如何使用 Claude Code 编写高质量的 Python Web UI 和 API 自动化测试，从环境搭建到调试排错的最佳实践。
