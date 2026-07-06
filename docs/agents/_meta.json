@@ -1,0 +1,22 @@
+[
+  { "type": "section-header", "label": "单 Agent 能力" },
+  "single-agent-task",
+  "agent-research",
+  "agent-code-review",
+
+  { "type": "section-header", "label": "多 Agent 协作" },
+  "parallel-review",
+  "pipeline-workflow",
+  "worktree-isolation",
+  "subagent-types",
+
+  { "type": "section-header", "label": "工程化编排" },
+  "large-scale-migration",
+  "judge-panel",
+  "self-healing-loop",
+
+  { "type": "section-header", "label": "全流程实战" },
+  "fullstack-requirements",
+  "fullstack-development",
+  "fullstack-verify-deliver"
+]

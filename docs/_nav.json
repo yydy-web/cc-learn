@@ -20,6 +20,11 @@
     "activeMatch": "/skills/"
   },
   {
+    "text": "Agency Agents",
+    "link": "/agents/",
+    "activeMatch": "/agents/"
+  },
+  {
     "text": "技巧",
     "link": "/tips/",
     "activeMatch": "/tips/"
