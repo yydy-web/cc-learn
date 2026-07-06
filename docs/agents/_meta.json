@@ -18,5 +18,13 @@
   { "type": "section-header", "label": "全流程实战" },
   "fullstack-requirements",
   "fullstack-development",
-  "fullstack-verify-deliver"
+  "fullstack-verify-deliver",
+
+  { "type": "section-header", "label": "产品与业务" },
+  "competitive-analysis",
+  "user-insight-extraction",
+  "pricing-strategy",
+  "prd-quality-review",
+  "case-study-writing",
+  "okr-alignment"
 ]

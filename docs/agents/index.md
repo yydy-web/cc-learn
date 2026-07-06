@@ -43,6 +43,17 @@ pageType: doc
 - [并行开发与集成](./fullstack-development) — 方案拆分 → 多 Agent 并行编码 → 集成合并
 - [审查验证与交付](./fullstack-verify-deliver) — 多维度审查 → 端到端验证 → deliver checklist
 
+### 📊 产品与业务
+
+Agent 不只写代码。调研、分析、决策、文案——零代码场景同样高效。
+
+- [竞品功能矩阵分析](./competitive-analysis) — 多 Agent 并行调研竞品，结构化对比 + 差异化建议
+- [用户访谈 → 需求提炼](./user-insight-extraction) — 访谈转录稿交给 Agent，自动聚类痛点、排优先级
+- [定价策略分析](./pricing-strategy) — 竞品定价对比 + 3 种方案生成 + ARR 预测
+- [PRD 质量审查](./prd-quality-review) — Agent 审查 PRD 的验收标准、不做清单、成功指标
+- [客户成功案例包装](./case-study-writing) — 原始素材 → 结构化案例 + 多平台文案
+- [OKR 拆解与对齐](./okr-alignment) — Agent 拆解目标、检测 KR 与 initiative 的断层
+
 ## 学习建议
 
 | 你的水平 | 推荐路径 |
