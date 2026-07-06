@@ -423,3 +423,9 @@ const [securityFindings, performanceFindings, correctnessFindings] = await paral
 ---
 
 **下一篇**：[流水线开发流程](/agents/pipeline-workflow) —— 看 `pipeline()` 如何把设计、实现、测试、审查串成一条自动化流水线。
+
+### 相关场景
+
+- [Agent 代码审查](./agent-code-review) — Schema 驱动的结构化审查
+- [Subagent 类型](./subagent-types) — 预定义 Agent 类型
+- [自愈循环](./self-healing-loop) — 自动修复 + 审查的闭环

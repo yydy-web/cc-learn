@@ -479,3 +479,8 @@ Time:        2.1 s
 3. **Agent 3**（拿到 Agent 2 的改动后）：写回归测试，确保重构没有引入 bug
 
 每一步的输出成为下一步的输入，形成一条 Agent 流水线——不过要注意，链越长，出错概率越高，建议每步审查后再启动下一环。
+
+### 相关场景
+
+- [Agent 代码审查](./agent-code-review) — Schema 驱动的结构化审查
+- [流水线开发流程](./pipeline-workflow) — pipeline() 接力开发

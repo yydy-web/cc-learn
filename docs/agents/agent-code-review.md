@@ -293,3 +293,8 @@ function verifyCallback(body: CallbackBody, headers: Record<string, string>): vo
 **配置文件审查**：针对 Dockerfile、k8s YAML、CI 配置定义 Schema——检查端口暴露、资源限制、镜像版本锁定、密钥硬编码等问题。这类审查规则相对固定，适合写成 Schema 后跑在 CI 中做 pre-merge 检查。
 
 **多个 PR 批量审查**：同一个 Schema 对多个 PR 输出多份报告后，可以聚合分析——哪些文件被频繁标记 Critical、哪个维度的 Low 问题堆积最多——从中发现团队的技术债务热点区域，指导下一步重构优先级。
+
+### 相关场景
+
+- [并行审查](./parallel-review) — 多维度并行审查工作流
+- [Subagent 类型](./subagent-types) — 预定义审查 Agent 类型

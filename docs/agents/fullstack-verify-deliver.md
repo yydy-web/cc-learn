@@ -282,3 +282,8 @@ Agent 输出的 checklist：
 - **上线后监控告警配置**：将 deliver checklist 中的监控指标落地为告警规则（Prometheus AlertManager 或 Grafana Alerting），接入 on-call 系统（PagerDuty / 飞书通知），确保第一个异常就在第一时间被感知。
 - **定期安全扫描**：即使是已上线的功能，也建议每月跑一次安全审查 Agent 扫描全仓库。依赖库可能爆出新 CVE，业务逻辑可能因新增功能而产生新的数据泄露路径。
 - **性能回归基准建立**：将端到端验证中"10 万行 Excel 导出 < 30s / 内存 < 300MB"固化为性能基线，每次 PR 自动跑性能验证，超出阈值即报警。随着数据量增长，阈值也需要动态调整。
+
+### 相关场景
+
+- [并行审查](./parallel-review) — 多维度并行审查工作流
+- [自愈循环](./self-healing-loop) — 自动修复 + 审查的闭环

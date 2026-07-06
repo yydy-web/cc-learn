@@ -331,3 +331,8 @@ echo "✅ Pre-commit review passed"
 :::warning
 CI 中的 agent 审查需要消耗 API tokens，建议只在关键分支（main/release）上启用，或者限制审查范围到变更行数超过阈值的 PR。对于小改动，靠 lint + typecheck 就够了。
 :::
+
+### 相关场景
+
+- [并行审查](./parallel-review) — 多维度并行审查工作流
+- [Agent 代码审查](./agent-code-review) — Schema 驱动的结构化审查

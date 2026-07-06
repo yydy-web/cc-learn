@@ -510,3 +510,8 @@ diff <(git show main:src/controller.ts) <(git show refactor-new-arch:src/control
 :::warning
 这种场景下两个 worktree 修改的是同一个文件，merge 时一定会产生冲突（甚至重构版已经改得面目全非）。**只建议在重构的探索阶段使用**——用 worktree 保护原代码不被破坏，重构确认 OK 后再决定是直接替换还是合并。
 :::
+
+### 相关场景
+
+- [全栈并行开发](./fullstack-development) — 多 Agent 并行全栈开发
+- [大规模迁移](./large-scale-migration) — Discover + Fan-out 批量迁移
