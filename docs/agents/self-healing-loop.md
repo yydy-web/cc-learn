@@ -359,9 +359,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          cc loop --target src/core/ --dry-threshold 2 \
-            --on-findings "create-issue" \
-            --label "auto-detected"
+          claude -p "对 src/core/ 执行 /loop 自审查，dry threshold = 2。发现问题后逐个修复并验证测试，
+            全部修复完成后创建 issue 汇总发现，打标签 auto-detected。" \
+            --allowedTools "Read,Write,Edit,Bash,Grep,Glob" \
+            --permission-mode plan
 ```
 
 **结合 code-reviewer Subagent**

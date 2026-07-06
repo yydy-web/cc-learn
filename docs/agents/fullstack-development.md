@@ -152,56 +152,59 @@ CC 输出: 三模块并行开发计划
 
 ### Step 2：编写 Workflow 脚本并行启动 3 个 Agent
 
-接下来编写一个 bash 脚本，用 3 个 `claude` Agent 分别处理前端、后端和 CLI，全部在隔离 worktree 中运行。
+接下来编写一个 Workflow 脚本，用 `parallel()` 编排 3 个 Agent 分别处理前端、后端和 CLI，全部在隔离 worktree 中运行。
 
-```bash
-#!/bin/bash
-# parallel-export-dev.sh -- 并行启动三个模块的 Agent
+```javascript
+// parallel-export-dev.workflow.js
+export const meta = {
+  name: 'parallel-export-dev',
+  description: '三模块并行开发：前端 + 后端 + CLI，全部 worktree 隔离',
+  phases: [{ title: '并行开发', detail: '3 个 Agent 同时在不同 worktree 中开发' }],
+}
 
-BASE_BRANCH="feature/data-export"
-CONTRACTS_DIR="docs/contracts"
-
-# Agent A: 前端 -- React ExportConfig 组件
-claude agent \
-  --prompt "根据 docs/contracts/export-component.md 中的 Props 接口定义，
+const [frontend, backend, cli] = await parallel(
+  // Agent A: 前端 —— React ExportConfig 组件
+  () => agent(
+    `根据 docs/contracts/export-component.md 中的 Props 接口定义，
 实现 ExportConfig React 组件。要求：
 - 导出格式选择器（CSV / Excel / JSON）
 - 字段多选列表（支持全选/取消全选）
 - 日期范围选择器
 - 进度条显示
 - 所有 Props 类型严格按契约定义
-将组件放在 src/components/ExportConfig/ 目录下。" \
-  --isolation worktree \
-  --branch "$BASE_BRANCH" &
+将组件放在 src/components/ExportConfig/ 目录下。`,
+    { label: 'export-frontend', isolation: 'worktree' },
+  ),
 
-# Agent B: 后端 -- Export API + BullMQ 任务队列
-claude agent \
-  --prompt "根据 docs/contracts/export-api.md 中的 API 规范，
+  // Agent B: 后端 —— Export API + BullMQ 任务队列
+  () => agent(
+    `根据 docs/contracts/export-api.md 中的 API 规范，
 实现导出 API 服务端。要求：
 - POST /api/exports 创建导出任务并入队
 - GET /api/exports/:id 查询任务状态和进度
 - GET /api/exports/:id/download 下载导出文件
 - 使用 BullMQ 管理任务队列
 - 使用 Redis 作为队列后端
-代码放在 src/api/exports/ 目录下。" \
-  --isolation worktree \
-  --branch "$BASE_BRANCH" &
+代码放在 src/api/exports/ 目录下。`,
+    { label: 'export-backend', isolation: 'worktree' },
+  ),
 
-# Agent C: CLI -- 批量导出命令
-claude agent \
-  --prompt "根据 docs/contracts/export-cli.md 中的 CLI 规范，
+  // Agent C: CLI —— 批量导出命令
+  () => agent(
+    `根据 docs/contracts/export-cli.md 中的 CLI 规范，
 实现 cli-export 命令行工具。要求：
 - 使用 commander 解析参数
 - 调用后端 POST /api/exports 创建任务
 - 轮询 GET /api/exports/:id 直到完成
 - 下载文件到指定目录
-代码放在 src/cli/ 目录下。" \
-  --isolation worktree \
-  --branch "$BASE_BRANCH" &
+代码放在 src/cli/ 目录下。`,
+    { label: 'export-cli', isolation: 'worktree' },
+  ),
+)
 
-# 等待所有 Agent 完成
-wait
-echo "所有模块开发完成，进入集成阶段"
+log(`前端 Agent 完成：${frontend}`)
+log(`后端 Agent 完成：${backend}`)
+log(`CLI Agent 完成：${cli}`)
 ```
 
 :::tip
@@ -494,11 +497,13 @@ program.parse()
 
 三个 Agent 各自完成开发后，进入集成阶段。这是契约驱动模式的价值集中体现环节。
 
+:::tip
+Agent 配置了 `isolation: 'worktree'` 后，worktree 的创建、提交和清理全部自动管理——Agent 完成工作后会将代码提交到指定的 `branch`，无需手动执行 `git merge`。三个模块的代码都已提交到 `feature/data-export` 分支，直接在该分支上做集成验证即可。
+:::
+
 ```bash
-# 1. 分别合并三个 worktree 的工作成果
-git merge worktree-frontend  # Agent A 的前端代码
-git merge worktree-backend   # Agent B 的后端代码
-git merge worktree-cli       # Agent C 的 CLI 代码
+# 1. 确认三个模块的代码都已就位
+git log --oneline -3
 
 # 2. 启动后端服务
 npm run dev:server

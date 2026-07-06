@@ -109,26 +109,41 @@ Agent 扫描后的输出示例：
 
 ### Step 2：fan-out 阶段 —— 分组并并行分发
 
-接下来写一个编排脚本，把 52 个文件均分成 10 组，每组 5-6 个文件，每组交给一个 Agent。
+接下来用 Workflow 脚本编排，把 52 个文件均分成 10 组，每组 5-6 个文件，用 `parallel()` 同时分发给 10 个 `agent()` 并行执行。
 
-```bash
-# 用 jq 将文件清单从 discover 报告里提取出来，按 5 个一组分片
-cat discover-report.json | jq -r '.files[].path' | split -l 5 - groups/group_
+```javascript
+// fan-out-migration.workflow.js
+export const meta = {
+  name: 'fan-out-migration',
+  description: '将 52 个文件均分 10 组，并行迁移 CJS → ESM',
+  phases: [{ title: '迁移', detail: '10 个 Agent 并行迁移' }],
+}
 
-# 对每个分组启动一个 agent task
-for group in groups/group_*; do
-  claude "将以下文件中的 require() 转为 import，module.exports 转为 export：
-$(cat $group)
+// 从 discover 阶段拿到文件清单（此处为示意，实际通过 agent 返回或手动分组）
+const fileGroups = [
+  ['array.ts', 'string.ts', 'object.ts', 'function.ts', 'promise.ts'],
+  ['validators.ts', 'formatters.ts', 'helpers.ts', 'constants.ts', 'types.ts'],
+  // ... 共 10 组
+]
+
+const results = await parallel(
+  fileGroups.map((files, i) => () =>
+    agent(
+      `将以下文件中的 require() 转为 import，module.exports 转为 export：
+${files.join('\n')}
 
 规则：
 1. require('builtin-module') → import ... from 'builtin-module'
 2. require('./relative') → import ... from './relative.js'（注意补 .js 后缀）
 3. module.exports = X → export default X
 4. module.exports = { a, b } → export { a, b }
-5. 改完后运行 eslint --fix && tsc --noEmit 验证
-6. 最终输出 JSON：{ file, changes[], lintPass, typecheckPass }" &
-done
-wait
+5. 改完后运行 eslint --fix && tsc --noEmit 验证`,
+      { label: `group_${String(i + 1).padStart(2, '0')}` },
+    ),
+  ),
+)
+
+log(`迁移完成：${results.filter(Boolean).length}/${fileGroups.length} 组通过`)
 ```
 
 分组策略要点：

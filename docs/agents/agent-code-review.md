@@ -145,11 +145,19 @@ src/
 }
 ```
 
-在 CC 中，把 Schema 和审查指令一起给 Agent：
+在 CC 中，通过 Workflow 脚本使用 `agent()` 的 `schema` 参数驱动结构化输出：
 
-```bash
-# 使用 --review-schema 指定审查规则（假设已配置自定义 slash command）
-/review --schema src/review/review-schema.json src/payment src/order src/inventory
+```js
+// .claude/agents/review-workflow.js
+export default async function main(ctx) {
+  const schema = await ctx.readFile('src/review/review-schema.json')
+  const result = await ctx.agent({
+    prompt: `审查以下文件的变更：src/payment src/order src/inventory
+按 security/performance/correctness/maintainability 四个维度逐行检查。`,
+    schema: JSON.parse(schema)
+  })
+  console.log(JSON.stringify(result, null, 2))
+}
 ```
 
 或者直接在对话中附上 Schema 文件和审查范围：

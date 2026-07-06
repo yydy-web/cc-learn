@@ -50,7 +50,7 @@ pageType: doc
 首先启动安全审查 Agent，扫描导出模块的四个高危攻击面。输入清晰的任务指令，让 Agent 按维度逐一检查：
 
 ```text
-@security-review-agent 审查 src/modules/export/ 目录的安全问题，
+使用 security-reviewer agent 审查 src/modules/export/ 目录的安全问题，
 重点检查：
 1. SQL 注入 —— 导出查询是否使用参数化
 2. 文件路径遍历 —— 下载端点是否校验路径
@@ -96,7 +96,7 @@ Agent 审查输出示例：
 安全审查跑完后，第二步启动性能审查 Agent，模拟大数据量导出场景下的瓶颈分析：
 
 ```text
-@performance-review-agent 审查 src/modules/export/ 的性能风险，
+使用 performance-reviewer agent 审查 src/modules/export/ 的性能风险，
 典型场景：单次导出 10 万行数据为 Excel/CSV。
 请分析：
 1. 大数据量时内存占用是否线性增长（是否存在全量加载）
@@ -138,7 +138,7 @@ Agent 输出示例：
 安全洞和性能瓶颈都找到了，最后用 Code Quality Agent 做工程层面的代码健康检查：
 
 ```text
-@code-review-agent 审查 src/modules/export/ 的代码质量，
+使用 code-reviewer agent 审查 src/modules/export/ 的代码质量，
 关注：
 1. 错误处理完整性 —— API 失败、队列失败、磁盘满场景
 2. TypeScript 类型安全 —— 是否存在 any 逸出、类型断言滥用
@@ -187,7 +187,7 @@ Agent 输出示例：
 修复完上述问题后，启动端到端验证 Agent，确保修复没有破坏功能，且边界情况都能正确处理。将验证任务分场景逐步执行：
 
 ```text
-@e2e-agent 对导出模块执行端到端验证，按以下顺序：
+使用 e2e-testing agent 对导出模块执行端到端验证，按以下顺序：
 
 1. 小数据量 CSV 导出：导出 1000 行，验证格式正确、中文不乱码、表头正确
 2. 大数据量 Excel 导出：导出 10 万行，验证：
@@ -224,7 +224,7 @@ Agent 输出示例：
 验证全部通过，进入交付环节。使用 deliver checklist 逐项确认，防止遗漏运维和回滚准备：
 
 ```text
-@deliver-agent 生成导出模块的交付 checklist，
+使用交付检查 agent 生成导出模块的交付 checklist，
 按：文档 / 监控 / 回滚 / 灰度 四个维度
 ```
 

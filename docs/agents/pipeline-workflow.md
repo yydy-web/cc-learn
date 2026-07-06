@@ -22,7 +22,7 @@ pageType: doc
 
 某 SaaS 团队需要快速交付一个"用户反馈提交"功能：用户在前端填写反馈表单并提交，管理员可以查看和变更反馈状态。这个需求横跨 API 设计、前端组件、自动化测试和代码审查四个阶段，每个阶段都依赖上一阶段的产物——API 接口没定，前端组件无法对接；实现没完成，测试用例无从写起。
 
-如果用 `/parallel` 一把梭全部阶段并行执行，后端 Agent 和前端 Agent 会各自凭空捏造接口协议，结果两边对不上——两个 Agent 分别定义了不同的字段名和数据类型，还得人工缝合。这正是 `pipeline()` 流水线所解决的问题：串行递进，前一个 Stage 的产出物就是后一个 Stage 的输入契约，四个阶段像接力赛一样按序推进，每棒交接都有明确的产物作为凭据。
+如果用 `parallel()` 一把梭全部阶段并行执行，后端 Agent 和前端 Agent 会各自凭空捏造接口协议，结果两边对不上——两个 Agent 分别定义了不同的字段名和数据类型，还得人工缝合。这正是 `pipeline()` 流水线所解决的问题：串行递进，前一个 Stage 的产出物就是后一个 Stage 的输入契约，四个阶段像接力赛一样按序推进，每棒交接都有明确的产物作为凭据。
 
 ## 为什么用 pipeline 流水线
 
@@ -60,7 +60,7 @@ project/
     └── feedback-api.md
 ```
 
-- **Claude Code 版本**：确保 CC 版本支持 `/pipeline` 命令（v1.0.40+）
+- **Workflow 脚本**：确保项目已启用 Workflow 功能。`pipeline()`、`parallel()`、`agent()` 是 Workflow 脚本中的全局函数，无需额外安装
 
 ## 完整交互过程
 
@@ -145,11 +145,7 @@ export const phase = {
 Stage 3 中包含两个 Agent（test 和 review），它们没有互相依赖，CC 会在进入 Stage 3 时**自动并行执行**。pipeline 的"串行"是指 Stage 之间，同一 Stage 内部是并行的。
 :::
 
-然后执行流水线：
-
-```bash
-/pipeline feedback-pipeline.ts
-```
+将脚本通过 Workflow 工具执行，或直接在对话中让 CC 按阶段推进：
 
 CC 的输出大致如下：
 
@@ -438,7 +434,7 @@ Review Agent 运行在 Stage 3，它可以同时审查 Stage 1（API）和 Stage
 - **pipeline vs parallel 取决于依赖关系**：有产出依赖选 pipeline，独立任务选 parallel。不要在 pipeline 里塞互不依赖的阶段——那会浪费等待时间。
 - **接口文档是阶段间的契约**：Backend Agent 输出的 API 文档是后续 Stage 的唯一真相来源。如果跳过文档直接让前端 Agent 对接代码，耦合会很高，后端改一个字段名前端就崩。
 - **中间阶段失败要回滚**：如果 Stage 2 的 Frontend Agent 报错，后续 Stage 3 不会执行。此时需要修好问题后重新运行 pipeline，而非手动补跑测试——保持交付物来源可追溯。
-- **测试和审查可以在同一个 Stage 用 parallel 并行**：pipeline 的每个 Stage 内部天然支持多 Agent 并行，不需要额外嵌套 `/parallel`。把互不依赖的任务放进同一个 Stage 即可自动并行。
+- **测试和审查可以在同一个 Stage 用 parallel 并行**：pipeline 的每个 Stage 内部天然支持多 Agent 并行，不需要额外嵌套 `parallel()`。把互不依赖的任务放进同一个 Stage 即可自动并行。
 - **产物清单作为交付凭证**：流水线跑完后对照产物清单逐项验收，确保每个 Agent 都产出了声明中的文件，避免"Agent 说做完了但实际什么都没写"的幻觉问题。
 
 ## 变体与延伸
@@ -453,10 +449,10 @@ pipeline 模式的应用远不止 API 开发这一个场景：
 | **全栈功能流水线** | 数据库 Schema Agent | API Agent | 前端 Agent | 测试 Agent + E2E Agent（Stage 4 并行） | 这是本文示例的扩展版，适合完整的 feature 交付 |
 
 :::warning
-pipeline 的每个 Stage 会**阻塞等待**前一 Stage 完成。如果 Stage 之间没有真正的产出依赖而强行用 pipeline，会让原本可以并行的任务白白排队。举个例子：同时改三个独立功能模块——应该用 `/parallel` 起三个 Agent，而不是用 pipeline 排成三个 Stage。
+pipeline 的每个 Stage 会**阻塞等待**前一 Stage 完成。如果 Stage 之间没有真正的产出依赖而强行用 pipeline，会让原本可以并行的任务白白排队。举个例子：同时改三个独立功能模块——应该用 `parallel()` 起三个 Agent，而不是用 pipeline 排成三个 Stage。
 :::
 
-掌握了 pipeline 之后，下一个自然的问题就是"如何让 pipeline 和 parallel 组合使用"。Claude Code 支持在 pipeline 的一个 Stage 中嵌套 `/parallel` 子调用，也可以在 parallel 的某个 Agent 内部启动 pipeline——这取决于你的工作流拓扑。如果你需要更复杂的编排（条件分支、重试、人工确认），可以探索 `/workflow` 命令，它提供了 DAG（有向无环图）级别的任务编排能力。
+掌握了 pipeline 之后，下一个自然的问题就是"如何让 pipeline 和 parallel 组合使用"。在 Workflow 脚本中，你可以在一个 Stage 内嵌套 `parallel()` 子调用，也可以在 `parallel()` 的某个分支内部启动 pipeline——这取决于你的工作流拓扑。如需更复杂的编排（条件分支、重试、人工确认），`parallel()` 本身就是 Workflow 脚本中的全局函数，配合 `agent()` 可以实现 DAG（有向无环图）级别的任务编排。此外，在对话中直接描述并行任务需求，CC 也可以自行调度多个 Agent 并发执行。
 
 ### 相关场景
 

@@ -96,16 +96,17 @@ git checkout main
 
 ```typescript
 // scripts/parallel-features.ts
-import { parallel } from '@anthropic-ai/claude-code'
+export const meta = {
+  title: '并行 Feature 开发：头像上传 + 邮件重构',
+  description: '在两个独立 Worktree 中并行开发用户头像上传组件和邮件通知模块重构'
+}
 
-async function main() {
-  const results = await parallel([
-    {
-      agent: 'feature-avatar',
-      description: '开发用户头像上传组件',
-      isolation: 'worktree',
-      branch: 'feature/avatar-upload',
-      prompt: `
+const [resultA, resultB] = await parallel([
+  {
+    description: '开发用户头像上传组件',
+    isolation: 'worktree',
+    branch: 'feature/avatar-upload',
+    prompt: `
 在 feature/avatar-upload 分支上开发用户头像上传功能，改动范围仅限于以下目录：
 
 ## 需求
@@ -127,13 +128,12 @@ async function main() {
 
 完成后输出：改了哪些文件、每个文件的用途、如何测试（curl 命令或手动操作步骤）。
 `
-    },
-    {
-      agent: 'feature-mail',
-      description: '重构邮件通知模块',
-      isolation: 'worktree',
-      branch: 'feature/mail-refactor',
-      prompt: `
+  },
+  {
+    description: '重构邮件通知模块',
+    isolation: 'worktree',
+    branch: 'feature/mail-refactor',
+    prompt: `
 在 feature/mail-refactor 分支上重构邮件通知模块，改动范围仅限于 lib/mail/ 和 emails/ 目录。
 
 ## 需求
@@ -154,28 +154,21 @@ async function main() {
 
 完成后输出：改了哪些文件、MailService 接口设计理由、旧模板和新 React Email 模板的对比。
 `
-    }
-  ])
-
-  for (const [i, result] of results.entries()) {
-    console.log(`\n===== Agent ${i + 1} 完成 =====`)
-    console.log(result.output)
   }
-}
+])
 
-main()
+log(`\n===== Agent 1 完成 =====`)
+log(resultA.output)
+log(`\n===== Agent 2 完成 =====`)
+log(resultB.output)
 ```
 
-然后运行脚本：
-
-```bash
-npx tsx scripts/parallel-features.ts
-```
+脚本编写完成后，通过 Claude Code 的 Workflow 工具运行即可。Workflow 脚本在对话中执行——将脚本内容提供给 CC，它会自动识别 `export const meta` 格式并调用 Workflow 工具。
 
 脚本执行后，两个 Agent 会分别在各自的 worktree 中启动。你会看到 Agent A checkout 到 `feature/avatar-upload` 的 worktree，Agent B checkout 到 `feature/mail-refactor` 的 worktree——两个目录完全隔离，并行推进。
 
 :::tip
-`isolation: 'worktree'` 是 Agent SDK 的内置选项，不需要手动 `git worktree add`。Agent 启动时会自动创建临时 worktree、checkout 目标分支，任务完成后自动清理（除非你配置了保留）。
+`isolation: 'worktree'` 是 Workflow 的内置选项，不需要手动 `git worktree add`。Agent 启动时会自动创建临时 worktree、checkout 目标分支，任务完成后自动清理（除非你配置了保留）。
 :::
 
 ### Step 2：Agent A 在 worktree A 开发头像上传功能

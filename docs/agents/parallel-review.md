@@ -375,11 +375,7 @@ severity 为 critical 的两个问题（SQL 注入和并发超卖）应该在 CI
 
 ### CI 中集成自动审查
 
-将上述 Workflow 脚本集成到 CI 流程中，每次 PR 自动触发：
-
-```bash
-claude run parallel-review.workflow.js --output review-report.json
-```
+将上述 Workflow 脚本保存为文件，通过 Workflow 工具运行即可触发多 Agent 并行审查。Claude Code 没有独立的 CLI 运行命令 —— Workflow 脚本在对话中通过 Workflow 工具执行，或直接将审查模式用自然语言描述给 Claude Code，由它自行编排 parallel/agent 调用。
 
 配合 severity 等级设置 CI 门禁：`critical` 和 `high` 级别的问题阻止合并，`medium` 和 `low` 只做告警。
 
