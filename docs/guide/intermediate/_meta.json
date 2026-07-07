@@ -1,1 +1,9 @@
-["codebase-navigation", "slash-commands", "claude-md", "git-workflow", "context-management", "orca-quickstart"]
+[
+  "codebase-navigation",
+  "slash-commands",
+  "git-workflow",
+  "claude-md",
+  "claude-md-collection",
+  "context-management",
+  "improve-ai-accuracy"
+]

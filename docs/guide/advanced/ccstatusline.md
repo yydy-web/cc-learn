@@ -3,6 +3,20 @@ title: CCStatusline 状态栏
 description: 使用 CCStatusline 自定义 Claude Code 终端状态栏，实时显示模型、Git 分支、Token 用量等信息
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★☆☆☆    |
+| 🧪 测试 | ★★★☆☆  | ★★☆☆☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★☆☆    |
+
+**🎯 学习产出：** 掌握 CC Statusline 的配置，能定制终端状态栏显示
+
+**🚀 AI 能力提升：** 上下文管理
+:::
+
 # CCStatusline 状态栏
 
 [CCStatusline](https://github.com/sirmalloc/ccstatusline) 是一个高度可定制的 Claude Code CLI 状态栏工具，在终端底部实时显示当前模型、Git 分支、Token 用量、会话费用等关键信息。

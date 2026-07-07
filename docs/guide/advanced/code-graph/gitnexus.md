@@ -3,6 +3,20 @@ title: GitNexus 代码智能平台
 description: 使用 GitNexus 构建企业级代码智能平台——本地代码图谱、MCP、CLI、Web UI、多仓库支持
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★☆☆  | ★★★★☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★★★    |
+
+**🎯 学习产出：** 掌握 GitNexus 的安装、12 阶段 ingestion pipeline 和 MCP 工具集，能独立构建多仓库代码智能平台，使用 api_impact 和 shape_check 提前暴露 API 变更风险
+
+**🚀 AI 能力提升：** 上下文管理、项目协作
+:::
+
 # GitNexus 代码智能平台
 
 GitNexus 是一个工程化程度最高的代码图谱工具，定位为 Agent 时代的代码理解基础设施。它不只是一个代码索引，而是集成了本地代码图谱、MCP 服务器、CLI、HTTP bridge、Web UI、hooks、skills、wiki 和多仓库 group 的完整平台。

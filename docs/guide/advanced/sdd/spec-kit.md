@@ -3,6 +3,20 @@ title: Spec-Kit 规格驱动开发
 description: 使用 GitHub Spec-Kit 实现规格驱动开发（SDD），从规格文档自动生成高质量实现
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★☆☆  | ★★★★☆    |
+| 📦 产品 | ★★★☆☆  | ★★★★☆    |
+
+**🎯 学习产出：** 掌握 Spec-Kit 的 7 步完整工作流（Constitution → Specify → Clarify → Plan → Validate → Tasks → Implement），能独立使用 Spec-Kit 从零搭建规格驱动的开发项目
+
+**🚀 AI 能力提升：** 规格驱动、代码生成
+:::
+
 # Spec-Kit 规格驱动开发
 
 [Spec-Kit](https://github.com/github/spec-kit) 是 GitHub 官方开源的规格驱动开发（Spec-Driven Development, SDD）工具包。它的核心理念是：**规格（Spec）不是代码的附属品，代码才是规格的实现产物**。当需求变更时，你重新生成规格而非手动重写代码。

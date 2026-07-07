@@ -3,5 +3,5 @@
   { "type": "dir-section-header", "name": "workflow", "label": "开发工作流" },
   { "type": "dir-section-header", "name": "docs-context", "label": "文档与上下文" },
   { "type": "dir-section-header", "name": "code-intelligence", "label": "代码智能" },
-  { "type": "dir-section-header", "name": "frontend", "label": "前端框架" }
+  { "type": "dir-section-header", "name": "frontend", "label": "前端开发" }
 ]

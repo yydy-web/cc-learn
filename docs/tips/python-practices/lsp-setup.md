@@ -3,6 +3,20 @@ title: Python LSP 配置指南
 description: 配置 Claude Code 内置 Python LSP（basedpyright），从 grep 文本搜索升级到语义级代码理解和即时诊断，大幅提升 Python 测试开发效率
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★★☆  | ★★★☆☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★★★    |
+
+**🎯 学习产出：** 掌握 Python LSP 配置，能独立完成 basedpyright 的安装、配置和验证
+
+**🚀 AI 能力提升：** 跨文件重构、调试诊断
+:::
+
 # Python LSP 配置指南
 
 Claude Code 从 v2.0.74 开始支持 LSP（Language Server Protocol）集成。对 Python 项目而言，配置 LSP 意味着从 grep 全文搜索升级到**语义级代码理解**——查询速度从 30 秒降到 50 毫秒，准确率从模糊匹配提升到 100% 语义精确。
@@ -210,3 +224,7 @@ pip install pytest-types
   "pythonVersion": "3.12"
 }
 ```
+
+:::tip 下一步
+LSP 配置完成后，建议阅读 [Page Object Model 深度实践](./playwright-pom) 或 [API 测试架构模式](./api-testing-patterns) 开始编写高质量的测试代码。LSP 的语义能力会在你编写 fixture、追踪调用链时发挥最大价值。
+:::

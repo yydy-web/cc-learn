@@ -3,6 +3,20 @@ title: Evaluate 命令
 description: Impeccable 评估类命令参考，包括五维度技术质量审计和设计批判性分析
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★★★  | ★★★☆☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★★☆    |
+
+**🎯 学习产出：** 掌握 Impeccable 评估阶段，能独立使用 audit 和 critique 进行五维度技术质量审计和设计批判性分析
+
+**🚀 AI 能力提升：** 代码审查
+:::
+
 # Evaluate 命令
 
 Evaluate 类命令用于评估现有设计的质量和一致性。Impeccable 提供两种评估方式：`audit` 进行量化技术检查，`critique` 进行定性设计审查。
@@ -249,3 +263,11 @@ Key indicators: Gradient hero, card grid below, CTA section at bottom
 | 适用场景 | 技术质量、可访问性、性能 | 设计审美、视觉层次、AI slop |
 | 建议顺序 | 先 critique，后 audit    | —                           |
 | 关注重点 | 代码和实现               | 视觉和体验                  |
+
+## 下一步
+
+- [Create 命令](/commands/impeccable/create) — 从零开始创建新功能
+- [Refine 命令](/commands/impeccable/refine) — 优化视觉和交互细节
+- [Simplify 命令](/commands/impeccable/simplify) — 简化和澄清设计
+- [Harden 命令](/commands/impeccable/harden) — 将功能推向生产就绪状态
+- [System 命令](/commands/impeccable/system) — 设计系统级别的自动化支持

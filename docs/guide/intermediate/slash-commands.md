@@ -1,7 +1,21 @@
 ---
 title: Slash 命令
-description: Claude Code 内置的 Slash 命令速查和使用技巧
+description: Claude Code 内置的 Slash 命令速查和使用技巧，涵盖对话管理、模型切换、配置管理和工作模式切换，帮助提升日常开发效率
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★☆☆☆    |
+| 🧪 测试 | ★★★★☆  | ★★☆☆☆    |
+| 📦 产品 | ★★★★☆  | ★★☆☆☆    |
+
+**🎯 学习产出：** 掌握所有内置斜杠命令的用法，能快速切换工作模式和控制会话成本
+
+**🚀 AI 能力提升：** 自动化工作流、上下文管理
+:::
 
 # Slash 命令
 
@@ -45,7 +59,7 @@ description: Claude Code 内置的 Slash 命令速查和使用技巧
 
 ### 对话过长时
 
-```
+```text
 > /compact
 ```
 
@@ -53,7 +67,7 @@ description: Claude Code 内置的 Slash 命令速查和使用技巧
 
 ### 切换到规划模式
 
-```
+```text
 > /plan
 > 帮我规划一下如何把这个单体应用拆分成微服务架构
 ```
@@ -62,7 +76,7 @@ description: Claude Code 内置的 Slash 命令速查和使用技巧
 
 ### 查看费用
 
-```
+```text
 > /cost
 ```
 
@@ -74,3 +88,4 @@ description: Claude Code 内置的 Slash 命令速查和使用技巧
 - [CLI 参考](/commands/cli-reference) — CLI 子命令和启动参数
 - [CLAUDE.md 与项目约定](/guide/intermediate/claude-md) — 用项目配置提升 Claude Code 效果
 - [上下文管理](/guide/intermediate/context-management) — 管理对话上下文和记忆
+- [代码库导航](/guide/intermediate/codebase-navigation) — 用 Slash 命令辅助代码库探索

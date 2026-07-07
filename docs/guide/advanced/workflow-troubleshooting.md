@@ -3,6 +3,20 @@ title: 工作流故障排除
 description: Claude Code 开发工作流中的常见卡点诊断与修复方案，覆盖 Skills 触发、规则冲突、Worktree 管理等场景
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★★☆  | ★★★☆☆    |
+| 📦 产品 | ★★★☆☆  | ★★★★☆    |
+
+**🎯 学习产出：** 掌握工作流诊断方法，能独立排查和修复 Skills 触发、规则冲突、Worktree 管理等常见故障
+
+**🚀 AI 能力提升：** 调试诊断、自动化工作流
+:::
+
 # 工作流故障排除
 
 使用 Claude Code 配合各类插件和 Skills 时，难免遇到卡点。本文整理最常见的故障场景，提供诊断思路和修复方案。
@@ -144,6 +158,13 @@ claude mcp list
 | 返工率         | 返工任务数 / 总任务数  | < 20%  |
 | 代码审查通过率 | 一次通过审查的任务比例 | ≥ 70%  |
 | 变更归档率     | 已归档变更 / 总变更    | 100%   |
+
+## 下一步
+
+- [任务中断与恢复](/guide/advanced/task-interruption-recovery) — 三层持久化和中断恢复策略
+- [双框架踩坑指南](/guide/advanced/sdd/openspec-superpowers-pitfalls) — OpenSpec + Superpowers 特定问题
+- [AGENTS 全局路由协议](/guide/advanced/agents-routing) — 多框架优先级配置
+- [上下文管理](/guide/intermediate/context-management) — Token 管理基础
 
 ## 相关资源
 

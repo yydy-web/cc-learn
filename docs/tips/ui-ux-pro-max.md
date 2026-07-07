@@ -3,6 +3,20 @@ title: UI/UX Pro Max — 设计智能系统
 description: UI/UX Pro Max 为 Claude Code 注入 161 套配色、57 组字体、50+ 设计风格，让 AI 一次找对方向不反复试
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★☆☆☆  | ★★★★☆    |
+| 📦 产品 | ★★★★☆  | ★★★☆☆    |
+
+**🎯 学习产出：** 掌握 UI/UX Pro Max 设计检索系统，能独立从 161 套配色和 50+ 风格中快速匹配最适合产品的设计参数
+
+**🚀 AI 能力提升：** 设计→代码
+:::
+
 # UI/UX Pro Max — 设计智能系统
 
 > 你不需要反复描述"我想要那种风格"——直接搜，一步到位。
@@ -78,35 +92,35 @@ python3 skills/ui-ux-pro-max/scripts/search.py "list performance" --stack react
 
 ### 检索域一览
 
-| 域 | 用途 | 示例关键词 |
-|----|------|-----------|
-| `--design-system` | 完整设计系统（风格+配色+字体+效果） | `"beauty spa wellness"` |
-| `--domain color` | 按产品/行业搜配色 | `fintech, ecommerce, healthcare` |
-| `--domain style` | UI 风格详情 | `glassmorphism, minimalism, brutalism` |
-| `--domain typography` | 字体配对 | `elegant, playful, modern` |
-| `--domain ux` | 交互/无障碍/动画准则 | `animation, accessibility, touch` |
-| `--domain chart` | 图表类型推荐 | `trend, comparison, real-time` |
-| `--domain landing` | 落地页结构 | `hero, pricing, social-proof` |
-| `--domain product` | 产品类型模式 | `SaaS, e-commerce, entertainment` |
-| `--stack react` | React/Next.js 实现建议 | `rerender, suspense, bundle` |
-| `--stack react-native` | React Native 组件 | `FlatList, navigation, safe area` |
+| 域                     | 用途                                | 示例关键词                             |
+| ---------------------- | ----------------------------------- | -------------------------------------- |
+| `--design-system`      | 完整设计系统（风格+配色+字体+效果） | `"beauty spa wellness"`                |
+| `--domain color`       | 按产品/行业搜配色                   | `fintech, ecommerce, healthcare`       |
+| `--domain style`       | UI 风格详情                         | `glassmorphism, minimalism, brutalism` |
+| `--domain typography`  | 字体配对                            | `elegant, playful, modern`             |
+| `--domain ux`          | 交互/无障碍/动画准则                | `animation, accessibility, touch`      |
+| `--domain chart`       | 图表类型推荐                        | `trend, comparison, real-time`         |
+| `--domain landing`     | 落地页结构                          | `hero, pricing, social-proof`          |
+| `--domain product`     | 产品类型模式                        | `SaaS, e-commerce, entertainment`      |
+| `--stack react`        | React/Next.js 实现建议              | `rerender, suspense, bundle`           |
+| `--stack react-native` | React Native 组件                   | `FlatList, navigation, safe area`      |
 
 ### 优先级体系
 
 Skill 内置 10 个优先级分类，按重要性从 1 到 10。做 UI 时按顺序检查：
 
-| 优先级 | 类别 | 必查项 | 常见翻车点 |
-|--------|------|--------|-----------|
-| 1 | 无障碍 | 对比度 4.5:1、键盘导航、aria-label | 去掉 focus ring、纯图标按钮无标签 |
-| 2 | 触控交互 | 44×44px 最小区域、8px 间距、加载反馈 | 依赖 hover、0ms 状态切换 |
-| 3 | 性能 | WebP/AVIF、懒加载、预留空间防 CLS | 布局抖动、同步大图 |
-| 4 | 风格选择 | 匹配产品类型、一致性、SVG 图标 | 混搭、用 emoji 做图标 |
-| 5 | 布局响应式 | 移动优先、viewport meta、无水平滚动 | 固定 px 容器、禁用缩放 |
-| 6 | 字体配色 | body 16px、行高 1.5、语义色值 token | 正文小于 12px、硬编码 hex |
-| 7 | 动画 | 150-300ms、动画传达含义 | 纯装饰动画、animate width/height |
-| 8 | 表单反馈 | 可见 label、错误就近显示 | placeholder 当 label、错误只在顶部 |
-| 9 | 导航 | 底部导航 ≤5 项、可预测返回 | 导航过载、无深链 |
-| 10 | 图表 | 图例、tooltip、无障碍配色 | 只用颜色区分数据 |
+| 优先级 | 类别       | 必查项                               | 常见翻车点                         |
+| ------ | ---------- | ------------------------------------ | ---------------------------------- |
+| 1      | 无障碍     | 对比度 4.5:1、键盘导航、aria-label   | 去掉 focus ring、纯图标按钮无标签  |
+| 2      | 触控交互   | 44×44px 最小区域、8px 间距、加载反馈 | 依赖 hover、0ms 状态切换           |
+| 3      | 性能       | WebP/AVIF、懒加载、预留空间防 CLS    | 布局抖动、同步大图                 |
+| 4      | 风格选择   | 匹配产品类型、一致性、SVG 图标       | 混搭、用 emoji 做图标              |
+| 5      | 布局响应式 | 移动优先、viewport meta、无水平滚动  | 固定 px 容器、禁用缩放             |
+| 6      | 字体配色   | body 16px、行高 1.5、语义色值 token  | 正文小于 12px、硬编码 hex          |
+| 7      | 动画       | 150-300ms、动画传达含义              | 纯装饰动画、animate width/height   |
+| 8      | 表单反馈   | 可见 label、错误就近显示             | placeholder 当 label、错误只在顶部 |
+| 9      | 导航       | 底部导航 ≤5 项、可预测返回           | 导航过载、无深链                   |
+| 10     | 图表       | 图例、tooltip、无障碍配色            | 只用颜色区分数据                   |
 
 ## 日常使用
 
@@ -152,25 +166,25 @@ python3 skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard enterprise" --des
 
 <style scoped>
 .card {
-  background: #1E293B;      /* slate-800 — 来自设计系统 */
-  padding: 24px;             /* 来自 spacing scale */
-  border-radius: 12px;       /* 来自 effects */
-  color: #F8FAFC;            /* slate-50 — 正文色 */
+  background: #1e293b; /* slate-800 — 来自设计系统 */
+  padding: 24px; /* 来自 spacing scale */
+  border-radius: 12px; /* 来自 effects */
+  color: #f8fafc; /* slate-50 — 正文色 */
 }
 .card-label {
   font-size: 14px;
-  color: #94A3B8;            /* slate-400 — 次级文字 */
+  color: #94a3b8; /* slate-400 — 次级文字 */
   font-weight: 500;
   margin-bottom: 8px;
 }
 .card-value {
   font-size: 32px;
   font-weight: 700;
-  color: #F8FAFC;            /* 高对比度 */
+  color: #f8fafc; /* 高对比度 */
   margin-bottom: 8px;
 }
 .card-trend.up {
-  color: #22C55E;            /* green-500 — 涨用绿 */
+  color: #22c55e; /* green-500 — 涨用绿 */
   font-size: 14px;
   font-weight: 600;
 }
@@ -186,7 +200,11 @@ python3 skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard enterprise" --des
 ```vue
 <!-- 随手写的，没考虑触控大小、对比度 -->
 <template>
-  <input v-model="query" placeholder="搜索..." style="padding: 6px 10px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px;" />
+  <input
+    v-model="query"
+    placeholder="搜索..."
+    style="padding: 6px 10px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px;"
+  />
 </template>
 ```
 
@@ -203,7 +221,7 @@ python3 skills/ui-ux-pro-max/scripts/search.py "search input touch form" --domai
 <template>
   <div class="search-wrapper">
     <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20">
-      <path d="M15.5 14h-.79l-.28-.27A6.471..." fill="currentColor"/>
+      <path d="M15.5 14h-.79l-.28-.27A6.471..." fill="currentColor" />
     </svg>
     <input
       v-model="query"
@@ -226,28 +244,28 @@ python3 skills/ui-ux-pro-max/scripts/search.py "search input touch form" --domai
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #94A3B8;
+  color: #94a3b8;
   /* SVG 矢量图标，不是 emoji 🔍 */
 }
 .search-input {
   width: 100%;
-  height: 44px;              /* 最小触控目标 */
-  padding: 0 16px 0 40px;    /* 给左侧图标留空间 */
-  font-size: 16px;            /* 避免 iOS 自动缩放 */
-  color: #1E293B;             /* 正文对比度 >4.5:1 */
-  border: 1px solid #CBD5E1;
+  height: 44px; /* 最小触控目标 */
+  padding: 0 16px 0 40px; /* 给左侧图标留空间 */
+  font-size: 16px; /* 避免 iOS 自动缩放 */
+  color: #1e293b; /* 正文对比度 >4.5:1 */
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  background: #FFFFFF;
+  background: #ffffff;
   outline: none;
   transition: border-color 200ms ease;
 }
 .search-input:focus {
-  border-color: #3B82F6;     /* 聚焦状态可见 */
+  border-color: #3b82f6; /* 聚焦状态可见 */
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 .search-error {
   font-size: 13px;
-  color: #DC2626;             /* 错误色 — 对比度达标 */
+  color: #dc2626; /* 错误色 — 对比度达标 */
   margin-top: 4px;
 }
 </style>
@@ -330,25 +348,25 @@ public enum DesignToken {
 
 ```css
 .admin-sidebar {
-  background: var(--surface-default);      /* #0F172A — 固定语义 */
-  color: var(--on-surface-primary);        /* #F8FAFC */
+  background: var(--surface-default); /* #0F172A — 固定语义 */
+  color: var(--on-surface-primary); /* #F8FAFC */
   font-family: var(--font-family);
-  padding: var(--spacing-lg);              /* 24px */
+  padding: var(--spacing-lg); /* 24px */
 }
 .menu-item {
-  height: 44px;                           /* 满足触控最小尺寸 */
-  padding: 0 var(--spacing-md);            /* 16px */
-  font-size: var(--font-size-sm);          /* 14px */
-  color: var(--on-surface-secondary);      /* #94A3B8 */
-  border-radius: var(--border-radius);     /* 8px */
+  height: 44px; /* 满足触控最小尺寸 */
+  padding: 0 var(--spacing-md); /* 16px */
+  font-size: var(--font-size-sm); /* 14px */
+  color: var(--on-surface-secondary); /* #94A3B8 */
+  border-radius: var(--border-radius); /* 8px */
   transition: background var(--duration-fast) ease;
 }
 .menu-item:hover {
-  background: var(--surface-variant);      /* #1E293B */
+  background: var(--surface-variant); /* #1E293B */
 }
 .menu-item.active {
-  background: var(--color-primary);        /* #3B82F6 */
-  color: #FFFFFF;
+  background: var(--color-primary); /* #3B82F6 */
+  color: #ffffff;
 }
 ```
 
@@ -425,6 +443,7 @@ public record ApiResponse(
 ```
 
 关键设计决策来自 UX 准则：
+
 - 错误响应体包含 `field` 和 `message`——前端可以在每个输入框下方就近显示
 - 业务错误包含原因 + 修复路径（"已被占用，请换一个"），而不只是"名称错误"
 - 校验失败后前端可以 `focus` 到第一个错误字段（WCAG 规范）
@@ -521,102 +540,106 @@ Anti-patterns: 避免纯白+纯黑强对比（太重），不要用粉/红强调
             autocomplete="current-password"
             class="field-input"
           />
-          <button type="button" class="toggle-pwd" @click="showPwd = !showPwd">
-            {{ showPwd ? '隐藏' : '显示' }}
-          </button>
+          <button type="button" class="toggle-pwd" @click="showPwd = !showPwd">{{ showPwd ? '隐藏' : '显示' }}</button>
         </div>
 
-        <button type="submit" class="btn-primary" :disabled="loading">
-          {{ loading ? '登录中…' : '登录' }}
-        </button>
+        <button type="submit" class="btn-primary" :disabled="loading">{{ loading ? '登录中…' : '登录' }}</button>
       </form>
     </main>
   </div>
 </template>
 
 <style scoped>
-.login-page {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100vh;
-}
-.brand-panel {
-  background: #0891B2;         /* primary — 来自设计系统 */
-  color: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 48px;
-}
-.form-panel {
-  background: #F8FAFC;          /* surface — 来自设计系统 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 48px;
-}
-.login-form {
-  width: 100%;
-  max-width: 400px;
-}
-.form-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: #0F172A;
-  margin-bottom: 32px;
-}
-.field-label {
-  display: block;               /* 可见 label — UX 准则 */
-  font-size: 14px;
-  font-weight: 500;
-  color: #334155;
-  margin-bottom: 6px;
-}
-.field-input {
-  width: 100%;
-  height: 44px;                 /* ≥44px 触控目标 */
-  padding: 0 12px;
-  font-size: 16px;
-  border: 1px solid #CBD5E1;
-  border-radius: 8px;
-  background: #FFFFFF;
-  margin-bottom: 20px;
-}
-.field-input:focus {
-  border-color: #0891B2;        /* 聚焦可见 — 无障碍 */
-  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
-}
-.btn-primary {
-  width: 100%;
-  height: 44px;
-  background: #0891B2;          /* primary */
-  color: #FFFFFF;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 150ms ease;
-}
-.btn-primary:hover { background: #0E7490; }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-primary:focus-visible {     /* focus ring — 不删 */
-  outline: 2px solid #0891B2;
-  outline-offset: 2px;
-}
-.password-wrapper { position: relative; }
-.toggle-pwd {
-  position: absolute;
-  right: 12px;
-  top: 12px;
-  background: none;
-  border: none;
-  font-size: 14px;
-  color: #64748B;
-  cursor: pointer;
-}
+  .login-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+  }
+  .brand-panel {
+    background: #0891b2; /* primary — 来自设计系统 */
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 48px;
+  }
+  .form-panel {
+    background: #f8fafc; /* surface — 来自设计系统 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+  }
+  .login-form {
+    width: 100%;
+    max-width: 400px;
+  }
+  .form-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 32px;
+  }
+  .field-label {
+    display: block; /* 可见 label — UX 准则 */
+    font-size: 14px;
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 6px;
+  }
+  .field-input {
+    width: 100%;
+    height: 44px; /* ≥44px 触控目标 */
+    padding: 0 12px;
+    font-size: 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #ffffff;
+    margin-bottom: 20px;
+  }
+  .field-input:focus {
+    border-color: #0891b2; /* 聚焦可见 — 无障碍 */
+    box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
+  }
+  .btn-primary {
+    width: 100%;
+    height: 44px;
+    background: #0891b2; /* primary */
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 150ms ease;
+  }
+  .btn-primary:hover {
+    background: #0e7490;
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .btn-primary:focus-visible {
+    /* focus ring — 不删 */
+    outline: 2px solid #0891b2;
+    outline-offset: 2px;
+  }
+  .password-wrapper {
+    position: relative;
+  }
+  .toggle-pwd {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #64748b;
+    cursor: pointer;
+  }
 </style>
 ```
 
@@ -651,12 +674,14 @@ python3 skills/ui-ux-pro-max/scripts/search.py "icon contrast touch-target form-
 **反例 1 — emoji 当图标**
 
 当前代码：
+
 ```vue
 <!-- ❌ emoji 在不同 OS 上显示完全不同 -->
 <button @click="exportCSV">📥 导出</button>
 ```
 
 修复：
+
 ```vue
 <!-- ✅ SVG 图标，跨平台一致 -->
 <button @click="exportCSV" class="btn-secondary">
@@ -670,17 +695,19 @@ python3 skills/ui-ux-pro-max/scripts/search.py "icon contrast touch-target form-
 **反例 2 — 按钮太小**
 
 当前代码：
+
 ```vue
 <!-- ❌ 高度 28px，手机上根本点不到 -->
 <button style="padding: 2px 8px; font-size: 12px;">删除</button>
 ```
 
 修复：
+
 ```vue
 <!-- ✅ 最小 44px 触控区域 -->
 <style>
 .btn-danger-sm {
-  min-height: 44px;         /* iOS HIG 标准 */
+  min-height: 44px; /* iOS HIG 标准 */
   min-width: 44px;
   padding: 8px 16px;
   font-size: 14px;
@@ -694,18 +721,22 @@ python3 skills/ui-ux-pro-max/scripts/search.py "icon contrast touch-target form-
 **反例 3 — 低对比度文字**
 
 当前代码：
+
 ```html
 <!-- ❌ 次级文字 #999 在白色背景上对比度 2.85:1，不达标 -->
 <p style="color: #999;">最后更新：2024-01-15</p>
 ```
 
 修复：
+
 ```html
 <!-- ✅ #64748B (slate-500) 对比度 4.6:1，达标 -->
 <p class="text-secondary">最后更新：2024-01-15</p>
 
 <style>
-.text-secondary { color: #64748B; }  /* 来自设计系统的语义 token */
+  .text-secondary {
+    color: #64748b;
+  } /* 来自设计系统的语义 token */
 </style>
 ```
 
@@ -736,6 +767,7 @@ python3 skills/ui-ux-pro-max/scripts/search.py "analytics dashboard data-dense e
 ```
 
 输出：
+
 ```
 Style: Data-Dense Minimalism
   — 信息优先，装饰最小化
@@ -758,6 +790,7 @@ python3 skills/ui-ux-pro-max/scripts/search.py "trend comparison real-time dashb
 ```
 
 拿到准则：
+
 - 趋势 → 折线图，时间 → 横轴
 - 对比 → 柱状图，同色系变体
 - 图例必须可见且可交互
@@ -832,18 +865,18 @@ public class DashboardService {
 
 <style scoped>
 .dashboard {
-  padding: 24px;              /* 4pt scale */
-  background: #0F172A;        /* surface — 来自设计系统 */
+  padding: 24px; /* 4pt scale */
+  background: #0f172a; /* surface — 来自设计系统 */
   min-height: 100vh;
 }
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;                  /* 8dp spacing rhythm */
+  gap: 16px; /* 8dp spacing rhythm */
   margin-bottom: 24px;
 }
 .chart-card {
-  background: #1E293B;        /* card — 来自设计系统 */
+  background: #1e293b; /* card — 来自设计系统 */
   border-radius: 12px;
   padding: 24px;
 }
@@ -851,7 +884,7 @@ public class DashboardService {
   font-family: 'Inter', sans-serif;
   font-size: 18px;
   font-weight: 600;
-  color: #F8FAFC;
+  color: #f8fafc;
   margin-bottom: 20px;
 }
 </style>
@@ -864,6 +897,7 @@ python3 skills/ui-ux-pro-max/scripts/search.py "animation reduced-motion contras
 ```
 
 确认：
+
 - 图表有 `aria-label` 摘要
 - 数字用 tabular figures 防止刷新抖动
 - 折线图颜色不依赖红/绿唯一区分
@@ -875,15 +909,15 @@ python3 skills/ui-ux-pro-max/scripts/search.py "animation reduced-motion contras
 
 ### 什么时候用
 
-| 场景 | 适合 | 不适合 |
-|------|------|--------|
-| 新项目/新页面 | ✅ 先 `--design-system` | — |
-| 改配色/改风格 | ✅ 重新检索对应域 | — |
-| 组件开发 | ✅ 配合 UX 准则 | — |
-| 交付前检查 | ✅ 全量 UX 查询 | — |
-| 修 bug | — | ❌ 跟设计无关 |
-| 后端逻辑 | — | ❌ 纯 API/数据库 |
-| 写测试 | — | ❌ 不涉及界面 |
+| 场景          | 适合                    | 不适合           |
+| ------------- | ----------------------- | ---------------- |
+| 新项目/新页面 | ✅ 先 `--design-system` | —                |
+| 改配色/改风格 | ✅ 重新检索对应域       | —                |
+| 组件开发      | ✅ 配合 UX 准则         | —                |
+| 交付前检查    | ✅ 全量 UX 查询         | —                |
+| 修 bug        | —                       | ❌ 跟设计无关    |
+| 后端逻辑      | —                       | ❌ 纯 API/数据库 |
+| 写测试        | —                       | ❌ 不涉及界面    |
 
 ### 设计系统持久化
 

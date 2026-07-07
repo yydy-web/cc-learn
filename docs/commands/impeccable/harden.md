@@ -3,6 +3,20 @@ title: Harden 命令
 description: Impeccable Harden 类命令参考，涵盖 harden、onboard、optimize 和 polish 四个命令的完整用法
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★★★  | ★★★☆☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★★☆    |
+
+**🎯 学习产出：** 掌握 Impeccable 加固阶段，能独立使用 harden、onboard、optimize、polish 将功能推向生产就绪状态
+
+**🚀 AI 能力提升：** 代码审查、测试生成
+:::
+
 # Harden 命令
 
 Harden 类命令用于加固和完善已有功能，使产品达到生产就绪状态。它们覆盖了错误处理、用户引导、性能优化和最终打磨。

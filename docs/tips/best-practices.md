@@ -1,7 +1,21 @@
 ---
 title: 最佳实践
-description: Claude Code 日常使用中的高效技巧和常见模式
+description: Claude Code 日常使用中的高效技巧和常见模式，涵盖对话技巧、工作流模式、四阶段开发闭环、省钱策略、团队协作和上下文管理
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★☆☆☆    |
+| 🧪 测试 | ★★★★☆  | ★★☆☆☆    |
+| 📦 产品 | ★★★★☆  | ★★☆☆☆    |
+
+**🎯 学习产出：** 掌握 Claude Code 最佳实践，能独立构建从需求到交付的完整四阶段开发流程
+
+**🚀 AI 能力提升：** 代码生成、上下文管理、自动化工作流
+:::
 
 # 最佳实践
 
@@ -549,3 +563,15 @@ OpenSpec + Superpowers 同时注入上下文时，Token 消耗较大。建议分
 - 确保 `tasks.md` 每个任务都有明确的 DoD（Definition of Done）
 - 启动 Superpowers 前强制加载 OpenSpec 的 design.md 和 specs
 - 参考 [双框架踩坑指南](/guide/advanced/sdd/openspec-superpowers-pitfalls) 的完整解决方案
+
+## 相关页面
+
+- [Ponytail](/tips/ponytail) — 懒惰高级工程师模式，减少 80-94% 过度设计
+- [Caveman](/tips/caveman) — 极致 Token 省流模式，砍掉 65% 输出消耗
+- [ECC](/tips/ecc) — 企业级增强系统（63 Agent + 249 Skill）
+- [Superpowers](/tips/superpowers) — 工程化开发流程（5 大核心工作流）
+- [AI 生成代码自检](/tips/self-check) — 五步自检法提高准确率到 90%
+
+:::tip 功能串联
+本文的四阶段工作流（Gstack 治理 → OpenSpec 规格 → Superpowers 纪律 → Ralph 自动化）是一套完整的开发方法论。小项目可以从 [Superpowers](/tips/superpowers) 的 `/brainstorm` + TDD 开始，中型项目加上 [OpenSpec](/guide/advanced/sdd/openspec) 规格文档，大型企业项目引入 [Spec-Kit](/guide/advanced/sdd/spec-kit) 的完整治理体系。按需组合，避免一次性引入所有工具。
+:::

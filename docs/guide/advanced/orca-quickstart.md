@@ -3,6 +3,20 @@ title: Orca 快速上手
 description: 安装和配置 Orca 桌面应用作为 Claude Code 的运行环境，10 分钟内完成第一个 Worktree 任务
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★☆☆  | ★★★★☆    |
+| 📦 产品 | ★★★☆☆  | ★★★★☆    |
+
+**🎯 学习产出：** 快速上手 Orca，能独立完成 Worktree 任务的创建、执行、审查和提交
+
+**🚀 AI 能力提升：** 多智能体
+:::
+
 # Orca 快速上手
 
 Orca 是一个专为 AI 编程 Agent 设计的桌面环境（Agentic Development Environment，简称 ADE）。它让每个任务运行在独立的 Git Worktree 中，互不干扰。
@@ -47,7 +61,7 @@ claude --version
 
 在 Worktree 的终端中，向 Claude Code 发送你的第一个任务：
 
-```
+```text
 > 帮我修复登录页面的验证逻辑，当邮箱格式不正确时显示错误提示
 ```
 

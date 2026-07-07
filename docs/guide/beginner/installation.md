@@ -1,7 +1,21 @@
 ---
 title: 安装与配置
-description: Claude Code 的安装步骤、系统要求和初始配置
+description: Claude Code 的安装步骤、系统要求、API 认证方式和基本配置选项。帮助你从零开始完成安装和首次启动，并了解项目级配置的编写方法。
 ---
+
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★☆☆☆☆    |
+| 🧪 测试 | ★★★★☆  | ★★☆☆☆    |
+| 📦 产品 | ★★★☆☆  | ★★☆☆☆    |
+
+**🎯 学习产出：** 掌握 Claude Code 的安装和配置，能成功完成首次启动
+
+**🚀 AI 能力提升：** 上下文管理
+:::
 
 # 安装与配置
 
@@ -72,6 +86,10 @@ Claude Code 的配置文件位于 `~/.claude/settings.json`：
 | `model`             | 使用的模型         | `claude-sonnet-4-20250514` |
 | `permissions.allow` | 自动允许的工具列表 | `[]`                       |
 
+:::tip
+模型 ID 可能随版本更新而变化。使用 `claude --version` 查看当前支持的模型，或在 [Anthropic 文档](https://docs.anthropic.com/) 中查找最新模型 ID。
+:::
+
 ## 项目级配置
 
 在项目根目录创建 `CLAUDE.md` 文件，为 Claude Code 提供项目上下文：
@@ -96,3 +114,11 @@ Claude Code 的配置文件位于 `~/.claude/settings.json`：
 
 - [第一次对话](/guide/beginner/first-conversation) — 学习与 Claude Code 对话的基本技巧
 - [CLAUDE.md 与项目约定](/guide/intermediate/claude-md) — 深入了解项目配置
+
+:::tip 进阶阅读
+配置完成后，推荐继续阅读：
+
+- [权限管理](/guide/beginner/permissions) — 了解安全机制和权限配置
+- [Slash 命令](/guide/intermediate/slash-commands) — 掌握内置命令提升操作效率
+- [CC-Switch](/guide/advanced/cc-switch) — 在多 API Provider 之间一键切换
+  :::

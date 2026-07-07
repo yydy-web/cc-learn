@@ -1,17 +1,60 @@
 [
   "index",
-  "best-practices",
-  "ecc",
-  "ponytail",
+  {
+    "type": "section-header",
+    "label": "行为模式"
+  },
   "caveman",
+  "ponytail",
+  "ecc",
+  {
+    "type": "section-header",
+    "label": "通用技巧"
+  },
+  "best-practices",
+  "mistake-log-skill",
+  "debugging",
+  "self-check",
+  "multi-agent-tips",
+  "loop-engineering",
+  "feature-dev",
+  "claude-code-testing",
+  "superpowers",
+  "claude-mem",
+  "skill-creator",
+  {
+    "type": "section-header",
+    "label": "工具集成"
+  },
+  "codex",
+  "agent-browser",
+  "typescript-lsp",
+  "design-to-code",
+  "product-toolchain",
+  {
+    "type": "section-header",
+    "label": "设计工具"
+  },
   "ui-ux-pro-max",
   "frontend-design",
+  "emil-skills",
   "ppt-master",
-  "claude-mem",
-  "feature-dev",
-  "skill-creator",
-  "superpowers",
-  "codex",
+  {
+    "type": "section-header",
+    "label": "前端"
+  },
+  "frontend-best-practices",
+  "react-best-practices",
+  "vue-best-practices",
+  {
+    "type": "dir",
+    "name": "frontend-practices",
+    "label": "前端工具链集成"
+  },
+  {
+    "type": "section-header",
+    "label": "Java"
+  },
   "java-best-practices",
   "java-custom-skills",
   {
@@ -19,14 +62,10 @@
     "name": "java-practices",
     "label": "Java 工具链集成"
   },
-  "frontend-best-practices",
   {
-    "type": "dir",
-    "name": "frontend-practices",
-    "label": "前端工具链集成"
+    "type": "section-header",
+    "label": "Python"
   },
-  "react-best-practices",
-  "vue-best-practices",
   "python-best-practices",
   {
     "type": "dir",

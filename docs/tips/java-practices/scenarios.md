@@ -3,6 +3,20 @@ title: Java 场景实战指南
 description: Java/Spring Boot 开发实战案例，展示新功能开发、大型重构、遗留项目接管等场景中 ECC、Gstack、Superpowers、CodeGraph、Serena、Spec-Kit、Context7 的深度集成
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★★★  | ★★★☆☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★★★    |
+
+**🎯 学习产出：** 掌握 Java 实战场景，能独立在新功能开发、大型重构、遗留项目接管等场景中运用工具链
+
+**🚀 AI 能力提升：** 代码生成、测试生成
+:::
+
 # Java 场景实战指南
 
 本文提供 5 个完整的 Java/Spring Boot 开发实战案例，每个案例包含从需求到上线的完整步骤、具体命令、Prompt 示例和预期输出。案例覆盖 Java 开发中最常见的场景：新功能开发、大型重构、遗留项目接管、性能优化和安全加固。
@@ -570,3 +584,7 @@ AuthController.register()
 | 分析 | CodeGraph               | 敏感数据流向图          |
 | 修复 | Superpowers、ECC、Git   | 安全修复代码 + 安全测试 |
 | 审查 | Gstack                  | OWASP Top 10 审查通过   |
+
+:::tip 下一步
+5 个场景覆盖了 Java/Spring Boot 开发中最核心的实战领域。建议结合 [代码阅读分析指南](./code-reading) 提升代码理解效率，或返回 [集成工作流详解](./integrated-workflow) 回顾五阶段方法论。
+:::

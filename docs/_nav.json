@@ -1,5 +1,10 @@
 [
   {
+    "text": "学习路线",
+    "link": "/guide/learning-path/",
+    "activeMatch": "/guide/learning-path/"
+  },
+  {
     "text": "教程",
     "link": "/guide/quick-start",
     "activeMatch": "/guide/"
@@ -13,6 +18,11 @@
     "text": "技能",
     "link": "/skills/",
     "activeMatch": "/skills/"
+  },
+  {
+    "text": "Agency Agents",
+    "link": "/agents/",
+    "activeMatch": "/agents/"
   },
   {
     "text": "技巧",

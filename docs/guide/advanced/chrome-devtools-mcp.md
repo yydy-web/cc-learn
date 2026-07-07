@@ -3,6 +3,20 @@ title: Chrome DevTools MCP
 description: 使用 ChromeDevTools 团队（Google）提供的 MCP 服务器连接 Chrome DevTools Protocol，进行前端开发调试
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★★★  | ★★★☆☆    |
+| 📦 产品 | ★★★☆☆  | ★★★☆☆    |
+
+**🎯 学习产出：** 掌握 Chrome DevTools MCP 的配置和使用，能用 Claude Code 进行浏览器调试和自动化测试
+
+**🚀 AI 能力提升：** 调试诊断、测试生成、自动化工作流
+:::
+
 # Chrome DevTools MCP
 
 Chrome DevTools MCP 是 ChromeDevTools 团队（Google）提供的 MCP 服务器，通过 Chrome DevTools Protocol 连接浏览器，为 Claude Code 提供实时调试、性能分析和网络监控能力。

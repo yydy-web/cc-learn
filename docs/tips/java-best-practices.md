@@ -3,6 +3,20 @@ title: Java 开发最佳实践
 description: 使用 Claude Code 进行 Java 开发的完整指南，涵盖项目配置、提示词策略、测试、构建工具、工具链集成（ECC、GStack、Superpowers、CodeGraph、Serena）和自动化工作流
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★★☆  | ★★★☆☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★★★    |
+
+**🎯 学习产出：** 掌握 Java 开发最佳实践，能独立配置 Spring Boot 项目的 CLAUDE.md 并集成八大工具链完成从需求到交付的完整流程
+
+**🚀 AI 能力提升：** 代码生成、调试诊断
+:::
+
 # Java 开发最佳实践
 
 Claude Code 对 Java 生态（Spring Boot、Maven、Gradle、JUnit 等）有良好的支持。本文介绍如何在 Java 项目中高效使用 Claude Code，从项目配置到自动化工作流的最佳实践。

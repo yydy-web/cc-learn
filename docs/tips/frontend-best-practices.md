@@ -3,6 +3,20 @@ title: 前端开发最佳实践
 description: 使用 Claude Code 进行前端开发的完整指南，涵盖提示词策略、测试、组件开发、工具链集成（ECC、GStack、Superpowers、CodeGraph、Serena、Chrome DevTools MCP）和自动化工作流
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★★☆  | ★★★☆☆    |
+| 📦 产品 | ★★★☆☆  | ★★★★☆    |
+
+**🎯 学习产出：** 掌握前端 Claude Code 最佳实践，能独立配置项目级 CLAUDE.md 并集成七大工具链完成完整开发流程
+
+**🚀 AI 能力提升：** 代码生成、设计→代码
+:::
+
 # 前端开发最佳实践
 
 Claude Code 对前端生态（React、Vue、Next.js、TypeScript、Vite 等）有天然的优势——训练数据中前端代码占比高，生成质量好。本文介绍如何在前端项目中高效使用 Claude Code，从项目配置到自动化工作流的最佳实践。

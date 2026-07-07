@@ -3,6 +3,20 @@ title: Page Object Model 深度实践
 description: Playwright + pytest 下的 Page Object Model 完整实现指南，涵盖 BasePage 基类、多页面电商系统、组件嵌套、多环境切换和认证态复用
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★★★  | ★★★☆☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★★★    |
+
+**🎯 学习产出：** 掌握 Playwright POM 模式，能独立设计多页面电商系统的 Page Object Model 架构
+
+**🚀 AI 能力提升：** 测试生成、自动化工作流
+:::
+
 # Page Object Model 深度实践
 
 Page Object Model（PO）是 UI 自动化测试中最核心的设计模式。它的核心理念是：**将页面结构和操作封装为对象，让测试用例不直接接触 DOM 选择器**。当页面 UI 变更时，你只需修改对应的 Page Object 类，测试用例本身不受影响。
@@ -446,3 +460,7 @@ def test_login_with_invalid_credentials(login_page: "LoginPage"):
 | 断言不在 PO 里   | 断言留在测试用例中                   | PO 方法内写 `assert`           |
 | 选择器集中定义   | `__init__` 顶部定义所有 Locator      | 方法内临时 `page.locator(...)` |
 | nestable 组件    | Header/Footer/Sidebar 等复用为组件类 | 每个页面重复定义导航栏         |
+
+:::tip 下一步
+掌握了 PO 模式的设计原则后，建议阅读 [API 测试架构模式](./api-testing-patterns) 了解后端接口测试的分层策略，或查看 [真实场景实战案例](./scenarios) 了解 UI+API 混合测试的完整流程。
+:::

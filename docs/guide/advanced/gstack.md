@@ -3,6 +3,20 @@ title: Gstack 工具包
 description: 使用 Gstack 将 Claude Code 变成虚拟工程团队，覆盖规划、审查、QA、安全和部署全流程
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★★☆☆    |
+| 🧪 测试 | ★★★☆☆  | ★★★★☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★★★    |
+
+**🎯 学习产出：** 掌握 GStack 的 Sprint 工作流（Think → Plan → Build → Review → Test → Ship → Reflect）和 23+ 个角色化 Skills，能独立将 Claude Code 扩展为虚拟工程团队
+
+**🚀 AI 能力提升：** 自动化工作流、多智能体
+:::
+
 # Gstack 工具包
 
 Gstack（Garry's Stack）是由 Y Combinator CEO Garry Tan 开发的开源工具包，将 Claude Code 扩展为一个虚拟工程团队。它提供 23+ 个专业 Slash 命令，每个命令扮演一个工程角色——从产品经理、CEO 到 Staff Engineer、QA Lead 和安全负责人。

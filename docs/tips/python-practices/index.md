@@ -3,6 +3,20 @@ title: Python 测试工具链概览
 description: Python 自动化测试生态中 pytest、Playwright、httpx、basedpyright、factory_boy、pydantic 的工具全景与 Claude Code 协同工作流
 ---
 
+:::info {title="📊 页面导航"}
+**适用角色与上手难度**
+
+| 角色    | 推荐度 | 上手难度 |
+| ------- | ------ | -------- |
+| 🛠️ 开发 | ★★★★★  | ★★☆☆☆    |
+| 🧪 测试 | ★★★★★  | ★★☆☆☆    |
+| 📦 产品 | ★★☆☆☆  | ★★★★★    |
+
+**🎯 学习产出：** 了解 Python 测试工具链，能独立搭建 pytest + Playwright + httpx 的自动化测试体系
+
+**🚀 AI 能力提升：** 测试生成
+:::
+
 # Python 测试工具链概览
 
 本系列聚焦 **Python Web UI 和 API 自动化测试场景下的工具实践**，而非单个工具的独立介绍。如果你还不熟悉 pytest 或 Playwright 的基础用法，请先参阅 [Python 自动化测试最佳实践](/tips/python-best-practices)。这里的重点是：如何将多个工具串联成一条完整的 Python 测试工作流，从 LSP 语义基础到测试编写、数据管理、调试排错，各阶段各司其职、协同增效。
