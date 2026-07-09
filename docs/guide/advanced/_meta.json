@@ -59,6 +59,7 @@
   "agency-agents",
   "ruflo",
   "agents-routing",
+  "agentskills",
   {
     "type": "section-header",
     "label": "工作流故障排除"

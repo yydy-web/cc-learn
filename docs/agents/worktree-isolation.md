@@ -33,11 +33,11 @@ pageType: doc
 
 先看清楚三种"并行开发"方式的本质区别：
 
-| 方式 | 原理 | 上下文隔离 | 文件系统 | 切换成本 | 适合场景 |
-| ---- | ---- | ---------- | -------- | -------- | -------- |
-| git stash 切换 | 暂存改动 → 切分支 → 恢复 | 差（同一目录，文件残留） | 共享 | 手动 `stash` + `pop`，易冲突 | 临时打断，快速切回 |
-| git checkout 分支 | 切换到另一分支的 HEAD | 差（只改了 Git 指针，工作目录是共享的） | 共享 | 必须先 commit 或 stash 当前改动 | 单线程开发，一次只做一件事 |
-| git worktree | 创建独立目录，每个目录有独立分支和工作区 | **好**（完全独立的文件系统） | **隔离** | 零切换，两个终端各连一个 worktree | 真正的并行开发 |
+| 方式              | 原理                                     | 上下文隔离                              | 文件系统 | 切换成本                          | 适合场景                   |
+| ----------------- | ---------------------------------------- | --------------------------------------- | -------- | --------------------------------- | -------------------------- |
+| git stash 切换    | 暂存改动 → 切分支 → 恢复                 | 差（同一目录，文件残留）                | 共享     | 手动 `stash` + `pop`，易冲突      | 临时打断，快速切回         |
+| git checkout 分支 | 切换到另一分支的 HEAD                    | 差（只改了 Git 指针，工作目录是共享的） | 共享     | 必须先 commit 或 stash 当前改动   | 单线程开发，一次只做一件事 |
+| git worktree      | 创建独立目录，每个目录有独立分支和工作区 | **好**（完全独立的文件系统）            | **隔离** | 零切换，两个终端各连一个 worktree | 真正的并行开发             |
 
 Worktree 的核心优势就两点：
 
@@ -98,8 +98,8 @@ git checkout main
 // scripts/parallel-features.ts
 export const meta = {
   title: '并行 Feature 开发：头像上传 + 邮件重构',
-  description: '在两个独立 Worktree 中并行开发用户头像上传组件和邮件通知模块重构'
-}
+  description: '在两个独立 Worktree 中并行开发用户头像上传组件和邮件通知模块重构',
+};
 
 const [resultA, resultB] = await parallel([
   {
@@ -127,7 +127,7 @@ const [resultA, resultB] = await parallel([
 - 组件状态用 useState + useRef，不需要状态管理库
 
 完成后输出：改了哪些文件、每个文件的用途、如何测试（curl 命令或手动操作步骤）。
-`
+`,
   },
   {
     description: '重构邮件通知模块',
@@ -153,14 +153,14 @@ const [resultA, resultB] = await parallel([
 - React Email 组件使用 @react-email/components
 
 完成后输出：改了哪些文件、MailService 接口设计理由、旧模板和新 React Email 模板的对比。
-`
-  }
-])
+`,
+  },
+]);
 
-log(`\n===== Agent 1 完成 =====`)
-log(resultA.output)
-log(`\n===== Agent 2 完成 =====`)
-log(resultB.output)
+log(`\n===== Agent 1 完成 =====`);
+log(resultA.output);
+log(`\n===== Agent 2 完成 =====`);
+log(resultB.output);
 ```
 
 脚本编写完成后，通过 Claude Code 的 Workflow 工具运行即可。Workflow 脚本在对话中执行——将脚本内容提供给 CC，它会自动识别 `export const meta` 格式并调用 Workflow 工具。
@@ -177,7 +177,7 @@ Agent A 收到指令后，在独立的 worktree 中完成组件和后端 API。
 
 **CC 输出：**
 
-```text
+````text
 ## 交付摘要
 
 ### 新建文件：components/AvatarUpload/index.tsx
@@ -245,30 +245,30 @@ export default function AvatarUpload() {
   }
   // ... 拖拽处理和渲染逻辑省略，完整代码见分支
 }
-```
+````
 
 ### 新建文件：app/api/upload/route.ts
 
 ```typescript
-import { NextRequest, NextResponse } from 'next/server'
-import { writeFile, mkdir } from 'fs/promises'
-import { join } from 'path'
-import { v4 as uuid } from 'uuid'
+import { NextRequest, NextResponse } from 'next/server';
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
+import { v4 as uuid } from 'uuid';
 
 export async function POST(req: NextRequest) {
-  const formData = await req.formData()
-  const file = formData.get('file') as File | null
+  const formData = await req.formData();
+  const file = formData.get('file') as File | null;
 
-  if (!file) return NextResponse.json({ error: '未找到文件' }, { status: 400 })
+  if (!file) return NextResponse.json({ error: '未找到文件' }, { status: 400 });
 
-  const ext = file.name.split('.').pop() || 'png'
-  const filename = `${uuid()}.${ext}`
-  const uploadDir = join(process.cwd(), 'public', 'uploads', 'avatars')
+  const ext = file.name.split('.').pop() || 'png';
+  const filename = `${uuid()}.${ext}`;
+  const uploadDir = join(process.cwd(), 'public', 'uploads', 'avatars');
 
-  await mkdir(uploadDir, { recursive: true })
-  await writeFile(join(uploadDir, filename), Buffer.from(await file.arrayBuffer()))
+  await mkdir(uploadDir, { recursive: true });
+  await writeFile(join(uploadDir, filename), Buffer.from(await file.arrayBuffer()));
 
-  return NextResponse.json({ url: `/uploads/avatars/${filename}` })
+  return NextResponse.json({ url: `/uploads/avatars/${filename}` });
 }
 ```
 
@@ -277,7 +277,8 @@ export async function POST(req: NextRequest) {
 - **XHR 替代 fetch**：fetch 不支持上传进度回调，用 XHR 的 `upload.onprogress` 实现进度条
 - **Canvas 裁剪在前端**：减少服务端图像处理开销，200x200 的 canvas 输出足够头像使用
 - **文件名校验**：用 uuid 重命名避免路径遍历和文件名冲突
-```
+
+````
 
 ### Step 3：Agent B 在 worktree B 重构邮件通知
 
@@ -306,17 +307,17 @@ export interface SendResult {
 export interface MailService {
   send(options: SendOptions): Promise<SendResult>
 }
-```
+````
 
 ### 新建文件：lib/mail/providers/sendgrid.ts
 
 ```typescript
-import sgMail from '@sendgrid/mail'
-import type { MailService, SendOptions, SendResult } from '../types'
+import sgMail from '@sendgrid/mail';
+import type { MailService, SendOptions, SendResult } from '../types';
 
 export class SendGridMailService implements MailService {
   constructor(apiKey: string) {
-    sgMail.setApiKey(apiKey)
+    sgMail.setApiKey(apiKey);
   }
 
   async send(options: SendOptions): Promise<SendResult> {
@@ -324,13 +325,13 @@ export class SendGridMailService implements MailService {
       to: options.to,
       from: options.from || process.env.MAIL_FROM!,
       subject: options.subject,
-      html: options.html
-    })
+      html: options.html,
+    });
 
     return {
       messageId: response.headers['x-message-id'] || '',
-      accepted: [options.to]
-    }
+      accepted: [options.to],
+    };
   }
 }
 ```
@@ -338,14 +339,14 @@ export class SendGridMailService implements MailService {
 ### 新建文件：lib/mail/providers/resend.ts
 
 ```typescript
-import { Resend } from 'resend'
-import type { MailService, SendOptions } from '../types'
+import { Resend } from 'resend';
+import type { MailService, SendOptions } from '../types';
 
 export class ResendMailService implements MailService {
-  private resend: Resend
+  private resend: Resend;
 
   constructor(apiKey: string) {
-    this.resend = new Resend(apiKey)
+    this.resend = new Resend(apiKey);
   }
 
   async send(options: SendOptions) {
@@ -353,11 +354,11 @@ export class ResendMailService implements MailService {
       to: [options.to],
       from: options.from || process.env.MAIL_FROM!,
       subject: options.subject,
-      html: options.html
-    })
+      html: options.html,
+    });
 
-    if (error) throw new Error(error.message + ': ' + error.name)
-    return { messageId: data!.id, accepted: [options.to] }
+    if (error) throw new Error(error.message + ': ' + error.name);
+    return { messageId: data!.id, accepted: [options.to] };
   }
 }
 ```
@@ -365,19 +366,19 @@ export class ResendMailService implements MailService {
 ### 新建文件：lib/mail/factory.ts
 
 ```typescript
-import type { MailService } from './types'
-import { SendGridMailService } from './providers/sendgrid'
-import { ResendMailService } from './providers/resend'
+import type { MailService } from './types';
+import { SendGridMailService } from './providers/sendgrid';
+import { ResendMailService } from './providers/resend';
 
-export function createMailService(
-  provider: 'sendgrid' | 'resend' = 'resend'
-): MailService {
-  const apiKey = process.env.MAIL_API_KEY
-  if (!apiKey) throw new Error('MAIL_API_KEY 环境变量未设置')
+export function createMailService(provider: 'sendgrid' | 'resend' = 'resend'): MailService {
+  const apiKey = process.env.MAIL_API_KEY;
+  if (!apiKey) throw new Error('MAIL_API_KEY 环境变量未设置');
 
   switch (provider) {
-    case 'sendgrid': return new SendGridMailService(apiKey)
-    case 'resend':  return new ResendMailService(apiKey)
+    case 'sendgrid':
+      return new SendGridMailService(apiKey);
+    case 'resend':
+      return new ResendMailService(apiKey);
   }
 }
 ```
@@ -387,7 +388,8 @@ export function createMailService(
 - **MailService 接口只定义 `send`**：当前需求只有发送邮件，不做过度抽象。接口只有一个方法，未来加 `sendBatch`、`getStatus` 时扩展接口即可
 - **工厂函数替代 DI 容器**：项目规模不需要依赖注入框架，一个简单的 `createMailService()` 就够了，通过环境变量控制用哪个 provider
 - **旧模板 vs 新模板**：Handlebars 模板需要维护 `.hbs` + JSON context 两套文件，React Email 模板是纯 TypeScript，类型安全且可以在 dev 模式下实时预览
-```
+
+````
 
 :::info
 两个 Agent 在各自的 worktree 中同时工作——Agent A 改 `components/AvatarUpload/` 和 `app/api/upload/`，Agent B 改 `lib/mail/` 和 `emails/`。修改的文件完全不重叠，所以两个 worktree 之间没有任何感知，各自 `npm run dev` 也不互相影响。
@@ -416,7 +418,7 @@ git merge feature/mail-refactor
 # 验证合并结果
 npm run build
 npm run dev
-```
+````
 
 因为两个 feature 修改的文件完全不重叠，两次 merge 都不会产生冲突——你甚至可以先合并 B 再合并 A，顺序无关紧要。
 
@@ -479,12 +481,12 @@ Fast-forward
 
 两个方案完成后对比：
 
-| 维度 | Canvas 前端裁剪 | Sharp 服务端裁剪 |
-| ---- | ------------- | ---------------- |
-| 上传流量 | 小（只传 200x200 裁剪结果） | 大（传原始大图） |
-| 服务器负载 | 无额外处理 | 需要图像解码 + 裁剪 |
-| 移动端体验 | Canvas 在低端机上可能卡顿 | 客户端无压力 |
-| 灵活性 | 只能产出一种尺寸 | 可以随时调整裁剪尺寸 |
+| 维度       | Canvas 前端裁剪             | Sharp 服务端裁剪     |
+| ---------- | --------------------------- | -------------------- |
+| 上传流量   | 小（只传 200x200 裁剪结果） | 大（传原始大图）     |
+| 服务器负载 | 无额外处理                  | 需要图像解码 + 裁剪  |
+| 移动端体验 | Canvas 在低端机上可能卡顿   | 客户端无压力         |
+| 灵活性     | 只能产出一种尺寸            | 可以随时调整裁剪尺寸 |
 
 这种"A/B 并行、对比选优"的模式特别适合架构选型和技术决策。
 

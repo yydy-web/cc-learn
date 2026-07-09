@@ -115,6 +115,10 @@ npx skills add https://github.com/anthropics/skills --skill ppt-master
 
 Anthropic 官方插件，用 7 个阶段把模糊需求变成可交付成果：需求澄清 → 方案设计 → 任务拆解 → 执行 → 审查 → 测试 → 交付。
 
+### [PM 实战：从需求到原型全流程](/tips/pm-prd-prototype)
+
+完整端到端案例——用一个「用户反馈收集系统」走完 PRD + 设计规范 + HTML 原型 + Figma + 评审 PPT。含必装插件清单和每步可直接复现的提示词。
+
 ### [产品工具链技巧](/tips/product-toolchain)
 
 以 Claude Code 为编排中心的全流程工具链——从需求到上线每个阶段用什么工具、怎么组合。

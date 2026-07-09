@@ -26,10 +26,10 @@ pageType: doc
 
 三个审查维度的关系：
 
-| 维度 | 关心什么 | 与其他维度依赖 |
-| ---- | -------- | -------------- |
-| 安全性 | SQL 注入、XSS、权限绕过、密钥泄露 | 独立，不依赖其他审查结果 |
-| 性能 | N+1 查询、内存泄漏、阻塞 IO、缓存策略 | 独立，不依赖其他审查结果 |
+| 维度   | 关心什么                                 | 与其他维度依赖           |
+| ------ | ---------------------------------------- | ------------------------ |
+| 安全性 | SQL 注入、XSS、权限绕过、密钥泄露        | 独立，不依赖其他审查结果 |
+| 性能   | N+1 查询、内存泄漏、阻塞 IO、缓存策略    | 独立，不依赖其他审查结果 |
 | 正确性 | 并发安全、边界条件、状态机完整性、幂等性 | 独立，不依赖其他审查结果 |
 
 ## 为什么用 parallel 并行审查
@@ -83,7 +83,7 @@ export const FINDING_SCHEMA = {
     suggestion: { type: 'string', description: '修复建议' },
   },
   required: ['severity', 'category', 'file', 'line', 'title', 'description', 'suggestion'],
-}
+};
 
 export const VERDICT_SCHEMA = {
   type: 'object',
@@ -93,7 +93,7 @@ export const VERDICT_SCHEMA = {
     evidence: { type: 'string', description: '代码证据（文件+行号）' },
   },
   required: ['isReal', 'reason', 'evidence'],
-}
+};
 ```
 
 ## 完整交互过程
@@ -112,51 +112,54 @@ export const meta = {
     { title: 'Adversarial Verify', detail: '对每个发现启动 3 个验证 Agent 反向确认' },
     { title: 'Aggregate', detail: '聚合确认后的问题 → 生成修复任务清单' },
   ],
-}
+};
 
-phase('Parallel Review')
+phase('Parallel Review');
 
 const [securityFindings, performanceFindings, correctnessFindings] = await parallel(
   // Agent 1：安全审查
-  () => agent(
-    `审查 src/services/payment-service.ts 的**安全性**：
+  () =>
+    agent(
+      `审查 src/services/payment-service.ts 的**安全性**：
     1. 检查是否存在 SQL 注入风险（拼接查询、未参数化）
     2. 检查敏感信息是否经日志或错误消息泄露（密钥、token、用户 PII）
     3. 检查支付金额/参数是否在前端可篡改
     4. 检查鉴权/授权逻辑是否有绕过路径
 
     只关注安全问题，忽略性能和代码风格。`,
-    { label: 'security-review', schema: { type: 'array', items: FINDING_SCHEMA } },
-  ),
+      { label: 'security-review', schema: { type: 'array', items: FINDING_SCHEMA } },
+    ),
 
   // Agent 2：性能审查
-  () => agent(
-    `审查 src/services/payment-service.ts 的**性能**：
+  () =>
+    agent(
+      `审查 src/services/payment-service.ts 的**性能**：
     1. 检查是否存在 N+1 查询（循环内执行 DB 操作）
     2. 检查是否存在同步阻塞 IO（fs.readFileSync、大 JSON 解析阻塞事件循环）
     3. 检查是否有无界循环或递归调用
     4. 检查缓存策略——高频查询是否复用结果
 
     只关注性能问题，忽略安全和代码风格。`,
-    { label: 'performance-review', schema: { type: 'array', items: FINDING_SCHEMA } },
-  ),
+      { label: 'performance-review', schema: { type: 'array', items: FINDING_SCHEMA } },
+    ),
 
   // Agent 3：正确性审查
-  () => agent(
-    `审查 src/services/payment-service.ts 的**正确性**：
+  () =>
+    agent(
+      `审查 src/services/payment-service.ts 的**正确性**：
     1. 检查库存扣减是否有并发超卖风险（read-check-write 非原子）
     2. 检查支付回调是否做了幂等处理（重复回调不重复扣款/发货）
     3. 检查金额计算是否使用浮点数（应用整数/Decimal）
     4. 检查边界条件：0 元订单、超大金额、负库存、重复请求
 
     只关注正确性问题，忽略安全和性能。`,
-    { label: 'correctness-review', schema: { type: 'array', items: FINDING_SCHEMA } },
-  ),
-)
+      { label: 'correctness-review', schema: { type: 'array', items: FINDING_SCHEMA } },
+    ),
+);
 
-log(`安全 Agent 发现 ${securityFindings.length} 个问题`)
-log(`性能 Agent 发现 ${performanceFindings.length} 个问题`)
-log(`正确性 Agent 发现 ${correctnessFindings.length} 个问题`)
+log(`安全 Agent 发现 ${securityFindings.length} 个问题`);
+log(`性能 Agent 发现 ${performanceFindings.length} 个问题`);
+log(`正确性 Agent 发现 ${correctnessFindings.length} 个问题`);
 ```
 
 **为什么要限定"只关注 X"**：Agent 的审查范围很容易漂移。一个审查安全的 Agent 可能顺手指出性能问题，但这不是它的职责，反而可能导致遗漏本应关注的安全问题。明确限定范围能让每个 Agent 更聚焦。
@@ -259,23 +262,25 @@ export const meta = {
   name: 'verify-findings',
   description: '对抗验证：3 个 Agent 独立尝试证伪每个发现',
   phases: [{ title: 'Verify' }],
-}
+};
 
-phase('Adversarial Verify')
+phase('Adversarial Verify');
 
 const allFindings = [
   ...securityFindings.map((f) => ({ ...f, source: 'security' })),
   ...performanceFindings.map((f) => ({ ...f, source: 'performance' })),
   ...correctnessFindings.map((f) => ({ ...f, source: 'correctness' })),
-]
+];
 
-const confirmed = []
+const confirmed = [];
 
 for (const finding of allFindings) {
   const votes = await parallel(
-    Array.from({ length: 3 }, () => () =>
-      agent(
-        `你的任务是**证伪**以下审查发现。默认判定为"不真实"，除非你从源代码中找到确凿证据：
+    Array.from(
+      { length: 3 },
+      () => () =>
+        agent(
+          `你的任务是**证伪**以下审查发现。默认判定为"不真实"，除非你从源代码中找到确凿证据：
 
         问题：${finding.title}
         描述：${finding.description}
@@ -288,21 +293,23 @@ for (const finding of allFindings) {
         3. 是否是误报（代码上下文中有防御措施，或根本不存在该问题）？
 
         给出明确结论：isReal（boolean）、reason（理由）、evidence（引用具体代码行）。`,
-        { label: `verify:${finding.file}:${finding.line}`, schema: VERDICT_SCHEMA },
-      ),
+          { label: `verify:${finding.file}:${finding.line}`, schema: VERDICT_SCHEMA },
+        ),
     ),
-  )
+  );
 
-  const realVotes = votes.filter(Boolean).filter((v) => v.isReal).length
+  const realVotes = votes.filter(Boolean).filter((v) => v.isReal).length;
   if (realVotes >= 2) {
-    confirmed.push(finding)
-    log(`✅ 确认：${finding.title}（${realVotes}/3 确认真实）`)
+    confirmed.push(finding);
+    log(`✅ 确认：${finding.title}（${realVotes}/3 确认真实）`);
   } else {
-    log(`❌ 证伪：${finding.title}（${realVotes}/3 确认真实，判定为误报）`)
+    log(`❌ 证伪：${finding.title}（${realVotes}/3 确认真实，判定为误报）`);
   }
 }
 
-log(`\n共 ${allFindings.length} 个审查发现，${confirmed.length} 个确认真实，${allFindings.length - confirmed.length} 个被证伪`)
+log(
+  `\n共 ${allFindings.length} 个审查发现，${confirmed.length} 个确认真实，${allFindings.length - confirmed.length} 个被证伪`,
+);
 ```
 
 **验证结果示例**：
@@ -329,31 +336,31 @@ log(`\n共 ${allFindings.length} 个审查发现，${confirmed.length} 个确认
 
 ```javascript
 // aggregate-tasks.workflow.js
-phase('Aggregate')
+phase('Aggregate');
 
 const sorted = confirmed.sort((a, b) => {
-  const severityOrder = { critical: 0, high: 1, medium: 2, low: 3 }
-  return severityOrder[a.severity] - severityOrder[b.severity]
-})
+  const severityOrder = { critical: 0, high: 1, medium: 2, low: 3 };
+  return severityOrder[a.severity] - severityOrder[b.severity];
+});
 
-log('## 修复任务清单\n')
-log('| Severity | Category | Issue | Verified | Assignee |')
-log('| -------- | -------- | ----- | -------- | -------- |')
+log('## 修复任务清单\n');
+log('| Severity | Category | Issue | Verified | Assignee |');
+log('| -------- | -------- | ----- | -------- | -------- |');
 for (const f of sorted) {
-  log(`| ${f.severity} | ${f.category} | ${f.title} | ${f.votes || '3/3'} | TBD |`)
+  log(`| ${f.severity} | ${f.category} | ${f.title} | ${f.votes || '3/3'} | TBD |`);
 }
 ```
 
 最终输出的修复任务清单：
 
-| Severity | Category | Issue | Verified | Assignee |
-| -------- | -------- | ----- | -------- | -------- |
-| critical | security | SQL 注入风险——拼接用户输入构造查询 | 3/3 | @backend-lead |
-| critical | correctness | 并发库存超卖——read-check-write 非原子操作 | 3/3 | @inventory-team |
-| high | performance | N+1 查询——循环内逐条查询支付记录 | 3/3 | @backend-lead |
-| high | correctness | 支付回调未做幂等处理 | 2/3 | @backend-lead |
-| high | security | 日志泄露支付回调原始 body | 3/3 | @backend-lead |
-| medium | performance | 退款通知同步等待第三方 API 无超时 | 2/3 | @backend-lead |
+| Severity | Category    | Issue                                     | Verified | Assignee        |
+| -------- | ----------- | ----------------------------------------- | -------- | --------------- |
+| critical | security    | SQL 注入风险——拼接用户输入构造查询        | 3/3      | @backend-lead   |
+| critical | correctness | 并发库存超卖——read-check-write 非原子操作 | 3/3      | @inventory-team |
+| high     | performance | N+1 查询——循环内逐条查询支付记录          | 3/3      | @backend-lead   |
+| high     | correctness | 支付回调未做幂等处理                      | 2/3      | @backend-lead   |
+| high     | security    | 日志泄露支付回调原始 body                 | 3/3      | @backend-lead   |
+| medium   | performance | 退款通知同步等待第三方 API 无超时         | 2/3      | @backend-lead   |
 
 :::warning
 severity 为 critical 的两个问题（SQL 注入和并发超卖）应该在 CI 中设为 **blocking**——未修复阻止合并。high 和 medium 级别的可以允许在后续迭代中修复，但需要建 ticket 跟踪。
@@ -388,7 +395,7 @@ const results = await parallel(
   () => agent('审查 billing-service 的支付相关模块', { label: 'review:billing' }),
   () => agent('审查 invoice-service 的支付相关模块', { label: 'review:invoice' }),
   // payment-service 自己就是一个 3-Agent 的 parallel
-)
+);
 ```
 
 每个服务内部的审查也是 parallel 的——形成"外层 parallel 串项目，内层 parallel 串维度"的两层并行结构。
@@ -399,19 +406,22 @@ const results = await parallel(
 
 ```javascript
 const [securityFindings, performanceFindings, correctnessFindings] = await parallel(
-  () => agent(
-    '审查 src/services/payment-service.ts',
-    { subagent_type: 'security-auditor', schema: { type: 'array', items: FINDING_SCHEMA } },
-  ),
-  () => agent(
-    '审查 src/services/payment-service.ts',
-    { subagent_type: 'perf-analyzer', schema: { type: 'array', items: FINDING_SCHEMA } },
-  ),
-  () => agent(
-    '审查 src/services/payment-service.ts',
-    { subagent_type: 'code-reviewer', schema: { type: 'array', items: FINDING_SCHEMA } },
-  ),
-)
+  () =>
+    agent('审查 src/services/payment-service.ts', {
+      subagent_type: 'security-auditor',
+      schema: { type: 'array', items: FINDING_SCHEMA },
+    }),
+  () =>
+    agent('审查 src/services/payment-service.ts', {
+      subagent_type: 'perf-analyzer',
+      schema: { type: 'array', items: FINDING_SCHEMA },
+    }),
+  () =>
+    agent('审查 src/services/payment-service.ts', {
+      subagent_type: 'code-reviewer',
+      schema: { type: 'array', items: FINDING_SCHEMA },
+    }),
+);
 ```
 
 预定义 Agent 封装了团队积累的审查经验（checklist、常见误报过滤、项目特定的安全策略），比每次手写 prompt 更稳定。

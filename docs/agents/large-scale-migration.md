@@ -28,13 +28,13 @@ pageType: doc
 
 手动逐文件迁移和 Agent 批量编排的差距，不只是"快一点"，而是工作方式完全不同：
 
-| 维度 | 手动逐文件 | Agent 批量编排 |
-| --- | --- | --- |
-| 耗时 | 50 文件 x 2-3 分钟 ≈ 2 小时 | 10 Agent 并行 ≈ 2 分钟 |
-| 一致性 | 靠人工记忆，容易漏或格式不统一 | 同一 prompt 驱动，输出风格一致 |
-| 验证 | 改完手动跑一次 lint，容易跳过 | 每个 Agent 自带 eslint + tsc 验证 |
-| 可追溯 | 一次大 commit，难以逐文件 review | 每个 Agent 的改动独立可见 |
-| 心智负担 | 高，重复劳动让人麻木 | 低，只负责 prompt 和最终 review |
+| 维度     | 手动逐文件                       | Agent 批量编排                    |
+| -------- | -------------------------------- | --------------------------------- |
+| 耗时     | 50 文件 x 2-3 分钟 ≈ 2 小时      | 10 Agent 并行 ≈ 2 分钟            |
+| 一致性   | 靠人工记忆，容易漏或格式不统一   | 同一 prompt 驱动，输出风格一致    |
+| 验证     | 改完手动跑一次 lint，容易跳过    | 每个 Agent 自带 eslint + tsc 验证 |
+| 可追溯   | 一次大 commit，难以逐文件 review | 每个 Agent 的改动独立可见         |
+| 心智负担 | 高，重复劳动让人麻木             | 低，只负责 prompt 和最终 review   |
 
 核心思路是"分而治之"：把 50 个文件拆成 10 组，每组 5 个文件，10 个 Agent 同时开工，互不干扰。改完后自动跑 lint 和类型检查，哪个 Agent 出问题就单独重跑，不需要全部重来。
 
@@ -117,19 +117,20 @@ export const meta = {
   name: 'fan-out-migration',
   description: '将 52 个文件均分 10 组，并行迁移 CJS → ESM',
   phases: [{ title: '迁移', detail: '10 个 Agent 并行迁移' }],
-}
+};
 
 // 从 discover 阶段拿到文件清单（此处为示意，实际通过 agent 返回或手动分组）
 const fileGroups = [
   ['array.ts', 'string.ts', 'object.ts', 'function.ts', 'promise.ts'],
   ['validators.ts', 'formatters.ts', 'helpers.ts', 'constants.ts', 'types.ts'],
   // ... 共 10 组
-]
+];
 
 const results = await parallel(
-  fileGroups.map((files, i) => () =>
-    agent(
-      `将以下文件中的 require() 转为 import，module.exports 转为 export：
+  fileGroups.map(
+    (files, i) => () =>
+      agent(
+        `将以下文件中的 require() 转为 import，module.exports 转为 export：
 ${files.join('\n')}
 
 规则：
@@ -138,12 +139,12 @@ ${files.join('\n')}
 3. module.exports = X → export default X
 4. module.exports = { a, b } → export { a, b }
 5. 改完后运行 eslint --fix && tsc --noEmit 验证`,
-      { label: `group_${String(i + 1).padStart(2, '0')}` },
-    ),
+        { label: `group_${String(i + 1).padStart(2, '0')}` },
+      ),
   ),
-)
+);
 
-log(`迁移完成：${results.filter(Boolean).length}/${fileGroups.length} 组通过`)
+log(`迁移完成：${results.filter(Boolean).length}/${fileGroups.length} 组通过`);
 ```
 
 分组策略要点：
@@ -190,7 +191,7 @@ claude "group_03 的 eslint 报了两个 error：object.ts 第 12 行 import 路
 
 **prompt 要点：**
 
-> 读取 `results/` 目录下所有 group_*.json 文件，汇总输出迁移报告：总改动文件数、require 转 import 数量、exports 转 export 数量、lint 通过率、typecheck 通过率、异常文件清单。
+> 读取 `results/` 目录下所有 group\_\*.json 文件，汇总输出迁移报告：总改动文件数、require 转 import 数量、exports 转 export 数量、lint 通过率、typecheck 通过率、异常文件清单。
 
 汇总 Agent 输出示例：
 
@@ -256,13 +257,13 @@ Co-Authored-By: Claude Code Agents"
 
 discover → fan-out → verify → synthesize 这个模式不只适用于 CJS 到 ESM 迁移，任何"量大、规则明确、可拆分"的任务都能套用：
 
-| 场景 | discover | fan-out 分组依据 | verify 方式 |
-| --- | --- | --- | --- |
-| CSS 类名迁移（BEM → Tailwind） | 扫描所有 className/class 使用点 | 按组件文件分组 | visual regression + lint |
-| API 端点迁移（REST → GraphQL） | 扫描所有 fetch/axios 调用 | 按业务模块分组 | TypeScript 类型检查 + 接口测试 |
-| 数据库字段重命名 | 扫描所有 ORM 模型和查询 | 按表/领域分组 | 迁移脚本 dry-run + 查询测试 |
-| 框架版本升级（Vue 2 → Vue 3） | 扫描已废弃 API 使用点 | 按组件文件分组 | vue-tsc + 单元测试 |
-| i18n 文案提取 | 扫描所有硬编码中文字符串 | 按页面/模块分组 | lint + 构建验证 |
+| 场景                           | discover                        | fan-out 分组依据 | verify 方式                    |
+| ------------------------------ | ------------------------------- | ---------------- | ------------------------------ |
+| CSS 类名迁移（BEM → Tailwind） | 扫描所有 className/class 使用点 | 按组件文件分组   | visual regression + lint       |
+| API 端点迁移（REST → GraphQL） | 扫描所有 fetch/axios 调用       | 按业务模块分组   | TypeScript 类型检查 + 接口测试 |
+| 数据库字段重命名               | 扫描所有 ORM 模型和查询         | 按表/领域分组    | 迁移脚本 dry-run + 查询测试    |
+| 框架版本升级（Vue 2 → Vue 3）  | 扫描已废弃 API 使用点           | 按组件文件分组   | vue-tsc + 单元测试             |
+| i18n 文案提取                  | 扫描所有硬编码中文字符串        | 按页面/模块分组  | lint + 构建验证                |
 
 核心不变：一个 Agent 看清全局，多个 Agent 分头执行，每个 Agent 自带验证，最后汇总成一张表。掌握了这个模式，遇到 100 个文件、500 个文件的迁移任务，思路完全一样 —— 只是分组数量不同而已。
 
