@@ -31,6 +31,10 @@
   "typescript-lsp",
   "design-to-code",
   "product-toolchain",
+  "graphify",
+  "stitch-skills",
+  "design-md",
+  "spec-kit",
   "pm-prd-prototype",
   {
     "type": "section-header",

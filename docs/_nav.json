@@ -10,6 +10,11 @@
     "activeMatch": "/guide/"
   },
   {
+    "text": "设计实战",
+    "link": "/design/",
+    "activeMatch": "/design/"
+  },
+  {
     "text": "命令参考",
     "link": "/commands/",
     "activeMatch": "/commands/"
